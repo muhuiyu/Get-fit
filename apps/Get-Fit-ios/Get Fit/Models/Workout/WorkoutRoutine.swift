@@ -13,7 +13,10 @@ struct WorkoutRoutine {
     var itemLogs: [WorkoutItemLog]
     var note: String
     
-    init(id: WorkoutRoutineID, title: String, itemLogs: [WorkoutItemLog], note: String = "") {
+    init(id: WorkoutRoutineID,
+         title: String,
+         itemLogs: [WorkoutItemLog],
+         note: String = "") {
         self.id = id
         self.title = title
         self.itemLogs = itemLogs

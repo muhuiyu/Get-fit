@@ -18,7 +18,12 @@ struct WorkoutSession: Codable {
     var itemLogs: [WorkoutItemLog]
     var note: String
 
-    init(id: WorkoutSessionID, startTime: Date, endTime: Date, title: String, itemLogs:[WorkoutItemLog], note: String = "") {
+    init(id: WorkoutSessionID,
+         startTime: Date,
+         endTime: Date,
+         title: String,
+         itemLogs:[WorkoutItemLog],
+         note: String = "") {
         self.id = id
         self.title = title
         self.startTime = startTime
@@ -27,6 +32,7 @@ struct WorkoutSession: Codable {
         self.note = note
     }
 }
+// MARK: - Init
 extension WorkoutSession {
     init() {
         // TODO: - set id
@@ -52,10 +58,6 @@ extension WorkoutSession {
     var durationInHourMinuteString: String {
         return (self.endTime - self.startTime).toHourMinuteString(unitsStyle: .full)
     }
-}
-
-// MARK: - Date
-extension WorkoutSession {
     var monthParsed: String {
         // note: may not apply if user exercises pass a day... (in the midnight)
         guard startTime.month == endTime.month else { return "" }
@@ -65,33 +67,6 @@ extension WorkoutSession {
         // note: may not apply if user exercises pass a day... (in the midnight)
         guard startTime.dayOfMonth == endTime.dayOfMonth else { return "" }
         return startTime.formatted(.dateTime.year().month(.wide))
-    }
-}
-
-// MARK: - Items
-struct WorkoutItemLog: Codable {
-    let itemID: WorkoutItemID
-    var sets: [WorkoutSetLog]
-    var note: String
-    
-    init(itemID: WorkoutItemID, sets: [WorkoutSetLog], note: String = "") {
-        self.itemID = itemID
-        self.sets = sets
-        self.note = note
-    }
-}
-
-struct WorkoutSetLog: Codable {
-    var weight: Double
-    var reps: Int
-    var note: String
-    var isWarmUpSet: Bool
-
-    init(weight: Double, reps: Int, note: String = "", isWarmUpSet: Bool = false) {
-        self.weight = weight
-        self.reps = reps
-        self.note = note
-        self.isWarmUpSet = isWarmUpSet
     }
 }
 

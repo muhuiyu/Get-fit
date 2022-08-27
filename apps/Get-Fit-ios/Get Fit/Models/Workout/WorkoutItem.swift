@@ -119,24 +119,3 @@ extension WorkoutItem {
                                               bodyPart: [.glutes],
                                               machine: nil)
 }
-
-// MARK: - Attributes
-enum WorkoutBodyPart: String {
-    case shoulders
-    case lateral
-    case back
-    case chest
-    case biceps
-    case triceps
-    case glutes
-    case quads
-    case hamstrings
-    case calves
-    case abs
-}
-enum WorkoutMachine {
-    case cableMachine
-    case pullUpMachine
-    case plateLegPressMachine
-    case seatedLegPressMachine
-}

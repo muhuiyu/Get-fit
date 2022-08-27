@@ -15,10 +15,3 @@ struct Food {
     let unitNutrition: [FoodUnit: NutritionFacts]
     let note: String = ""
 }
-
-enum FoodUnit: String, Hashable {
-    case tablespoon
-    case mililiter
-    case ounce
-    case gram
-}

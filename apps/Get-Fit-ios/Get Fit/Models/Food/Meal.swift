@@ -16,9 +16,3 @@ extension Meal {
         return 689
     }
 }
-
-struct FoodLog {
-    let foodID: FoodID
-    let amount: Double
-    let unit: FoodUnit
-}
