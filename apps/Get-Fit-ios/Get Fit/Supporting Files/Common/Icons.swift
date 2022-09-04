@@ -30,6 +30,11 @@ class Icons {
     static var houseFill: String { "house.fill" }
     static var bedDouble: String { "bed.double" }
     static var bedDoubleFill: String { "bed.double.fill" }
+    static var chartBar: String { "chart.bar" }
+    static var chartBarFill: String { "chart.bar.fill" }
+    static var chevronForward: String { "chevron.forward" }
+    static var chevronBackward: String { "chevron.backward" }
+    static var zzz: String { "zzz" }
     static var creditcard: String { "creditcard" }
     static var creditcardFill: String { "creditcard.fill" }
     static var creditcardCircle: String { "creditcard.circle" }
@@ -92,6 +97,7 @@ class Icons {
     static var filmFill: String { "film.fill" }
     static var ticketFill: String { "ticket.fill" }
     static var playTvFill: String { "play.tv.fill" }
+    static var note: String { "note" }
     static var noteText: String { "note.text" }
     static var gamecontrollerFill: String { "gamecontroller.fill" }
     static var figureWalk: String { "figure.walk" }

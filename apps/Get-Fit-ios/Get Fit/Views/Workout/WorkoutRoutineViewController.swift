@@ -94,7 +94,7 @@ extension WorkoutRoutineViewController {
             noteCell.textLabel?.text = routine.note
         }
         // TODO: - Add note value Changed Handler?
-        startButtonCell.textLabel?.text = AppText.Workout.startThisRoutine
+        startButtonCell.title = AppText.Workout.startThisRoutine
         startButtonCell.tapHandler = { [weak self] in
             self?.didStartRoutine()
         }
@@ -116,7 +116,7 @@ extension WorkoutRoutineViewController {
     }
     private func configureAddExerciseSection() -> [UITableViewCell] {
         let addExerciseCell = ButtonCell()
-        addExerciseCell.textLabel?.text = AppText.Workout.addExercise
+        addExerciseCell.title = AppText.Workout.addExercise
         addExerciseCell.tapHandler = { [weak self] in
             self?.didTapAddExercise()
         }

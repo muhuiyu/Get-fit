@@ -8,14 +8,26 @@
 import Foundation
 
 class CacheManager {
-    static let shared = CacheManager()
+    // MARK: - Cached data
+    private var workoutRoutines = [WorkoutRoutine]()
+    private var mealLogs = [MealLog]()
     
     // MARK: - Variables
     private let defaults = UserDefaults.standard
     private let preferredLanguageKey = "preferredLanguage"
-    private init() {
+    
+    init() {
         
     }
+}
+
+extension CacheManager {
+    func getWorkoutRoutines() -> [WorkoutRoutine] {
+        return self.workoutRoutines
+    }
+}
+extension CacheManager {
+    
 }
 
 extension CacheManager {

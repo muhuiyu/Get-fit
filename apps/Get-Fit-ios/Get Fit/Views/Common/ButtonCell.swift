@@ -10,6 +10,11 @@ import UIKit
 class ButtonCell: UITableViewCell {
     static let reuseID = NSStringFromClass(ButtonCell.self)
     
+    var title: String? {
+        didSet {
+            textLabel?.text = title
+        }
+    }
     var tapHandler: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

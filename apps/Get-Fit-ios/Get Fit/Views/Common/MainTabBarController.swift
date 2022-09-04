@@ -11,6 +11,7 @@ class MainTabBarController: UITabBarController {
     weak var appCoordinator: AppCoordinator?
     weak var homeCoordinator: HomeCoordinator?
     weak var workoutCoordinator: WorkoutCoordinator?
+    weak var progressCoordinator: ProgressCoordinator?
     weak var meCoordinator: MeCoordinator?
     
     deinit {
@@ -48,19 +49,23 @@ extension MainTabBarController {
     private func generateViewController(_ category: TabBarCategory) -> UINavigationController? {
         let viewController = category.viewController
         viewController.appCoordinator = self.appCoordinator
-        viewController.homeCoordinator = self.homeCoordinator
-        viewController.workoutCoordinator = self.workoutCoordinator
-        viewController.meCoordinator = self.meCoordinator
         viewController.tabBarItem = category.tabBarItem
         
         switch category {
         case .home:
+            viewController.homeCoordinator = self.homeCoordinator
             self.homeCoordinator?.navigationController.setViewControllers([viewController], animated: true)
             return self.homeCoordinator?.navigationController
         case .workout:
+            viewController.workoutCoordinator = self.workoutCoordinator
             self.workoutCoordinator?.navigationController.setViewControllers([viewController], animated: true)
             return self.workoutCoordinator?.navigationController
+        case .progress:
+            viewController.progressCoordinator = self.progressCoordinator
+            self.progressCoordinator?.navigationController.setViewControllers([viewController], animated: true)
+            return self.progressCoordinator?.navigationController
         case .me:
+            viewController.meCoordinator = self.meCoordinator
             self.meCoordinator?.navigationController.setViewControllers([viewController], animated: true)
             return self.meCoordinator?.navigationController
         }
@@ -70,26 +75,30 @@ extension MainTabBarController {
 enum TabBarCategory: Int, CaseIterable {
     case home = 0
     case workout = 1
-    case me = 2
+    case progress = 2
+    case me = 3
     
     var title: String {
         switch self {
         case .home: return AppText.MainTab.home
         case .workout: return AppText.MainTab.workout
+        case .progress: return AppText.MainTab.progress
         case .me: return AppText.MainTab.me
         }
     }
     var inactiveImageValue: UIImage? {
         switch self {
-        case .home: return UIImage(systemName: Icons.dollarsignCircle)
+        case .home: return UIImage(systemName: Icons.note)
         case .workout: return UIImage(systemName: Icons.flame)
+        case .progress: return UIImage(systemName: Icons.chartBar)
         case .me: return UIImage(systemName: Icons.person)
         }
     }
     var activeImageValue: UIImage? {
         switch self {
-        case .home: return UIImage(systemName: Icons.dollarsignCircleFill)
+        case .home: return UIImage(systemName: Icons.noteText)
         case .workout: return UIImage(systemName: Icons.flameFill)
+        case .progress: return UIImage(systemName: Icons.chartBarFill)
         case .me: return UIImage(systemName: Icons.personFill)
         }
     }
@@ -97,6 +106,7 @@ enum TabBarCategory: Int, CaseIterable {
         switch self {
         case .home: return HomeViewController()
         case .workout: return WorkoutViewController()
+        case .progress: return ProgressViewController()
         case .me: return MeViewController()
         }
     }

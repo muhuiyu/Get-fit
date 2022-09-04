@@ -10,17 +10,17 @@ import UIKit
 
 typealias WorkoutSessionID = String
 
-struct WorkoutSession: Codable {
-    let id: WorkoutSessionID
-    var startTime: Date
-    var endTime: Date
+struct WorkoutSession: WorkoutSessionInterface, Codable {
+    var id: WorkoutSessionID
+    var startTime: DateAndTime
+    var endTime: DateAndTime
     var title: String
     var itemLogs: [WorkoutItemLog]
     var note: String
 
     init(id: WorkoutSessionID,
-         startTime: Date,
-         endTime: Date,
+         startTime: DateAndTime,
+         endTime: DateAndTime,
          title: String,
          itemLogs:[WorkoutItemLog],
          note: String = "") {
@@ -34,21 +34,21 @@ struct WorkoutSession: Codable {
 }
 // MARK: - Init
 extension WorkoutSession {
-    init() {
+    init(preferredWorkoutLengthInMinutes: Int = 60) {
         // TODO: - set id
         self.id = "id"
         self.title = "New workout session"
-        self.startTime = Date()
-        self.endTime = Date().date(afterMinutes: CacheManager.shared.preferredWorkoutLengthInMinutes)
+        self.startTime = DateAndTime()
+        self.endTime = self.startTime.afterMinutes(preferredWorkoutLengthInMinutes)
         self.itemLogs = []
         self.note = ""
     }
-    init(from routine: WorkoutRoutine) {
+    init(from routine: WorkoutRoutine, preferredWorkoutLengthInMinutes: Int = 60) {
         // TODO: - Set id
         self.id = "id"
         self.title = routine.title
-        self.startTime = Date()
-        self.endTime = Date().date(afterMinutes: CacheManager.shared.preferredWorkoutLengthInMinutes)
+        self.startTime = DateAndTime()
+        self.endTime = self.startTime.afterMinutes(preferredWorkoutLengthInMinutes)
         self.itemLogs = routine.itemLogs
         self.note = routine.note
     }
@@ -56,44 +56,19 @@ extension WorkoutSession {
 
 extension WorkoutSession {
     var durationInHourMinuteString: String {
-        return (self.endTime - self.startTime).toHourMinuteString(unitsStyle: .full)
+        return DateAndTime.difference(from: startTime, to: endTime).toHourMinuteString(unitsStyle: .full)
     }
     var monthParsed: String {
         // note: may not apply if user exercises pass a day... (in the midnight)
         guard startTime.month == endTime.month else { return "" }
-        return startTime.formatted(.dateTime.year().month(.wide))
+        return startTime.toDate()?.formatted(.dateTime.year().month(.wide)) ?? ""
     }
     var dayParsed: String {
         // note: may not apply if user exercises pass a day... (in the midnight)
-        guard startTime.dayOfMonth == endTime.dayOfMonth else { return "" }
-        return startTime.formatted(.dateTime.year().month(.wide))
+        guard startTime.day == endTime.day else { return "" }
+        return startTime.toDate()?.formatted(.dateTime.year().month(.wide)) ?? ""
     }
-}
-
-// MARK: - Test entries
-extension WorkoutSession {
-    static let testEntries: [WorkoutSession] = [
-        WorkoutSession(id: "workout-session-1",
-                       startTime: Date(),
-                       endTime: Date().date(afterMinutes: 35),
-                       title: "Some session",
-                       itemLogs: [
-                        WorkoutItemLog(
-                            itemID: WorkoutItem.legPress.id,
-                            sets: [
-                                WorkoutSetLog(weight: 65, reps: 15, isWarmUpSet: true),
-                                WorkoutSetLog(weight: 65, reps: 15)
-                            ],
-                            note: "3 x 15"
-                        ),
-                        WorkoutItemLog(
-                            itemID: WorkoutItem.assistedPullUp.id,
-                            sets: [
-                                WorkoutSetLog(weight: 12.5, reps: 15, note: "good job!", isWarmUpSet: true),
-                                WorkoutSetLog(weight: 12.5, reps: 15, note: "good job!", isWarmUpSet: false),
-                            ],
-                            note: "3 x 15"
-                        ),
-                       ])
-    ]
+    var allItemNames: String {
+        return itemLogs.compactMap { WorkoutItem.getWorkoutItemName(of: $0.itemID) }.joined(separator: ", ")
+    }
 }

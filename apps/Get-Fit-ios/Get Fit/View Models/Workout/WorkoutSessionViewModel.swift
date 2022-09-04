@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class WorkoutSessionViewModel {
+class WorkoutSessionViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     
     var session: BehaviorRelay<WorkoutSession?> = BehaviorRelay(value: nil)
@@ -19,7 +19,8 @@ class WorkoutSessionViewModel {
     var displayWeekdayString: BehaviorRelay<String> = BehaviorRelay(value: "")
     var displayDurationString: BehaviorRelay<String> = BehaviorRelay(value: "")
     
-    init() {
+    override init() {
+        super.init()
         configureSignals()
     }
 }
@@ -35,7 +36,7 @@ extension WorkoutSessionViewModel {
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeStartTime(to value: Date) {
+    func didChangeStartTime(to value: DateAndTime) {
         guard
             var updatedSession = session.value else {
             return
@@ -44,7 +45,7 @@ extension WorkoutSessionViewModel {
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeEndTime(to value: Date) {
+    func didChangeEndTime(to value: DateAndTime) {
         guard
             var updatedSession = session.value else {
             return
@@ -122,8 +123,8 @@ extension WorkoutSessionViewModel {
                 if let value = value {
                     self.displayTitleString.accept(value.title)
                     self.displayContentString.accept("will be updated soon")     // TODO: - update displayText
-                    self.displayDayString.accept(String(value.startTime.dayOfMonth))
-                    self.displayWeekdayString.accept(value.startTime.toWeekDayString())
+                    self.displayDayString.accept(String(value.startTime.day))
+                    self.displayWeekdayString.accept(value.startTime.toDate()?.toWeekDayString() ?? "")
                     self.displayDurationString.accept(value.durationInHourMinuteString)
                 }
             })

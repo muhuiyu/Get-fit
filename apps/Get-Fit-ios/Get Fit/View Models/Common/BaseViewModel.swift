@@ -8,7 +8,5 @@
 import Foundation
 
 class BaseViewModel {
-    let userManager = UserManager.shared
-    
-    // TODO: - Add user
+    var appCoordinator: AppCoordinator?
 }

@@ -18,8 +18,8 @@ extension MeCoordinator {
     private func makeViewController(for destination: Destination) -> ViewController? {
         switch destination {
         case .viewAccountDetails:
-            let viewController = MeAccountDetailViewController()
-            viewController.meCoordinator = self
+            let viewController = MeAccountDetailViewController(appCoordinator: self.parentCoordinator,
+                                                               meCoordinator: self)
             return viewController
         case .viewGoals:
             // TODO: -

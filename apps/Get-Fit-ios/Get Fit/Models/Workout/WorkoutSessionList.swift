@@ -17,8 +17,15 @@ extension WorkoutSessionList {
         guard let index = self.firstIndex(where: { $0.id == id }) else { return }
         self.remove(at: index)
     }
-    func sortedByTime() -> WorkoutSessionList {
-        return self.sorted(by: { $0.startTime < $1.startTime })
+    func sortedByTime(isAscending: Bool = true) -> WorkoutSessionList {
+        return self.sorted(by: {
+            guard let first = $0.startTime.toDate(), let second = $1.startTime.toDate() else { return false }
+            if isAscending {
+                return first < second
+            } else {
+                return first > second
+            }
+        })
     }
 }
 

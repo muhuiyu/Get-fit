@@ -20,15 +20,15 @@ class DateCell: UITableViewCell {
             titleLabel.text = title
         }
     }
-    var date: Date {
-        get { return datePicker.date }
-        set { datePicker.date = newValue }
+    var date: DateAndTime {
+        get { return DateAndTime(date: datePicker.date) }
+        set { datePicker.date = newValue.toDate() ?? Date() }
     }
     var endEditingHandler: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.date = Date.today
+        self.date = DateAndTime(date: Date.today)
         configureViews()
         configureConstraints()
         configureGestures()
@@ -54,7 +54,7 @@ extension DateCell {
         titleLabel.font = UIFont.body
         contentView.addSubview(titleLabel)
         
-        datePicker.date = date
+        datePicker.date = date.toDate() ?? Date()
         datePicker.datePickerMode = .dateAndTime
         datePicker.locale = .current
         datePicker.preferredDatePickerStyle = .compact

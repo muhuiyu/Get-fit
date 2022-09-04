@@ -19,6 +19,8 @@ extension AppText {
         static var delete: String { "Delete" }
         static var search: String { "Search" }
         static var pullToRefresh: String { "Pull to refresh" }
+        static var goal: String { "Goal" }
+        static var noData: String { "No data" }
     }
 }
 // MARK: - Loading
@@ -32,18 +34,29 @@ extension AppText {
     struct MainTab {
         static var home: String { "Home" }
         static var workout: String { "Workout" }
+        static var progress: String { "Progress" }
         static var me: String { "Me" }
     }
 }
 // MARK: - Home
 extension AppText {
     struct Home {
-        static var dailyMovementCellCaloriesTitle: String { "Burned" }
-        static var dailyMovementCellCaloriesSubtitle: String { "active calories" }
-        static var dailyMovementCellStepsTitle: String { "Steps" }
-        static var dailyMovementCellStepsSubtitle: String { "Daily steps" }
-        static var addFoodLog: String { "Add food log" }
+        static var title: String { "Diary" }
+        static var activeCaloriesTitle: String { "Burned" }
+        static var activeCaloriesSubtitle: String { "active calories" }
+        static var dailyStepsTitle: String { "Steps" }
+        static var dailyStepsSubtitle: String { "Daily steps" }
+        static var sleepHoursTitle: String { "Sleep" }
+        static var sleepHoursSubtitle: String { "sleep hours" }
+        static var waterIntakeTitle: String { "Water" }
+        static var waterIntakeSubtitle: String { "water intake" }
+        static var remaining: String { "Remaining" }
+        static var consumed: String { "Consumed" }
+        static var addFoodLog: String { "Add food" }
         static var addJournal: String { "Add journal" }
+        static var noData: String { "No data" }
+        static var exercise: String { "Exercise" }
+        static var journal: String { "Journal" }
     }
 }
 // MARK: - Unit
@@ -51,8 +64,13 @@ extension AppText {
     struct Unit {
         static var kcal: String { "kcal" }
         static var steps: String { "steps" }
+        static var hours: String { "hours" }
+        static var mililiter: String { "mL" }
+        static var liter: String { "L" }
         static var day: String { "day" }
         static var days: String { "days" }
+        static var minutes: String { "minutes" }
+        static var minuteShort: String { "min" }
     }
 }
 // MARK: - Workout

@@ -12,4 +12,5 @@ enum FoodUnit: String, Hashable {
     case mililiter
     case ounce
     case gram
+    case each
 }

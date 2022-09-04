@@ -9,14 +9,10 @@ import UIKit
 import RxRelay
 import RxSwift
 
-class WorkoutRoutineListViewModel {
+class WorkoutRoutineListViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     
     var routines: BehaviorRelay<[WorkoutRoutine]> = BehaviorRelay(value: [])
-    
-    init() {
-        
-    }
 }
 
 extension WorkoutRoutineListViewModel {
@@ -25,8 +21,9 @@ extension WorkoutRoutineListViewModel {
 
 extension WorkoutRoutineListViewModel {
     func reloadData() {
-        // TODO: -
-        routines.accept(WorkoutRoutine.entries)
+        guard let cacheManager = appCoordinator?.cacheManager else { return }
+        let workoutRoutines = cacheManager.getWorkoutRoutines()
+        routines.accept(workoutRoutines)
     }
     func deleteRoutine(at indexPath: IndexPath) {
         // TODO: - 

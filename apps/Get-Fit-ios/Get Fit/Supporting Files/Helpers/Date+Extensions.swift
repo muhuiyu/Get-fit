@@ -31,6 +31,9 @@ extension Date {
     var year: Int { Calendar.current.component(.year, from: self) }
     var month: Int { Calendar.current.component(.month, from: self) }
     var dayOfMonth: Int { Calendar.current.component(.day, from: self) }
+    var hour: Int { Calendar.current.component(.hour, from: self) }
+    var minute: Int { Calendar.current.component(.minute, from: self) }
+    var second: Int { Calendar.current.component(.second, from: self) }
     
     func getDateInThisWeek(on weekday: Int) -> Date {
         let calendar = Calendar(identifier: .gregorian)
@@ -208,4 +211,9 @@ extension Date {
     static func - (lhs: Date, rhs: Date) -> TimeInterval {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
+}
+
+// MARK: - DateTriple
+extension Date {
+    var toDateTriple: DateTriple { DateTriple(year: self.year, month: self.month, day: self.dayOfMonth) }
 }

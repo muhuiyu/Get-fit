@@ -17,6 +17,8 @@ class WorkoutSessionViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.appCoordinator = appCoordinator
+        
         configureViews()
         configureConstraints()
         configureGestures()
@@ -57,6 +59,13 @@ extension WorkoutSessionViewController {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.displayTitleString
+            .asObservable()
+            .subscribe { value in
+                self.title = value
             }
             .disposed(by: disposeBag)
     }
@@ -134,7 +143,7 @@ extension WorkoutSessionViewController {
                 section.append(cell)
             }
             let addSetCell = ButtonCell()
-            addSetCell.textLabel?.text = AppText.Workout.addSet
+            addSetCell.title = AppText.Workout.addSet
             addSetCell.tapHandler = { [weak self] in
                 self?.didTapAddSet(for: indexOfItemLog)
             }
@@ -145,7 +154,7 @@ extension WorkoutSessionViewController {
     }
     private func configureAddExerciseSection() -> [UITableViewCell] {
         let addExerciseCell = ButtonCell()
-        addExerciseCell.textLabel?.text = AppText.Workout.addExercise
+        addExerciseCell.title = AppText.Workout.addExercise
         addExerciseCell.tapHandler = { [weak self] in
             self?.didTapAddExercise()
         }

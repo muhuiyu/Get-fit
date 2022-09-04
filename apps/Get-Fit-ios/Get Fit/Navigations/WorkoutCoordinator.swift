@@ -23,22 +23,22 @@ extension WorkoutCoordinator {
     private func makeViewController(for destination: Destination) -> ViewController? {
         switch destination {
         case .viewSessionLog(let session):
-            let viewController = WorkoutSessionViewController()
-            viewController.workoutCoordinator = self
+            let viewController = WorkoutSessionViewController(appCoordinator: self.parentCoordinator,
+                                                              workoutCoordinator: self)
             viewController.viewModel.session.accept(session)
             return viewController
         case .viewWorkoutRoutineList:
-            let viewController = WorkoutRoutineListViewController()
-            viewController.workoutCoordinator = self
+            let viewController = WorkoutRoutineListViewController(appCoordinator: self.parentCoordinator,
+                                                                  workoutCoordinator: self)
             return viewController
         case .viewWorkoutRoutine(let routine):
-            let viewController = WorkoutRoutineViewController()
-            viewController.workoutCoordinator = self
+            let viewController = WorkoutRoutineViewController(appCoordinator: self.parentCoordinator,
+                                                              workoutCoordinator: self)
             viewController.viewModel.routine.accept(routine)
             return viewController
         case .viewCreateRoutine:
-            let viewController = WorkoutRoutineViewController()
-            viewController.workoutCoordinator = self
+            let viewController = WorkoutRoutineViewController(appCoordinator: self.parentCoordinator,
+                                                              workoutCoordinator: self)
             viewController.viewModel.routine.accept(WorkoutRoutine())
             return viewController
         case .editItemLog(let itemLog):

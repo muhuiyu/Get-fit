@@ -6,7 +6,7 @@
 //
 
 import UIKit
-// import FirebaseCore
+import FirebaseCore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
         
         appCoordinator = AppCoordinator(window: window)
         appCoordinator?.start()

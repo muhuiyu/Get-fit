@@ -10,19 +10,15 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class MeViewModel {
+class MeViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
-
-    init() {
-
-    }
 }
 
 extension MeViewModel {
     var displayTitle: String { AppText.MainTab.me }
     var displayRefreshControlString: String { AppText.General.pullToRefresh }
     var userEmail: String? {
-        return UserManager.shared.getUserEmail
+        return appCoordinator?.userManager?.email
     }
 }
 

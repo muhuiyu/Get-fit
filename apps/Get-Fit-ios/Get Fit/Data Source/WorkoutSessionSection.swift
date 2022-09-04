@@ -41,7 +41,7 @@ typealias WorkoutSessionSections = [WorkoutSessionSection]
 extension WorkoutSessionSections {
     func sortedByDate() -> [WorkoutSessionSection] {
         return self.sorted { a, b in
-            guard let aDate = a.items.first?.startTime, let bDate = b.items.first?.startTime else { return false }
+            guard let aDate = a.items.first?.startTime.toDate(), let bDate = b.items.first?.startTime.toDate() else { return false }
             return aDate > bDate
         }
     }

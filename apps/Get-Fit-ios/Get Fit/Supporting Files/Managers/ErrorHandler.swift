@@ -14,6 +14,6 @@ class ErrorHandler {
 
 extension ErrorHandler {
     func handle(_ error: Error) {
-        print(error)
+        print("Error: \(error.localizedDescription)")
     }
 }

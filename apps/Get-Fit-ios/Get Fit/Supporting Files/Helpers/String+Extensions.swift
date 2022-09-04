@@ -9,6 +9,15 @@ import Foundation
 import UIKit
 
 // MARK: - Captialization
+extension Substring {
+    func capitalizingFirstLetter() -> Substring {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}
 extension String {
     func capitalizingFirstLetter() -> String {
         return prefix(1).capitalized + dropFirst()
@@ -16,6 +25,10 @@ extension String {
 
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
+    }
+    func capitalizeWithAPStyle() -> String {
+        let words = self.split(separator: " ")
+        return words.map { $0.capitalizingFirstLetter() }.joined(separator: " ")
     }
 }
 

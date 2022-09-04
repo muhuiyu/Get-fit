@@ -7,18 +7,21 @@
 
 import UIKit
 
-class AppCoordinator: Coordinator {
+// class AppCoordinator: Coordinator {
+class AppCoordinator {
     private let window: UIWindow
     
     var childCoordinators = [BaseCoordinator]()
-//    private(set) var navigationController: UINavigationController?
     private(set) var mainTabBarController: MainTabBarController?
     private(set) var loadingScreenController: LoadingScreenViewController?
     
-    // TODO: - Add some managers here (userSessionManager, cacheManager)
-//    private var userManager = UserManager.shared
+    let dataProvider: DataProvider = Database()
+    private(set) var userManager: UserManager?
+    private(set) var cacheManager = CacheManager()
+    
     private var homeCoordinator: HomeCoordinator?
     private var workoutCoordinator: WorkoutCoordinator?
+    private var progressCoordinator: ProgressCoordinator?
     private var meCoordinator: MeCoordinator?
 
     init?(window: UIWindow?) {
@@ -27,14 +30,26 @@ class AppCoordinator: Coordinator {
     }
 
     func start() {
+        Task {
+            await configureManagers()
+            await window.makeKeyAndVisible()
+        }
         configureLoadingScreen()
         configureCoordinators()
         setupMainTabBar()
         changeRootViewController(to: self.loadingScreenController)
-        window.makeKeyAndVisible()
     }
 }
-
+// MARK: - Services and managers
+extension AppCoordinator {
+    private func configureManagers() async {
+        await dataProvider.setup()
+        if let user = await dataProvider.fetchCurrentUser() {
+            userManager = UserManager(user: user)
+        }
+        // TODO: - connect collections to data provider
+    }
+}
 // MARK: - UI Setup
 extension AppCoordinator {
     /// Sets loading screen as rootViewController and embeds in a navigationController
@@ -58,6 +73,12 @@ extension AppCoordinator {
         self.workoutCoordinator = WorkoutCoordinator(navigationController: workoutNavigationController,
                                                      parentCoordinator: self)
         
+        let progressNavigationController = UINavigationController(tintColor: UIColor.Brand.primary)
+        progressNavigationController.navigationItem.largeTitleDisplayMode = .always
+        progressNavigationController.navigationBar.prefersLargeTitles = true
+        self.progressCoordinator = ProgressCoordinator(navigationController: progressNavigationController,
+                                                       parentCoordinator: self)
+        
         let meNavigationController = UINavigationController(tintColor: UIColor.Brand.primary)
         meNavigationController.navigationItem.largeTitleDisplayMode = .always
         meNavigationController.navigationBar.prefersLargeTitles = true
@@ -72,6 +93,7 @@ extension AppCoordinator {
         mainTabBarController?.appCoordinator = self
         mainTabBarController?.homeCoordinator = homeCoordinator
         mainTabBarController?.workoutCoordinator = workoutCoordinator
+        mainTabBarController?.progressCoordinator = progressCoordinator
         mainTabBarController?.meCoordinator = meCoordinator
         mainTabBarController?.configureTabBarItems()
     }
@@ -101,4 +123,9 @@ extension AppCoordinator {
     func showLogin(forceReplace: Bool = false, animated: Bool = true) {
         // TODO: -
     }
+}
+
+// MARK: - Users
+extension AppCoordinator {
+    var isUserLoggedIn: Bool { userManager != nil }
 }

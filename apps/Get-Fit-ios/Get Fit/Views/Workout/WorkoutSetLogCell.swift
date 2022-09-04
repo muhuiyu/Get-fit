@@ -65,15 +65,19 @@ class WorkoutSetLogCell: UITableViewCell {
 // MARK: - Interface
 extension WorkoutSetLogCell {
     var weight: Double {
-        guard let value = weightStack.value as? Double else { return 0 }
+        guard
+            let rawValue = weightStack.value,
+            let value = Double(rawValue) else { return 0 }
         return value
     }
     var reps: Int {
-        guard let value = repsStack.value as? Int else { return 0 }
+        guard
+            let rawValue = repsStack.value,
+            let value = Int(rawValue) else { return 0 }
         return value
     }
     var note: String {
-        guard let value = noteStack.value as? String else { return "" }
+        guard let value = noteStack.value else { return "" }
         return value
     }
 }
@@ -184,7 +188,7 @@ extension WorkoutSetLogCellFieldView {
         
         textField.addTarget(self, action: #selector(didChangeValue(_:)), for: .valueChanged)
         textField.font = UIFont.smallBold
-        textField.textColor = .secondaryLabel
+        textField.textColor = .label
         textField.textAlignment = .left
         addSubview(textField)
     }

@@ -13,6 +13,7 @@ class BaseViewController: ViewController {
     weak var appCoordinator: AppCoordinator?
     weak var homeCoordinator: HomeCoordinator?
     weak var workoutCoordinator: WorkoutCoordinator?
+    weak var progressCoordinator: ProgressCoordinator?
     weak var meCoordinator: MeCoordinator?
     
     private lazy var refreshControl = UIRefreshControl()
@@ -20,11 +21,13 @@ class BaseViewController: ViewController {
     init(appCoordinator: AppCoordinator? = nil,
          homeCoordinator: HomeCoordinator? = nil,
          workoutCoordinator: WorkoutCoordinator? = nil,
+         progressCoordinator: ProgressCoordinator? = nil,
          meCoordinator: MeCoordinator? = nil) {
         super.init()
         self.appCoordinator = appCoordinator
         self.homeCoordinator = homeCoordinator
         self.workoutCoordinator = workoutCoordinator
+        self.progressCoordinator = progressCoordinator
         self.meCoordinator = meCoordinator
     }
     

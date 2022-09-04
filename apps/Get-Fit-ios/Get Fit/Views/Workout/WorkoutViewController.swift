@@ -17,6 +17,8 @@ class WorkoutViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.appCoordinator = appCoordinator
+        
         configureViews()
         configureConstraints()
         configureGestures()
@@ -52,7 +54,7 @@ extension WorkoutViewController {
             BaseCoordinator.AlertActionOption(title: AppText.General.cancel, style: .cancel, handler: nil)
         ]
 
-        homeCoordinator?.presentAlert(option: alertControllerOption, actions: alertActions)
+        workoutCoordinator?.presentAlert(option: alertControllerOption, actions: alertActions)
     }
 }
 // MARK: - View Config

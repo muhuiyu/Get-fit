@@ -12,6 +12,37 @@ typealias FoodID = String
 struct Food {
     let id: FoodID
     let name: String
-    let unitNutrition: [FoodUnit: NutritionFacts]
+    let unitNutritions: [UnitNutrition]
     let note: String = ""
+}
+
+extension Food {
+    static func getNutritionFacts(for foodID: FoodID,
+                                  amount: Double,
+                                  unit: FoodUnit) -> NutritionFacts? {
+        guard
+            let food = getFood(for: foodID),
+            let nutrition = food.getUnitNutrition(of: unit) else { return nil }
+        
+        return nutrition.nutritionFacts.multiply(by: amount / nutrition.amount)
+        
+    }
+    static func getFood(for id: FoodID) -> Food? {
+        return all[id]
+    }
+    static func searchFoods(contain keyword: String) -> [FoodID] {
+        return all.values.filter { $0.name.lowercased().contains(keyword.lowercased()) }.map { $0.id }
+    }
+}
+extension Food {
+    private func getUnitNutrition(of unit: FoodUnit) -> UnitNutrition? {
+        for unitNutrition in unitNutritions {
+            if unitNutrition.unit == unit { return unitNutrition }
+        }
+        return nil
+    }
+    func getDefaultFoodLog() -> FoodLog? {
+        guard let defaultNutrition = unitNutritions.first else { return nil }
+        return FoodLog(foodID: self.id, amount: defaultNutrition.amount, unit: defaultNutrition.unit)
+    }
 }

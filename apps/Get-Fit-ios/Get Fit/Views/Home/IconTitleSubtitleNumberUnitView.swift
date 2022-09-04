@@ -1,5 +1,5 @@
 //
-//  TitleSubtitleNumberUnitView.swift
+//  IconTitleSubtitleNumberUnitView.swift
 //  Get Fit
 //
 //  Created by Mu Yu on 8/23/22.
@@ -7,42 +7,37 @@
 
 import UIKit
 
-class TitleSubtitleNumberUnitView: UIView {
+class IconTitleSubtitleNumberUnitView: UIView {
     
+    private let iconView = UIImageView()
+    private let titleStack = UIStackView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let numberLabel = UILabel()
     private let unitLabel = UILabel()
     private let noteLabel = UILabel()
     
-    var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
+    struct Configuration {
+        let icon: UIImage?
+        let title: String
+        let subtitle: String
+        let numberString: String
+        let numberStringColor: UIColor
+        let unitString: String
+        let noteString: String
     }
-    var subtitle: String? {
+    var configuration: Configuration? {
         didSet {
-            subtitleLabel.text = subtitle
-        }
-    }
-    var numberString: String? {
-        didSet {
-            numberLabel.text = numberString
-        }
-    }
-    var numberStringColor: UIColor = .label {
-        didSet {
-            numberLabel.textColor = numberStringColor
-        }
-    }
-    var unitString: String? {
-        didSet {
-            unitLabel.text = unitString
-        }
-    }
-    var noteString: String? {
-        didSet {
-            noteLabel.text = noteString
+            if let configuration = configuration {
+                iconView.image = configuration.icon
+                iconView.tintColor = configuration.numberStringColor
+                titleLabel.text = configuration.title
+                subtitleLabel.text = configuration.subtitle
+                numberLabel.text = configuration.numberString
+                numberLabel.textColor = configuration.numberStringColor
+                unitLabel.text = configuration.unitString
+                noteLabel.text = configuration.noteString
+            }
         }
     }
     var tapHandler: (() -> Void)?
@@ -58,25 +53,31 @@ class TitleSubtitleNumberUnitView: UIView {
     }
 }
 // MARK: - Handlers
-extension TitleSubtitleNumberUnitView {
+extension IconTitleSubtitleNumberUnitView {
     @objc
     private func didTapInView(_ sender: UITapGestureRecognizer) {
         self.tapHandler?()
     }
 }
 // MARK: - View Config
-extension TitleSubtitleNumberUnitView {
+extension IconTitleSubtitleNumberUnitView {
     private func configureViews() {
+        iconView.contentMode = .scaleAspectFit
+        addSubview(iconView)
         titleLabel.text = "title"
         titleLabel.font = UIFont.body
         titleLabel.textColor = .label
         titleLabel.textAlignment = .left
-        addSubview(titleLabel)
+        titleStack.addArrangedSubview(titleLabel)
         subtitleLabel.text = "subtitle"
         subtitleLabel.font = UIFont.small
         subtitleLabel.textColor = .secondaryLabel
         subtitleLabel.textAlignment = .left
-        addSubview(subtitleLabel)
+        titleStack.addArrangedSubview(subtitleLabel)
+        titleStack.axis = .vertical
+        titleStack.spacing = Constants.Spacing.slight
+        titleStack.alignment = .leading
+        addSubview(titleStack)
         numberLabel.text = "number"
         numberLabel.font = UIFont.h2
         numberLabel.textColor = .label
@@ -94,19 +95,20 @@ extension TitleSubtitleNumberUnitView {
         addSubview(noteLabel)
     }
     private func configureConstraints() {
-        titleLabel.snp.remakeConstraints { make in
+        titleStack.snp.remakeConstraints { make in
             make.top.leading.trailing.equalTo(layoutMarginsGuide)
         }
-        subtitleLabel.snp.remakeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.Spacing.slight)
-            make.leading.trailing.equalTo(titleLabel)
+        iconView.snp.remakeConstraints { make in
+            make.size.equalTo(Constants.IconButtonSize.small)
+            make.leading.equalTo(titleLabel)
+            make.centerY.equalTo(numberLabel)
         }
         numberLabel.snp.remakeConstraints { make in
-            make.top.equalTo(subtitleLabel.snp.bottom).offset(Constants.Spacing.small)
-            make.leading.equalTo(titleLabel)
+            make.top.equalTo(titleStack.snp.bottom).offset(Constants.Spacing.small)
+            make.leading.equalTo(iconView.snp.trailing).offset(Constants.Spacing.trivial)
         }
         unitLabel.snp.remakeConstraints { make in
-            make.bottom.equalTo(numberLabel)
+            make.bottom.equalTo(numberLabel).inset(Constants.Spacing.trivial)
             make.leading.equalTo(numberLabel.snp.trailing).offset(Constants.Spacing.trivial)
             make.trailing.lessThanOrEqualTo(titleLabel)
         }

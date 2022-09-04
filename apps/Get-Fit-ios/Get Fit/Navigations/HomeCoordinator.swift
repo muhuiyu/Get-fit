@@ -10,7 +10,8 @@ import UIKit
 class HomeCoordinator: BaseCoordinator {
     enum Destination {
         case viewNotifications
-        case addFoodLog
+        case addFoodLog(Date, Int)
+        case viewFoodLog(FoodLog, Date, Int, Int)
         case addJournal
 //        case viewTransactionList
 //        case viewTransactionDetail(TransactionID)
@@ -30,14 +31,24 @@ extension HomeCoordinator {
         case .viewNotifications:
             // TODO: -
             return BaseViewController()
-        case .addFoodLog:
-            // TODO: -
-            return BaseViewController()
+        case .addFoodLog(let date, let mealIndex):
+            let viewController = AddFoodViewController(appCoordinator: self.parentCoordinator,
+                                                       homeCoordinator: self)
+            viewController.viewModel.date = date
+            viewController.viewModel.mealIndex = mealIndex
+            return viewController
+        case .viewFoodLog(let foodLog, let date, let mealIndex, let foodLogIndex):
+            let viewController = EditFoodLogViewController(appCoordinator: self.parentCoordinator,
+                                                           homeCoordinator: self)
+            viewController.viewModel.foodLog.accept(foodLog)
+            viewController.viewModel.date = date
+            viewController.viewModel.mealIndex = mealIndex
+            viewController.viewModel.foodLogIndex = foodLogIndex
+            return viewController
         case .addJournal:
             // TODO: -
             return BaseViewController()   
         }
-            
 //        case .viewTransactionList:
 //            let viewController = TransactionListViewController(homeCoordinator: self)
 //            return viewController
@@ -82,10 +93,14 @@ extension HomeCoordinator {
         let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: false)
         self.navigate(to: viewController, presentModally: true, options: options)
     }
-    func showAddFoodLog() {
-        guard let viewController = makeViewController(for: .addFoodLog) else { return }
+    func showAddFoodLog(on date: Date, forMeal mealIndex: Int) {
+        guard let viewController = makeViewController(for: .addFoodLog(date, mealIndex)) else { return }
         let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: false)
         self.navigate(to: viewController, presentModally: true, options: options)
+    }
+    func showFoodLog(for foodLog: FoodLog, on date: Date, forMeal mealIndex: Int, ofFood foodLogIndex: Int) {
+        guard let viewController = makeViewController(for: .viewFoodLog(foodLog, date, mealIndex, foodLogIndex)) else { return }
+        self.navigate(to: viewController, presentModally: false)
     }
     func showAddJournal() {
         guard let viewController = makeViewController(for: .addJournal) else { return }

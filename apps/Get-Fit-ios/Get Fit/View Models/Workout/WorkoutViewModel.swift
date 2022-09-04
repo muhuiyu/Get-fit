@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class WorkoutViewModel {
+class WorkoutViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     lazy var dataSource = WorkoutSessionDataSource.dataSource()
     
@@ -17,7 +17,8 @@ class WorkoutViewModel {
     private var sessions: BehaviorRelay<WorkoutSessionList> = BehaviorRelay(value: [])
     var displaySessions: BehaviorRelay<[WorkoutSessionSection]> = BehaviorRelay(value: [])
     
-    init() {
+    override init() {
+        super.init()
         configureSignals()
     }
 }
@@ -26,15 +27,19 @@ extension WorkoutViewModel {
 }
 extension WorkoutViewModel {
     func reloadSessions() {
-        // TODO: -
-        self.sessions.accept(WorkoutSession.testEntries)
+        guard let userID = appCoordinator?.userManager?.id else { return }
+        Task {
+            if let sessionsData = await appCoordinator?.dataProvider.fetchAllWorkoutSessions(for: userID) {
+                self.sessions.accept(sessionsData)
+            }
+        }
     }
     private func configureSignals() {
         self.sessions
             .asObservable()
             .subscribe { _ in
                 let sections: [WorkoutSessionSection] = self.sessions.value.groupedByMonth()
-                    .map { WorkoutSessionSection(header: $0, items: $1) }
+                    .map { WorkoutSessionSection(header: $0, items: $1.sortedByTime(isAscending: false)) }
                     .sortedByDate()
                 self.displaySessions.accept(sections)
             }

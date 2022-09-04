@@ -29,6 +29,7 @@ class IconButton: UIView {
         self.icon = icon
         configureViews()
         configureConstraints()
+        configureGestures()
     }
     
     required init?(coder: NSCoder) {
@@ -53,7 +54,6 @@ extension IconButton {
         containerView.backgroundColor = .clear
         addSubview(containerView)
     }
-    
     private func configureConstraints() {
         iconImageView.snp.remakeConstraints { make in
             make.center.equalToSuperview()
@@ -62,5 +62,9 @@ extension IconButton {
             make.edges.equalToSuperview()
             make.height.equalTo(Constants.IconButtonSize.medium)
         }
+    }
+    private func configureGestures() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapButton))
+        addGestureRecognizer(tapRecognizer)
     }
 }

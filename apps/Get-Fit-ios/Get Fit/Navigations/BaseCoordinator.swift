@@ -8,7 +8,9 @@
 import UIKit
 
 class BaseCoordinator: Coordinator {
-    private weak var parentCoordinator: AppCoordinator?
+    // private or not?
+    weak var parentCoordinator: AppCoordinator?
+    
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
