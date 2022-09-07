@@ -22,3 +22,7 @@ extension FoodLog {
     var protein: Double { nutrition?.protein ?? 0 }
     var fat: Double { nutrition?.fat ?? 0 }
 }
+
+extension FoodLog: Codable {
+    
+}

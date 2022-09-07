@@ -5,11 +5,9 @@
 //  Created by Mu Yu on 8/21/22.
 //
 
-typealias MealLogID = String
-
 struct MealLog {
-    let id: MealLogID
-    let date: DateTriple
+    let hour: Int
+    let minute: Int
     let foodLogs: [FoodLog]
     let note: String = ""
 }
@@ -30,4 +28,7 @@ extension MealLog {
             .fat: Double(caloriesFromFat) / Double(totalCalories)
         ]
     }
+}
+extension MealLog: Codable {
+    
 }

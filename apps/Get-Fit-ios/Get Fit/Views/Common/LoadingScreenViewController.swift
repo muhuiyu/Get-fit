@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import Lottie
 
 class LoadingScreenViewController: BaseViewController {
     
     private let titleLabel = UILabel()
-    
-    var viewModel = LoadingScreenViewModel()
+    private let animationView = AnimationView(name: "loading")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,20 +20,26 @@ class LoadingScreenViewController: BaseViewController {
         configureGestures()
         configureSignals()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        checkUserLoginFlow()
-    }
 }
 // MARK: - View Config
 extension LoadingScreenViewController {
     private func configureViews() {
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        animationView.animationSpeed = 0.5
+        view.addSubview(animationView)
+        animationView.play()
+        
         titleLabel.font = UIFont.h2
         titleLabel.text = AppText.Loading.title
         view.addSubview(titleLabel)
     }
     private func configureConstraints() {
-        titleLabel.snp.remakeConstraints { make in
+//        titleLabel.snp.remakeConstraints { make in
+//            make.center.equalToSuperview()
+//        }
+        animationView.snp.remakeConstraints { make in
+            make.size.equalTo(200)
             make.center.equalToSuperview()
         }
     }
@@ -47,16 +53,5 @@ extension LoadingScreenViewController {
 
 // MARK: -
 extension LoadingScreenViewController {
-    
-    /// Decide user flow
-    private func checkUserLoginFlow() {
-        DispatchQueue.main.async {
-            if self.viewModel.hasUserSignedIn {
-                self.appCoordinator?.showHome()
-            } else {
-                self.appCoordinator?.showLogin()
-            }
-        }
-    }
 
 }

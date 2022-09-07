@@ -59,9 +59,12 @@ extension WorkoutSessionViewModel {
 extension WorkoutSessionViewModel {
     func addExercise(for itemID: WorkoutItemID) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs.append(WorkoutItemLog(itemID: itemID, sets: [
-            WorkoutSetLog(weight: 0, reps: 0)
-        ]))
+        updatedSession.itemLogs.append(
+            WorkoutItemLog(
+                itemID: itemID,
+                sets: [ WorkoutSetLog(weight: 0, reps: 0) ],
+                restTime: TimeInterval(60))
+        )
         session.accept(updatedSession)
         updateSessionToDatabase()
     }

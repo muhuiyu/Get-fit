@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct DateTriple: Comparable, Hashable, Decodable {
+struct DateTriple: Comparable, Hashable, Codable {
     var year: Int
     var month: Int
     var day: Int

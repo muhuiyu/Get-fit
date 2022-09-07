@@ -6,18 +6,21 @@
 //
 
 import UIKit
+import RxSwift
 
 // class AppCoordinator: Coordinator {
 class AppCoordinator {
+    private let disposeBag = DisposeBag()
     private let window: UIWindow
     
     var childCoordinators = [BaseCoordinator]()
     private(set) var mainTabBarController: MainTabBarController?
-    private(set) var loadingScreenController: LoadingScreenViewController?
     
     let dataProvider: DataProvider = Database()
-    private(set) var userManager: UserManager?
+    private(set) var userManager = UserManager()
     private(set) var cacheManager = CacheManager()
+    
+    private let authViewModel = AuthenticationViewModel()
     
     private var homeCoordinator: HomeCoordinator?
     private var workoutCoordinator: WorkoutCoordinator?
@@ -30,34 +33,45 @@ class AppCoordinator {
     }
 
     func start() {
+        showLoadingScreen()
+        configureAuthViewModel()
+        DispatchQueue.main.async {
+            self.configureCoordinators()
+            self.setupMainTabBar()
+        }
         Task {
             await configureManagers()
             await window.makeKeyAndVisible()
         }
-        configureLoadingScreen()
-        configureCoordinators()
-        setupMainTabBar()
-        changeRootViewController(to: self.loadingScreenController)
     }
 }
 // MARK: - Services and managers
 extension AppCoordinator {
     private func configureManagers() async {
         await dataProvider.setup()
-        if let user = await dataProvider.fetchCurrentUser() {
-            userManager = UserManager(user: user)
+        if userManager.isUserLoggedIn, let userID = userManager.id {
+            if let preference = await dataProvider.fetchUserPreference(for: userID) {
+                userManager.setPreference(preference)
+            }
         }
-        // TODO: - connect collections to data provider
+    }
+    private func configureAuthViewModel() {
+        authViewModel.appCoordinator = self
+        authViewModel.state
+            .asObservable()
+            .subscribe(onNext: { state in
+                if state == .signedIn && self.userManager.isUserLoggedIn {
+                    self.showHome()
+                } else {
+                    self.showLogin()
+                }
+            })
+            .disposed(by: disposeBag)
+        authViewModel.signIn()
     }
 }
 // MARK: - UI Setup
 extension AppCoordinator {
-    /// Sets loading screen as rootViewController and embeds in a navigationController
-    private func configureLoadingScreen() {
-        let viewController = LoadingScreenViewController()
-        viewController.appCoordinator = self
-        self.loadingScreenController = viewController
-    }
     /// Initializes coordinators
     /// Tab coordinators have their own different navigationControllers
     private func configureCoordinators() {
@@ -118,10 +132,16 @@ extension AppCoordinator {
         changeRootViewController(to: self.mainTabBarController)
     }
     func showLoadingScreen(forceReplace: Bool = false, animated: Bool = true) {
-        changeRootViewController(to: self.loadingScreenController)
+        let viewController = LoadingScreenViewController()
+        viewController.appCoordinator = self
+        changeRootViewController(to: viewController)
     }
     func showLogin(forceReplace: Bool = false, animated: Bool = true) {
-        // TODO: -
+        let viewController = WelcomeViewController(appCoordinator: self)
+        changeRootViewController(to: viewController)
+    }
+    func requestLogin() {
+        authViewModel.signIn()
     }
 }
 

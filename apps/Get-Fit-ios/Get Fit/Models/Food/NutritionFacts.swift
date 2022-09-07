@@ -150,3 +150,6 @@ extension NutritionFacts {
         return newValue
     }
 }
+extension NutritionFacts: Codable {
+    
+}

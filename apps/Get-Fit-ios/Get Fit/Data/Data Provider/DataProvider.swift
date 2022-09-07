@@ -12,7 +12,8 @@ protocol DataProvider {
     func setup() async
     
     // User
-    func fetchCurrentUser() async -> User?
+    func fetchUserPreference(for userID: UserID) async -> UserPreference?
+//    func fetchCurrentUser() async -> User?
     
     // Food, Database
     func fetchCustomizedMeals(for userID: UserID) async -> [CustomizedMeal]

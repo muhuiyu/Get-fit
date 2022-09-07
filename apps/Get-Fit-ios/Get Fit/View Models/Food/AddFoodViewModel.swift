@@ -26,7 +26,7 @@ class AddFoodViewModel: BaseViewModel {
 extension AddFoodViewModel {
     private func fetchLoggedFood() async {
         guard
-            let userID = appCoordinator?.userManager?.id,
+            let userID = appCoordinator?.userManager.id,
             let loggedFoods = await appCoordinator?.dataProvider.fetchLoggedFood(for: userID) else { return }
         
         self.displayFoods.accept(Array(loggedFoods.values))

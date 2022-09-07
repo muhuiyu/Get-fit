@@ -52,7 +52,10 @@ extension Food {
                                           unitNutritions: [
                                             UnitNutrition(amount: 1,
                                                           unit: .tablespoon,
-                                                          nutritionFacts: NutritionFacts(calories: 115, carbs: 0, protein: 0, fat: 12.8))
+                                                          nutritionFacts: NutritionFacts(calories: 115, carbs: 0, protein: 0, fat: 12.8)),
+                                            UnitNutrition(amount: 10,
+                                                          unit: .gram,
+                                                          nutritionFacts: NutritionFacts(calories: 90, carbs: 0, protein: 0, fat: 10))
                                           ])
     static let chickenWing: Food = Food(id: "chicken-wing",
                                           name: "Chicken wing",

@@ -28,8 +28,15 @@ extension WorkoutRoutineViewController {
         self.workoutCoordinator?.showExerciseList(routineViewModel: viewModel, sessionViewModel: nil)
     }
     private func didStartRoutine() {
-        guard let routine = viewModel.routine.value else { return }
-        let session = WorkoutSession(from: routine)
+        guard
+            let routine = viewModel.routine.value,
+            let userID = appCoordinator?.userManager.id,
+            let preferredWorkoutLength = appCoordinator?.userManager.preferredWorkoutLength else {
+            return
+        }
+        let session = WorkoutSession(createdFrom: routine,
+                                     userID: userID,
+                                     preferredWorkoutLength: preferredWorkoutLength)
         self.workoutCoordinator?.showSessionLog(for: session)
     }
 }

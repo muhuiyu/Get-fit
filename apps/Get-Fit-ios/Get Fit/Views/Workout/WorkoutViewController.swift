@@ -45,7 +45,13 @@ extension WorkoutViewController {
                                                                           preferredStyle: .actionSheet)
         let alertActions = [
             BaseCoordinator.AlertActionOption(title: AppText.Workout.newSession, style: .default) { _ in
-                let session = WorkoutSession()
+                guard
+                    let userID = self.appCoordinator?.userManager.id,
+                    let preferredWorkoutLength = self.appCoordinator?.userManager.preferredWorkoutLength else {
+                    return
+                }
+                let session = WorkoutSession(userID: userID,
+                                             preferredWorkoutLength: preferredWorkoutLength)
                 self.workoutCoordinator?.showSessionLog(for: session)
             },
             BaseCoordinator.AlertActionOption(title: AppText.Workout.workoutRoutine, style: .default) { _ in

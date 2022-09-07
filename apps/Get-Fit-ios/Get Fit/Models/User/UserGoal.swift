@@ -5,7 +5,10 @@
 //  Created by Mu Yu on 8/29/22.
 //
 
-struct UserGoal {
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
+struct UserGoal: Codable {
     var dailyDietaryCalories: Int
     var macroRatio: [MacroItem: Double]
     var exerciseMinute: Int
@@ -44,5 +47,26 @@ extension UserGoal {
     var fatGramGoal: Double {
         guard let ratio = macroRatio[.fat] else { return 0 }
         return Double(dailyDietaryCalories) * ratio / 9
+    }
+}
+extension UserGoal {
+    private enum CodingKeys: String, CodingKey {
+        case dailyDietaryCalories
+        case macroRatio
+        case exerciseMinute
+        case activeCalories
+        case stepCountGoal
+        case sleepHoursGoal
+        case waterIntakeGoal
+    }
+    init(snapshot: DocumentSnapshot) throws {
+        let data = try snapshot.data(as: UserGoal.self)
+        self.dailyDietaryCalories = data.dailyDietaryCalories
+        self.macroRatio = data.macroRatio
+        self.exerciseMinute = data.exerciseMinute
+        self.activeCalories = data.activeCalories
+        self.stepCountGoal = data.stepCountGoal
+        self.sleepHoursGoal = data.sleepHoursGoal
+        self.waterIntakeGoal = data.waterIntakeGoal
     }
 }

@@ -7,24 +7,31 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestoreSwift
 
 typealias WorkoutSessionID = String
 
 struct WorkoutSession: WorkoutSessionInterface, Codable {
     var id: WorkoutSessionID
+    var userID: UserID
     var startTime: DateAndTime
     var endTime: DateAndTime
     var title: String
     var itemLogs: [WorkoutItemLog]
     var note: String
+    
+    // Firebase
+    static var collectionName: String { "workoutSessions" }
 
     init(id: WorkoutSessionID,
+         userID: UserID,
          startTime: DateAndTime,
          endTime: DateAndTime,
          title: String,
          itemLogs:[WorkoutItemLog],
          note: String = "") {
         self.id = id
+        self.userID = userID
         self.title = title
         self.startTime = startTime
         self.endTime = endTime
@@ -34,25 +41,52 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
 }
 // MARK: - Init
 extension WorkoutSession {
-    init(preferredWorkoutLengthInMinutes: Int = 60) {
+    init(userID: UserID,
+         preferredWorkoutLength: TimeInterval) {
+        
         // TODO: - set id
         self.id = "id"
+        self.userID = userID
         self.title = "New workout session"
         self.startTime = DateAndTime()
-        self.endTime = self.startTime.afterMinutes(preferredWorkoutLengthInMinutes)
+        self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
         self.itemLogs = []
         self.note = ""
     }
-    init(from routine: WorkoutRoutine, preferredWorkoutLengthInMinutes: Int = 60) {
+    init(createdFrom routine: WorkoutRoutine,
+         userID: UserID,
+         preferredWorkoutLength: TimeInterval) {
+
         // TODO: - Set id
         self.id = "id"
+        self.userID = userID
         self.title = routine.title
         self.startTime = DateAndTime()
-        self.endTime = self.startTime.afterMinutes(preferredWorkoutLengthInMinutes)
+        self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
         self.itemLogs = routine.itemLogs
         self.note = routine.note
     }
 }
+//extension WorkoutSession {
+//    private struct WorkoutSessionData {
+//        var userID: UserID
+//        var startTime: DateAndTime
+//        var endTime: DateAndTime
+//        var title: String
+//        var itemLogs: [WorkoutItemLog]
+//        var note: String
+//
+//        private enum CodingKeys: String, CodingKey {
+//            case userID
+//            case startTime
+//            case endTime
+//            case title
+//            case itemLogs
+//            case note
+//        }
+//
+//    }
+//}
 
 extension WorkoutSession {
     var durationInHourMinuteString: String {

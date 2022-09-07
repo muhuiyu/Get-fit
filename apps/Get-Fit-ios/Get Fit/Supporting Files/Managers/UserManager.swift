@@ -9,43 +9,48 @@ import UIKit
 import HealthKit
 
 class UserManager {
-    private var user: User
-
+    private var user: User?
     private var healthStore = HKHealthStore()
     private var hasRequestedHealthData = false
     private var healthData = [DateTriple: UserHealthData]()
     private var workoutData = [DateTriple: [HKWorkout]]()
     
-    init(user: User) {
-        self.user = user
+    init() {
         setupHealthRequest()
     }
 }
+// MARK: - User
+extension UserManager {
+    var isUserLoggedIn: Bool { return user != nil }
+}
 // MARK: - Get data
 extension UserManager {
-    var id: UserID? { user.id }
-    var name: String? { user.name }
-    var email: String? { user.email }
-    var profileImageURLString: String? { user.profileImageURLString }
+    var id: UserID? { user?.id }
+    var name: String? { user?.displayName }
+    var email: String? { user?.email }
+    var photoURL: URL? { user?.photoURL }
     var loggedFoods: [FoodID: AmountAndUnit] {
-        return user.loggedFoods
+        return user?.loggedFoods ?? [:]
+    }
+    var preferredWorkoutLength: TimeInterval {
+        return user?.preferredWorkoutLength ?? 60
     }
     
     // Goal
     func getMacroGramGoal(for item: MacroItem) -> Double {
         switch item {
         case .carbs:
-            return user.goal.carbsGramGoal
+            return user?.goal.carbsGramGoal ?? 0
         case .protein:
-            return user.goal.proteinGramGoal
+            return user?.goal.proteinGramGoal ?? 0
         case .fat:
-            return user.goal.fatGramGoal
+            return user?.goal.fatGramGoal ?? 0
         }
     }
-    var dailyDietaryCaloriesGoal: Int {  user.goal.dailyDietaryCalories }
-    var stepCountGoal: Int { user.goal.stepCountGoal }
-    var sleepHoursGoal: Double { user.goal.sleepHoursGoal }
-    var waterIntakeGoal: Double { user.goal.waterIntakeGoal }
+    var dailyDietaryCaloriesGoal: Int {  user?.goal.dailyDietaryCalories ?? 0 }
+    var stepCountGoal: Int { user?.goal.stepCountGoal ?? 0 }
+    var sleepHoursGoal: Double { user?.goal.sleepHoursGoal ?? 0 }
+    var waterIntakeGoal: Double { user?.goal.waterIntakeGoal ?? 0 }
     
     // Health
     func stepCount(on date: Date) -> Int { healthData[date.toDateTriple]?.stepCount ?? 0 }
@@ -63,17 +68,49 @@ extension UserManager {
 }
 // MARK: - Set data
 extension UserManager {
-    func setName(to value: String) {
-        user.name = value
+    func setData(to attribute: User.Attribute, to value: Any) {
+        if self.user == nil {
+            self.user = User()
+        }
+        switch attribute {
+        case .id:
+            if let value = value as? UserID {
+                user?.id = value
+            }
+        case .displayName:
+            if let value = value as? String {
+                user?.displayName = value
+            }
+        case .email:
+            if let value = value as? String {
+                user?.email = value
+            }
+        case .photoURL:
+            if let value = value as? URL {
+                user?.photoURL = value
+            }
+        case .goal:
+            if let value = value as? UserGoal {
+                user?.goal = value
+            }
+        case .preferredWorkoutLength:
+            if let value = value as? TimeInterval {
+                user?.preferredWorkoutLength = value
+            }
+        }
     }
-    func setEmail(to value: String) {
-        user.email = value
+    func setPreference(_ preference: UserPreference) {
+        if self.user == nil {
+            self.user = User()
+        }
+        user?.goal = preference.goal
+        user?.preferredWorkoutLength = preference.preferredWorkoutLength
     }
-    func setProfileImageURLString(to value: String) {
-        user.profileImageURLString = value
+    func setData(_ user: User) {
+        self.user = user
     }
     func clearData() {
-        // TODO: -
+        self.user?.clearData()
     }
 }
 // MARK: - Set HealthKit Request
@@ -137,7 +174,7 @@ extension UserManager {
             case .biologicalSex:
                 do {
                     if let sex = try? healthStore.biologicalSex().biologicalSex {
-                        user.biologicalSex = sex
+                        user?.biologicalSex = sex
                         switch sex {
                         case .female: print("female")
                         case .male: print("male")

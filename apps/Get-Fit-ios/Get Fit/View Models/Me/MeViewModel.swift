@@ -18,7 +18,7 @@ extension MeViewModel {
     var displayTitle: String { AppText.MainTab.me }
     var displayRefreshControlString: String { AppText.General.pullToRefresh }
     var userEmail: String? {
-        return appCoordinator?.userManager?.email
+        return appCoordinator?.userManager.email
     }
 }
 

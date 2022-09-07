@@ -38,7 +38,7 @@ extension HomeViewModel {
 // MARK: - Interface
 extension HomeViewModel {
     func reloadDailyLog(shouldPull: Bool) {
-        guard let userID = appCoordinator?.userManager?.id else { return }
+        guard let userID = appCoordinator?.userManager.id else { return }
         Task {
             if let mealLogs = await appCoordinator?.dataProvider.fetchMealLogs(for: userID, on: currentDate.value) {
                 self.mealLogs.accept(mealLogs)
@@ -47,8 +47,8 @@ extension HomeViewModel {
     }
     func getCaloriesUnitConfiguration() -> IconTitleSubtitleNumberUnitView.Configuration {
         let date = currentDate.value
-        let activeCalories: Int = appCoordinator?.userManager?.activeEnergyBurned(on: date) ?? 0
-        let totalCaloriesBurned: Int = appCoordinator?.userManager?.totalEnergyBurned(on: date) ?? 0
+        let activeCalories: Int = appCoordinator?.userManager.activeEnergyBurned(on: date) ?? 0
+        let totalCaloriesBurned: Int = appCoordinator?.userManager.totalEnergyBurned(on: date) ?? 0
         let configuration = IconTitleSubtitleNumberUnitView.Configuration(icon: UIImage(systemName: Icons.flameFill),
                                                                           title: AppText.Home.activeCaloriesTitle,
                                                                           subtitle: AppText.Home.activeCaloriesSubtitle,
@@ -60,8 +60,8 @@ extension HomeViewModel {
     }
     func getStepCountUnitConfiguration() -> IconTitleSubtitleNumberUnitView.Configuration {
         let date = currentDate.value
-        let stepCount = appCoordinator?.userManager?.stepCount(on: date) ?? 0
-        let stepCountGoal = appCoordinator?.userManager?.stepCountGoal ?? 0
+        let stepCount = appCoordinator?.userManager.stepCount(on: date) ?? 0
+        let stepCountGoal = appCoordinator?.userManager.stepCountGoal ?? 0
         let configuration = IconTitleSubtitleNumberUnitView.Configuration(icon: UIImage(systemName: Icons.figureWalk),
                                                                           title: AppText.Home.dailyStepsTitle,
                                                                           subtitle: AppText.Home.dailyStepsSubtitle,
@@ -73,8 +73,8 @@ extension HomeViewModel {
     }
     func getSleepHoursUnitConfiguration() -> IconTitleSubtitleNumberUnitView.Configuration {
         let date = currentDate.value
-        let sleepHours = appCoordinator?.userManager?.sleepHours(on: date) ?? 0
-        let sleepHoursGoal = appCoordinator?.userManager?.sleepHoursGoal ?? 0
+        let sleepHours = appCoordinator?.userManager.sleepHours(on: date) ?? 0
+        let sleepHoursGoal = appCoordinator?.userManager.sleepHoursGoal ?? 0
         let configuration = IconTitleSubtitleNumberUnitView.Configuration(icon: UIImage(systemName: Icons.bedDoubleFill),
                                                                           title: AppText.Home.sleepHoursTitle,
                                                                           subtitle: AppText.Home.sleepHoursSubtitle,
@@ -86,8 +86,8 @@ extension HomeViewModel {
     }
     func getWaterIntakeConfiguration() -> IconTitleSubtitleNumberUnitView.Configuration {
         let date = currentDate.value
-        let dietaryWater = appCoordinator?.userManager?.dietaryWater(on: date) ?? 0
-        let waterIntakeGoal = appCoordinator?.userManager?.waterIntakeGoal ?? 0
+        let dietaryWater = appCoordinator?.userManager.dietaryWater(on: date) ?? 0
+        let waterIntakeGoal = appCoordinator?.userManager.waterIntakeGoal ?? 0
         let configuration = IconTitleSubtitleNumberUnitView.Configuration(icon: UIImage(systemName: Icons.dropFill),
                                                                           title: AppText.Home.waterIntakeTitle,
                                                                           subtitle: AppText.Home.waterIntakeSubtitle,
@@ -98,7 +98,7 @@ extension HomeViewModel {
         return configuration
     }
     func getWorkouts() -> [HealthKitWorkout] {
-        if let workouts = appCoordinator?.userManager?.workout(on: currentDate.value) {
+        if let workouts = appCoordinator?.userManager.workout(on: currentDate.value) {
             return workouts.compactMap { workout in
                 guard let activityType = HealthKitWorkout.getActivityName(from: workout.workoutActivityType),
                       let calories = workout.totalEnergyBurned?.doubleValue(for: .smallCalorie()) else { return nil }
@@ -140,10 +140,10 @@ extension HomeViewModel {
         }
     }
     func getMacroGramGoal(for item: MacroItem) -> Double {
-        return appCoordinator?.userManager?.getMacroGramGoal(for: item) ?? 0
+        return appCoordinator?.userManager.getMacroGramGoal(for: item) ?? 0
     }
     var getDailyDietaryCaloriesGoal: Int {
-        return appCoordinator?.userManager?.dailyDietaryCaloriesGoal ?? 0
+        return appCoordinator?.userManager.dailyDietaryCaloriesGoal ?? 0
     }
     func getSummaryMacroString(for item: MacroItem) -> String {
         return "\(String(Int(getDailyTotalGram(for: item)))) / \(String(Int(getMacroGramGoal(for: item)))) g"

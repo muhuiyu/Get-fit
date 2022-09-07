@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FoodUnit: String, Hashable {
+enum FoodUnit: String, Hashable, Codable {
     case tablespoon
     case mililiter
     case ounce

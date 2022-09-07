@@ -5,7 +5,7 @@
 //  Created by Mu Yu on 8/29/22.
 //
 
-enum MacroItem {
+enum MacroItem: String, Codable {
     case carbs
     case protein
     case fat

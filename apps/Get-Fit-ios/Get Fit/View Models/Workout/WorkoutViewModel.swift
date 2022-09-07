@@ -27,7 +27,7 @@ extension WorkoutViewModel {
 }
 extension WorkoutViewModel {
     func reloadSessions() {
-        guard let userID = appCoordinator?.userManager?.id else { return }
+        guard let userID = appCoordinator?.userManager.id else { return }
         Task {
             if let sessionsData = await appCoordinator?.dataProvider.fetchAllWorkoutSessions(for: userID) {
                 self.sessions.accept(sessionsData)

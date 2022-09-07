@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseFirestore
 
 class Database: DataProvider {
     
@@ -16,11 +16,27 @@ class Database: DataProvider {
 //    internal var currencyDictionary = [CurrencyCode: Currency]()
 //
 //    internal var merchantList = [MerchantID: Merchant]()
-//    internal let transactionRef: CollectionReference = Firestore.firestore().collection(Collections.transactions)
-//    internal let recurringTransactionRef: CollectionReference = Firestore.firestore().collection(Collections.recurringTransactions)
-//    internal let budgetRef: CollectionReference = Firestore.firestore().collection(Collections.budgets)
-//    internal let merchantRef: CollectionReference = Firestore.firestore().collection(Collections.merchants)
-//    internal let notificationRef: CollectionReference = Firestore.firestore().collection(Collections.notifications)
+    
+    internal let mealLogRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.mealLogs)
+    internal let workoutSessionRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.workoutSessions)
+    internal let workoutRoutineRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.workoutRoutines)
+    internal let progressRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.progress)
+    internal let userPreferenceRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.userPreference)
+    
+    struct FirebaseCollection {
+        static let mealLogs = "mealLogs"
+        static let workoutSessions = "workoutSessions"
+        static let workoutRoutines = "workoutRoutines"
+        static let progress = "progress"
+        static let userPreference = "userPreference"
+    }
+    
+    struct Attribute {
+        static let userID = "userID"
+        static let year = "year"
+        static let month = "month"
+        static let day = "day"
+    }
     
     enum FirebaseError: Error {
         case snapshotMissing
@@ -43,6 +59,26 @@ extension Database {
     func setup() async {
         // connect to remote database
         // establishing connection
+        
+        print("set up database")
+        writeData()
+    }
+}
+// MARK: - write data
+extension Database {
+    func writeData() {
+        // mealLog
+//        do {
+//            let _ = try mealLogRef.addDocument(from: DailyMealLog.testEntries[2]) { error in
+//                if let error = error {
+//                    print(error)
+//                } else {
+//                    print("done")
+//                }
+//            }
+//        } catch {
+//
+//        }
     }
 }
 // MARK: - Users
@@ -50,6 +86,15 @@ extension Database {
     internal func fetchCurrentUser() async -> User? {
         // TODO: - connect to database
         return User.testUser
+    }
+    internal func fetchUserPreference(for userID: UserID) async -> UserPreference? {
+        do {
+            let snapshot = try await userPreferenceRef.whereField(Attribute.userID, isEqualTo: userID).getDocuments()
+            let userPreference = try? UserPreference(snapshot: snapshot.documentChanges[0].document)
+            return userPreference
+        } catch {
+            return nil
+        }
     }
 }
 // MARK: - Food set
@@ -67,7 +112,8 @@ extension Database {
         return CustomizedMeal.testEntries
     }
     func fetchMealLogs(for userID: UserID, on date: Date) async -> [MealLog] {
-        return MealLog.testEntries.filter { $0.date == date.toDateTriple }.sorted(by: { $0.id < $1.id } )
+        return []
+//        return MealLog.testEntries.filter { $0.date == date.toDateTriple }.sorted(by: { $0.id < $1.id } )
     }
     func fetchLoggedFood(for userID: UserID) async -> [FoodID: FoodLog] {
         let loggedFoods = [

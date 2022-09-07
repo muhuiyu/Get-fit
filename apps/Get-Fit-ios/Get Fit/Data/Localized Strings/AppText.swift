@@ -8,7 +8,7 @@
 import Foundation
 
 struct AppText {
-    
+    static var appName: String { "Get Fit" }
 }
 
 extension AppText {
@@ -23,10 +23,13 @@ extension AppText {
         static var noData: String { "No data" }
     }
 }
-// MARK: - Loading
+// MARK: - Loading and Auth
 extension AppText {
     struct Loading {
         static var title: String { "Loading" }
+    }
+    struct Auth {
+        static var continueWithGoogle: String { "Continue with Google" }
     }
 }
 // MARK: - Main Tab
