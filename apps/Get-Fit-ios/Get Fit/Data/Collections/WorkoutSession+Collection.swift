@@ -440,6 +440,189 @@ extension WorkoutSession {
                             note: "3 x 15"
                         ),
                        ]),
+        WorkoutSession(id: "20220908-1",
+                       userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+                       startTime: DateAndTime(year: 2022, month: 9, day: 8, hour: 7, minute: 17, second: 0),
+                       endTime: DateAndTime(year: 2022, month: 9, day: 8, hour: 8, minute: 01, second: 0),
+                       title: "Full body #2",
+                       itemLogs: [
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.romanianDeadlift.id,
+                            sets: [
+                                WorkoutSetLog(weight: 30, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 40, reps: 15),
+                                WorkoutSetLog(weight: 40, reps: 15),
+                            ],
+                            restTime: TimeInterval(120),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.dumbbellBenchPress.id,
+                            sets: [
+                                WorkoutSetLog(weight: 12, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 16, reps: 15),
+                                WorkoutSetLog(weight: 16, reps: 15),
+                            ],
+                            restTime: TimeInterval(90),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.latPullDown.id,
+                            sets: [
+                                WorkoutSetLog(weight: 20, reps: 20),
+                                WorkoutSetLog(weight: 30, reps: 15),
+                                WorkoutSetLog(weight: 30, reps: 15),
+                            ],
+                            restTime: TimeInterval(90),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.hipAbduction.id,
+                            sets: [
+                                WorkoutSetLog(weight: 48, reps: 15),
+                                WorkoutSetLog(weight: 48, reps: 15),
+                                WorkoutSetLog(weight: 48, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.dumbbellSideRaises.id,
+                            sets: [
+                                WorkoutSetLog(weight: 8, reps: 15),
+                                WorkoutSetLog(weight: 8, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.tricepPushdown.id,
+                            sets: [
+                                WorkoutSetLog(weight: 12.5, reps: 15),
+                                WorkoutSetLog(weight: 12.5, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                       ]),
+        WorkoutSession(id: "20220911-1",
+                       userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+                       startTime: DateAndTime(year: 2022, month: 9, day: 8, hour: 7, minute: 02, second: 0),
+                       endTime: DateAndTime(year: 2022, month: 9, day: 8, hour: 7, minute: 47, second: 0),
+                       title: "Full body #1",
+                       itemLogs: [
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.legPress.id,
+                            sets: [
+                                WorkoutSetLog(weight: 20, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 40, reps: 15),
+                                WorkoutSetLog(weight: 40, reps: 15),
+                            ],
+                            restTime: TimeInterval(120),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.latPullDown.id,
+                            sets: [
+                                WorkoutSetLog(weight: 20, reps: 20),
+                                WorkoutSetLog(weight: 27.5, reps: 15),
+                                WorkoutSetLog(weight: 27.5, reps: 15),
+                            ],
+                            restTime: TimeInterval(90),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.machineChestPress.id,
+                            sets: [
+                                WorkoutSetLog(weight: 12, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 20, reps: 15),
+                                WorkoutSetLog(weight: 20, reps: 15),
+                            ],
+                            restTime: TimeInterval(90),
+                            note: "3 x 15, seat@3, push@2"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.hipAbduction.id,
+                            sets: [
+                                WorkoutSetLog(weight: 48, reps: 15),
+                                WorkoutSetLog(weight: 48, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.hipExtension.id,
+                            sets: [
+                                WorkoutSetLog(weight: 10, reps: 15),
+                                WorkoutSetLog(weight: 10, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.dumbbellSideRaises.id,
+                            sets: [
+                                WorkoutSetLog(weight: 8, reps: 15),
+                                WorkoutSetLog(weight: 8, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.tricepPushdown.id,
+                            sets: [
+                                WorkoutSetLog(weight: 12.5, reps: 15),
+                                WorkoutSetLog(weight: 12.5, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                       ]),
+        WorkoutSession(id: "20220913-1",
+                       userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+                       startTime: DateAndTime(year: 2022, month: 9, day: 8, hour: 11, minute: 15, second: 0),
+                       endTime: DateAndTime(year: 2022, month: 9, day: 8, hour: 11, minute: 37, second: 0),
+                       title: "Full body #2",
+                       itemLogs: [
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.romanianDeadlift.id,
+                            sets: [
+                                WorkoutSetLog(weight: 20, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 35, reps: 15),
+                                WorkoutSetLog(weight: 35, reps: 15),
+                            ],
+                            restTime: TimeInterval(120),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.seatedCableRow.id,
+                            sets: [
+                                WorkoutSetLog(weight: 19, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 29, reps: 15),
+                                WorkoutSetLog(weight: 29, reps: 15),
+                            ],
+                            restTime: TimeInterval(90),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.pushUp.id,
+                            sets: [
+                                WorkoutSetLog(weight: 0, reps: 15),
+                                WorkoutSetLog(weight: 0, reps: 15),
+                            ],
+                            restTime: TimeInterval(90),
+                            note: "3 x 15"
+                        ),
+                        WorkoutItemLog(
+                            itemID: WorkoutItem.dumbbellSideRaises.id,
+                            sets: [
+                                WorkoutSetLog(weight: 8, reps: 15),
+                                WorkoutSetLog(weight: 8, reps: 15),
+                            ],
+                            restTime: TimeInterval(60),
+                            note: "3 x 15"
+                        ),
+                       ]),
 
     ]
 }

@@ -19,6 +19,7 @@ struct User {
     // MARK: - Fetch separately
     var goal: UserGoal = UserGoal()
     var preferredWorkoutLength: TimeInterval = 60
+    var preferredNumberOfMeals: Int = 3
     var biologicalSex: HKBiologicalSex = .notSet        // Health data
     var loggedFoods: [FoodID: AmountAndUnit] = [:]      // Food
     var workoutSessions: [WorkoutSession] = []          // Workout sessions
@@ -50,6 +51,7 @@ extension User {
         case photoURL
         case goal
         case preferredWorkoutLength
+        case preferredNumberOfMeals
     }
 }
 extension User {
@@ -60,6 +62,7 @@ extension User {
         self.photoURL = nil
         self.goal = UserGoal()
         self.preferredWorkoutLength = 60
+        self.preferredNumberOfMeals = 3
         self.biologicalSex = .notSet
         self.loggedFoods.removeAll()
         self.workoutSessions.removeAll()

@@ -52,9 +52,9 @@ class CaloriesSummaryCell: UITableViewCell {
             fatGramView.subtitle = fatString
         }
     }
-    var marcoRatios: [MacroItem: Double] = [:] {
+    var marcoRatio: MacroRatio? {
         didSet {
-            ratioBar.ratios = marcoRatios
+            ratioBar.ratio = marcoRatio
         }
     }
     

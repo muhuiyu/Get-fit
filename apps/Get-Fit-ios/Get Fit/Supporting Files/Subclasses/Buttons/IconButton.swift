@@ -46,7 +46,7 @@ extension IconButton {
 // MARK: - View Config
 extension IconButton {
     private func configureViews() {
-        
+        iconImageView.contentMode = .scaleAspectFit
         iconImageView.image = icon
         iconImageView.sizeToFit()
         containerView.addSubview(iconImageView)
@@ -57,6 +57,7 @@ extension IconButton {
     private func configureConstraints() {
         iconImageView.snp.remakeConstraints { make in
             make.center.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         containerView.snp.remakeConstraints { make in
             make.edges.equalToSuperview()

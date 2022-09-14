@@ -35,11 +35,8 @@ class HomeViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // TODO: - Set bottom bar
 //        self.hidesBottomBarWhenPushed = true
-//        viewModel.reloadDailyLog(shouldPull: false) {
-//
-//        }
+        viewModel.reloadDailyLog()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -77,7 +74,7 @@ extension HomeViewController {
         }
     }
     private func configureSignals() {
-        viewModel.mealLogs
+        viewModel.dailyMealLog
             .asObservable()
             .subscribe { _ in
                 DispatchQueue.main.async {
@@ -100,9 +97,9 @@ extension HomeViewController {
         
         // 1. Macro summary, Movement, sleep and water intake
         let summaryCell = CaloriesSummaryCell()
-        summaryCell.consumedCalories = viewModel.mealLogs.value.totalCalories
-        summaryCell.calories = viewModel.getDailyDietaryCaloriesGoal - viewModel.mealLogs.value.totalCalories
-        summaryCell.marcoRatios = viewModel.getMacroRatio()
+        summaryCell.consumedCalories = viewModel.dailyTotalCalories
+        summaryCell.calories = viewModel.dailyDietaryCaloriesGoal - viewModel.dailyTotalCalories
+        summaryCell.marcoRatio = viewModel.macroRatio
         summaryCell.carbsString = viewModel.getSummaryMacroString(for: .carbs)
         summaryCell.proteinString = viewModel.getSummaryMacroString(for: .protein)
         summaryCell.fatString = viewModel.getSummaryMacroString(for: .fat)
@@ -118,7 +115,7 @@ extension HomeViewController {
         cells.append([ summaryCell, movementCell, sleepAndWaterIntakeCell ])
         
         // 2+. Meals
-        let mealSections: [[UITableViewCell]] = viewModel.mealLogs.value.enumerated().map { mealIndex, mealLog in
+        let mealSections: [[UITableViewCell]] = viewModel.mealLogs.enumerated().map { mealIndex, mealLog in
             let addFoodLogCell = ButtonCell()
             addFoodLogCell.title = AppText.Home.addFoodLog
             addFoodLogCell.tapHandler = { [weak self] in
@@ -200,9 +197,9 @@ extension HomeViewController {
                                                                           message: nil,
                                                                           preferredStyle: .actionSheet)
         let alertActions = [
-            BaseCoordinator.AlertActionOption(title: AppText.Home.addFoodLog, style: .default) { _ in
-                self.homeCoordinator?.showAddFoodLog(on: self.viewModel.currentDate.value, forMeal: 1)
-            },
+//            BaseCoordinator.AlertActionOption(title: AppText.Home.addMeal, style: .default) { _ in
+//                self.homeCoordinator?.showAddMeal(on: self.viewModel.currentDate.value)
+//            },
             BaseCoordinator.AlertActionOption(title: AppText.Home.addJournal, style: .default) { _ in
             self.homeCoordinator?.showAddJournal()
             },
@@ -235,41 +232,21 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section >= viewModel.startIndexOfMealSections else { return nil }
-        
-        let view = UIView()
-        let nameLabel = UILabel()
-        nameLabel.font = UIFont.bodyHeavy
-        nameLabel.textColor = .label
-        nameLabel.textAlignment = .left
-        view.addSubview(nameLabel)
-        view.backgroundColor = .secondarySystemBackground
-        nameLabel.snp.remakeConstraints { make in
-            make.leading.equalTo(view.layoutMarginsGuide).inset(Constants.Spacing.small)
-            make.top.bottom.equalTo(view.layoutMarginsGuide)
-            make.centerY.equalToSuperview()
-        }
-        
         switch section {
         case viewModel.indexOfExerciseSection:
-            nameLabel.text = AppText.Home.exercise
+            let view = TitleTableHeaderView()
+            view.title = AppText.Home.exercise
+            return view
         case viewModel.indexOfJournalSection:
-            nameLabel.text = AppText.Home.journal
+            let view = TitleTableHeaderView()
+            view.title = AppText.Home.journal
+            return view
         default:
-            nameLabel.text = "Meal \(String(section-viewModel.startIndexOfMealSections+1))".uppercased()
-            
-            let caloriesLabel = UILabel()
-            caloriesLabel.font = UIFont.bodyHeavy
-            caloriesLabel.textColor = .label
-            caloriesLabel.textAlignment = .right
-            caloriesLabel.text = String(viewModel.getMealCalories(at: section))
-            view.addSubview(caloriesLabel)
-            
-            caloriesLabel.snp.remakeConstraints { make in
-                make.trailing.equalTo(view.layoutMarginsGuide).inset(Constants.Spacing.small)
-                make.top.bottom.equalTo(view.layoutMarginsGuide)
-                make.centerY.equalToSuperview()
-            }
+            let view = MealSummaryHeaderView()
+            view.title = "Meal \(String(section-viewModel.startIndexOfMealSections+1))".uppercased()
+            view.macroString = viewModel.getMealMacroString(at: section)
+            view.caloriesString = String(viewModel.getMealCalories(at: section))
+            return view
         }
-        return view
     }
 }

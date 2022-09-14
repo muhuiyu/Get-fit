@@ -8,9 +8,9 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct UserGoal: Codable {
+struct UserGoal {
     var dailyDietaryCalories: Int
-    var macroRatio: [MacroItem: Double]
+    var macroRatio: MacroRatio
     var exerciseMinute: Int
     var activeCalories: Int
     var stepCountGoal: Int
@@ -18,7 +18,7 @@ struct UserGoal: Codable {
     var waterIntakeGoal: Double
     
     init(dailyDietaryCalories: Int = 1300,
-         macroRatio: [MacroItem: Double] = [ .carbs: 0.4, .protein: 0.3, .fat: 0.3 ],
+         macroRatio: MacroRatio = MacroRatio(carbs: 0.4, protein: 0.3, fat: 0.3),
          exerciseMinute: Int = 30,
          activeCalories: Int = 200,
          stepCountGoal: Int = 10000,
@@ -37,36 +37,15 @@ struct UserGoal: Codable {
 
 extension UserGoal {
     var carbsGramGoal: Double {
-        guard let ratio = macroRatio[.carbs] else { return 0 }
-        return Double(dailyDietaryCalories) * ratio / 4
+        return Double(dailyDietaryCalories) * macroRatio.carbs / 4
     }
     var proteinGramGoal: Double {
-        guard let ratio = macroRatio[.protein] else { return 0 }
-        return Double(dailyDietaryCalories) * ratio / 4
+        return Double(dailyDietaryCalories) * macroRatio.protein / 4
     }
     var fatGramGoal: Double {
-        guard let ratio = macroRatio[.fat] else { return 0 }
-        return Double(dailyDietaryCalories) * ratio / 9
+        return Double(dailyDietaryCalories) * macroRatio.fat / 9
     }
 }
-extension UserGoal {
-    private enum CodingKeys: String, CodingKey {
-        case dailyDietaryCalories
-        case macroRatio
-        case exerciseMinute
-        case activeCalories
-        case stepCountGoal
-        case sleepHoursGoal
-        case waterIntakeGoal
-    }
-    init(snapshot: DocumentSnapshot) throws {
-        let data = try snapshot.data(as: UserGoal.self)
-        self.dailyDietaryCalories = data.dailyDietaryCalories
-        self.macroRatio = data.macroRatio
-        self.exerciseMinute = data.exerciseMinute
-        self.activeCalories = data.activeCalories
-        self.stepCountGoal = data.stepCountGoal
-        self.sleepHoursGoal = data.sleepHoursGoal
-        self.waterIntakeGoal = data.waterIntakeGoal
-    }
+extension UserGoal: Codable {
+    
 }

@@ -12,9 +12,10 @@ import RxSwift
 
 class AuthenticationViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
-    var state: BehaviorRelay<SignInState> = BehaviorRelay(value: .signedOut)
+    var state: BehaviorRelay<SignInState> = BehaviorRelay(value: .loading)
     
     enum SignInState {
+        case loading
         case signedIn
         case signedOut
     }
@@ -24,16 +25,18 @@ class AuthenticationViewModel: BaseViewModel {
         self.state
             .asObservable()
             .subscribe { _ in
+                self.appCoordinator?.userManager.clearData()
                 if let user = Auth.auth().currentUser {
                     let newUser = User(id: user.uid,
                                        displayName: user.displayName,
                                        email: user.email,
                                        photoURL: user.photoURL)
-                    
-                    self.appCoordinator?.userManager.clearData()
                     self.appCoordinator?.userManager.setData(newUser)
-                } else {
-                    
+                    Task {
+                        if let preference = await self.appCoordinator?.dataProvider.fetchUserPreference(for: user.uid) {
+                            self.appCoordinator?.userManager.setPreference(preference)
+                        }
+                    }
                 }
             }
             .disposed(by: disposeBag)
@@ -90,7 +93,7 @@ extension AuthenticationViewModel {
             state.accept(.signedOut)
         } catch {
             print(error.localizedDescription)
-            self.state.accept(.signedOut)
+            state.accept(.signedOut)
         }
     }
 }

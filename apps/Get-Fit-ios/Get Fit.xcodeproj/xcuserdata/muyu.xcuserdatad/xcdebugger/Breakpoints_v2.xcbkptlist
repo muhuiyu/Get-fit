@@ -7,80 +7,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D939C21D-4495-4DAD-9BBD-1FCAB4D62BDE"
+            uuid = "96DAECA9-5BC4-4081-820E-C24CE5382E59"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Get Fit/Models/Food/DailyMealLog.swift"
+            filePath = "Get Fit/View Models/Common/AuthenticationViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "init(from:)"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "signIn()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "49A6C6F2-BDF8-44B0-BFBD-2B8C0B47B739"
+            uuid = "1FC68D31-929E-4EE0-A978-3EF9EEFB5E8D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Get Fit/Models/Food/DailyMealLog.swift"
+            filePath = "Get Fit/View Models/Common/AuthenticationViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "init(from:)"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "signOut()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BECEAB19-C678-4ECD-A78E-BDE31FCD13FE"
+            uuid = "1B055F82-53D7-43B7-8872-556365571662"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Get Fit/Models/Food/DailyMealLog.swift"
+            filePath = "Get Fit/View Models/Common/AuthenticationViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "init(from:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1A575ADE-C449-4A5A-A039-B15CBCE0DB70"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Get Fit/Models/Food/DailyMealLog.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "init(from:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2B65777D-0C42-4087-A79A-D88D93404F38"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Get Fit/Models/Food/DailyMealLog.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "init(from:)"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "signOut()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

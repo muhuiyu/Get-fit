@@ -9,8 +9,10 @@ extension WorkoutItem {
     static let all: [WorkoutItemID: WorkoutItem] = [
         // upper body
         dumbbellBenchPress.id: dumbbellBenchPress,
+        dumbbellInclinePress.id: dumbbellInclinePress,
         machineChestPress.id: machineChestPress,
         machineShoulderPress.id: machineShoulderPress,
+        pushUp.id: pushUp,
         assistedPullUp.id: assistedPullUp,
         latPullDown.id: latPullDown,
         seatedCableRow.id: seatedCableRow,
@@ -34,7 +36,11 @@ extension WorkoutItem {
     
     // Upper body
     static let dumbbellBenchPress = WorkoutItem(id: "dumbbellBenchPress",
-                                                name: "Bench press",
+                                                name: "Dumbbell bench press",
+                                                bodyPart: [.chest],
+                                                machine: nil)
+    static let dumbbellInclinePress = WorkoutItem(id: "dumbbellInclinePress",
+                                                name: "Dumbbell incline press",
                                                 bodyPart: [.chest],
                                                 machine: nil)
     static let machineChestPress = WorkoutItem(id: "machineChestPress",
@@ -45,6 +51,10 @@ extension WorkoutItem {
                                                   name: "Machine shoulder press",
                                                   bodyPart: [.chest],
                                                   machine: .shoulderPressMachine)
+    static let pushUp = WorkoutItem(id: "pushUp",
+                                    name: "Push up",
+                                    bodyPart: [.chest, .triceps],
+                                    machine: nil)
     static let assistedPullUp = WorkoutItem(id: "assistedPullUp",
                                             name: "Assisted pull up",
                                             bodyPart: [.back, .biceps],

@@ -56,6 +56,8 @@ extension AppText {
         static var remaining: String { "Remaining" }
         static var consumed: String { "Consumed" }
         static var addFoodLog: String { "Add food" }
+        static var addMeal: String { "Add meal" }
+        static var editMeal: String { "Edit" }
         static var addJournal: String { "Add journal" }
         static var noData: String { "No data" }
         static var exercise: String { "Exercise" }

@@ -17,39 +17,34 @@ class MacroRatioBarView: UIView {
     private let fatLabel = UILabel()
     private let fatView = UIView()
 
-    var ratios: [MacroItem: Double] = [:] {
+    var ratio: MacroRatio? {
         didSet {
-            guard !ratios.isEmpty else {
+            guard
+                let ratio = ratio, !ratio.isEmpty else {
                 carbsView.isHidden = true
                 proteinView.isHidden = true
                 fatView.isHidden = true
                 emptyStateLabel.isHidden = false
                 return
             }
-            if let carbsRatio = ratios[.carbs] {
-                carbsLabel.text = "carbs \(String(Int((carbsRatio * 100).rounded()))) %"
-                carbsView.snp.remakeConstraints { make in
-                    make.leading.top.bottom.equalToSuperview()
-                    make.height.equalTo(40)
-                    make.width.equalToSuperview().multipliedBy(carbsRatio)
-                }
+            carbsLabel.text = "carbs \(String(Int((ratio.carbs * 100).rounded()))) %"
+            proteinLabel.text = "protein \(String(Int((ratio.protein * 100).rounded()))) %"
+            fatLabel.text = "fat \(String(Int((ratio.fat * 100).rounded()))) %"
+            carbsView.snp.remakeConstraints { make in
+                make.leading.top.bottom.equalToSuperview()
+                make.height.equalTo(40)
+                make.width.equalToSuperview().multipliedBy(ratio.carbs)
             }
-            if let proteinRatio = ratios[.protein] {
-                proteinLabel.text = "protein \(String(Int((proteinRatio * 100).rounded()))) %"
-                proteinView.snp.remakeConstraints { make in
-                    make.top.bottom.equalTo(carbsView)
-                    make.leading.equalTo(carbsView.snp.trailing)
-                    make.width.equalToSuperview().multipliedBy(proteinRatio)
-                }
+            proteinView.snp.remakeConstraints { make in
+                make.top.bottom.equalTo(carbsView)
+                make.leading.equalTo(carbsView.snp.trailing)
+                make.width.equalToSuperview().multipliedBy(ratio.protein)
             }
-            if let fatRatio = ratios[.fat] {
-                fatLabel.text = "fat \(String(Int((fatRatio * 100).rounded()))) %"
-                fatView.snp.remakeConstraints { make in
-                    make.top.bottom.equalTo(carbsView)
-                    make.leading.equalTo(proteinView.snp.trailing)
-                    make.trailing.equalToSuperview()
-                    make.width.equalToSuperview().multipliedBy(fatRatio)
-                }
+            fatView.snp.remakeConstraints { make in
+                make.top.bottom.equalTo(carbsView)
+                make.leading.equalTo(proteinView.snp.trailing)
+                make.trailing.equalToSuperview()
+                make.width.equalToSuperview().multipliedBy(ratio.fat)
             }
         }
     }

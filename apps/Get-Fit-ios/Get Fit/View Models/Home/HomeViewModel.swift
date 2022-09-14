@@ -14,9 +14,8 @@ class HomeViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
     
     // MARK: - Reactive Properties
-    // TODO: -
     var currentDate: BehaviorRelay<Date> = BehaviorRelay(value: Date())
-    var mealLogs: BehaviorRelay<[MealLog]> = BehaviorRelay(value: [])
+    var dailyMealLog: BehaviorRelay<DailyMealLog?> = BehaviorRelay(value: nil)
 
     override init() {
         super.init()
@@ -26,7 +25,8 @@ class HomeViewModel: BaseViewModel {
 extension HomeViewModel {
     var startIndexOfMealSections: Int { return 2 }
     var endIndexOfMealSections: Int {
-        return 2 + mealLogs.value.count - 1
+        guard let mealLogs = dailyMealLog.value?.mealLogs else { return 0 }
+        return 2 + mealLogs.count - 1
     }
     var indexOfExerciseSection: Int { return endIndexOfMealSections + 1 }
     var indexOfJournalSection: Int { return endIndexOfMealSections + 2 }
@@ -37,11 +37,20 @@ extension HomeViewModel {
 
 // MARK: - Interface
 extension HomeViewModel {
-    func reloadDailyLog(shouldPull: Bool) {
+    func reloadDailyLog(shouldPull: Bool = true) {
         guard let userID = appCoordinator?.userManager.id else { return }
         Task {
-            if let mealLogs = await appCoordinator?.dataProvider.fetchMealLogs(for: userID, on: currentDate.value) {
-                self.mealLogs.accept(mealLogs)
+            if let entry = await appCoordinator?.dataProvider.fetchDailyMealLog(for: userID, on: currentDate.value) {
+                self.dailyMealLog.accept(entry)
+            } else {
+                if let preferredNumberOfMeals = appCoordinator?.userManager.preferredNumberOfMeals {
+                    self.dailyMealLog.accept(DailyMealLog(userID: userID,
+                                                          date: currentDate.value,
+                                                          preferredNumberOfMeals: preferredNumberOfMeals))
+                } else {
+                    self.dailyMealLog.accept(DailyMealLog(userID: userID,
+                                                          date: currentDate.value))
+                }
             }
         }
     }
@@ -111,38 +120,39 @@ extension HomeViewModel {
             return []
         }
     }
-    func getMacroRatio() -> [MacroItem: Double] {
-        guard !mealLogs.value.isEmpty else { return [:] }
-        
-        let caloriesFromCarbs = mealLogs.value.map { $0.totalCarbs }.reduce(0, +) * 4
-        let caloriesFromProtein = mealLogs.value.map { $0.totalProtein }.reduce(0, +) * 4
-        let caloriesFromFat = mealLogs.value.map { $0.totalFat }.reduce(0, +) * 9
-        let totalCalories = caloriesFromCarbs + caloriesFromProtein + caloriesFromFat
-        
-        return [
-            .carbs: Double(caloriesFromCarbs) / Double(totalCalories),
-            .protein: Double(caloriesFromProtein) / Double(totalCalories),
-            .fat: Double(caloriesFromFat) / Double(totalCalories)
-        ]
+    var macroRatio: MacroRatio {
+        return mealLogs.macroRatio
+    }
+    var mealLogs: [MealLog] {
+        return dailyMealLog.value?.mealLogs ?? []
+    }
+    var dailyTotalCalories: Int {
+        return dailyMealLog.value?.totalCalories ?? 0
+    }
+    func getMealMacroString(at section: Int) -> String {
+        guard
+            let mealLogs = dailyMealLog.value?.mealLogs,
+            section >= startIndexOfMealSections else {
+            return ""
+        }
+        return mealLogs[section-startIndexOfMealSections].macroStringInGram
     }
     func getMealCalories(at section: Int) -> Int {
-        guard section >= startIndexOfMealSections else { return 0 }
-        return mealLogs.value[section-startIndexOfMealSections].totalCalories
+        guard
+            let mealLogs = dailyMealLog.value?.mealLogs,
+            section >= startIndexOfMealSections else {
+            return 0
+        }
+        return mealLogs[section-startIndexOfMealSections].totalCalories
     }
     func getDailyTotalGram(for item: MacroItem) -> Double {
-        switch item {
-        case .carbs:
-            return mealLogs.value.map { $0.totalCarbs }.reduce(0, +)
-        case .protein:
-            return mealLogs.value.map { $0.totalProtein }.reduce(0, +)
-        case .fat:
-            return mealLogs.value.map { $0.totalFat }.reduce(0, +)
-        }
+        guard let dailyMealLog = dailyMealLog.value else { return 0 }
+        return dailyMealLog.getTotalGram(for: item)
     }
     func getMacroGramGoal(for item: MacroItem) -> Double {
         return appCoordinator?.userManager.getMacroGramGoal(for: item) ?? 0
     }
-    var getDailyDietaryCaloriesGoal: Int {
+    var dailyDietaryCaloriesGoal: Int {
         return appCoordinator?.userManager.dailyDietaryCaloriesGoal ?? 0
     }
     func getSummaryMacroString(for item: MacroItem) -> String {

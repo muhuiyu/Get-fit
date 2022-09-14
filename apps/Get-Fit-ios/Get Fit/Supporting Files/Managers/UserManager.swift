@@ -35,6 +35,9 @@ extension UserManager {
     var preferredWorkoutLength: TimeInterval {
         return user?.preferredWorkoutLength ?? 60
     }
+    var preferredNumberOfMeals: Int {
+        return user?.preferredNumberOfMeals ?? 3
+    }
     
     // Goal
     func getMacroGramGoal(for item: MacroItem) -> Double {
@@ -97,6 +100,10 @@ extension UserManager {
             if let value = value as? TimeInterval {
                 user?.preferredWorkoutLength = value
             }
+        case .preferredNumberOfMeals:
+            if let value = value as? Int {
+                user?.preferredNumberOfMeals = value
+            }
         }
     }
     func setPreference(_ preference: UserPreference) {
@@ -105,6 +112,7 @@ extension UserManager {
         }
         user?.goal = preference.goal
         user?.preferredWorkoutLength = preference.preferredWorkoutLength
+        user?.preferredNumberOfMeals = preference.preferredNumberOfMeals
     }
     func setData(_ user: User) {
         self.user = user

@@ -10,6 +10,8 @@ import UIKit
 class HomeCoordinator: BaseCoordinator {
     enum Destination {
         case viewNotifications
+        case addMeal(Date)
+        case editMeal(Date, Int)
         case addFoodLog(Date, Int)
         case viewFoodLog(FoodLog, Date, Int, Int)
         case addJournal
@@ -31,6 +33,14 @@ extension HomeCoordinator {
         case .viewNotifications:
             // TODO: -
             return BaseViewController()
+        case .addMeal(let date):
+            // TODO: -
+            let viewController = BaseViewController()
+            return viewController
+        case .editMeal(let date, let mealIndex):
+            // TODO: -
+            let viewController = BaseViewController()
+            return viewController
         case .addFoodLog(let date, let mealIndex):
             let viewController = AddFoodViewController(appCoordinator: self.parentCoordinator,
                                                        homeCoordinator: self)
@@ -90,6 +100,16 @@ extension HomeCoordinator {
 extension HomeCoordinator {
     func showNotifications() {
         guard let viewController = makeViewController(for: .viewNotifications) else { return }
+        let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: false)
+        self.navigate(to: viewController, presentModally: true, options: options)
+    }
+    func showAddMeal(on date: Date) {
+        guard let viewController = makeViewController(for: .addMeal(date)) else { return }
+        let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: false)
+        self.navigate(to: viewController, presentModally: true, options: options)
+    }
+    func showEditMeal(on date: Date, forMeal mealIndex: Int) {
+        guard let viewController = makeViewController(for: .editMeal(date, mealIndex)) else { return }
         let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: false)
         self.navigate(to: viewController, presentModally: true, options: options)
     }

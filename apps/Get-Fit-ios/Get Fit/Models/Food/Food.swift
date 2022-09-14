@@ -30,8 +30,24 @@ extension Food {
     static func getFood(for id: FoodID) -> Food? {
         return all[id]
     }
-    static func searchFoods(contain keyword: String) -> [FoodID] {
+    static func getItemIDs(contain keyword: String) -> [FoodID] {
         return all.values.filter { $0.name.lowercased().contains(keyword.lowercased()) }.map { $0.id }
+    }
+}
+extension Food {
+    static func getItem(of id: FoodID) -> Food? {
+        return all[id]
+    }
+    static func getItemName(of id: FoodID, isLocalized: Bool = false) -> String? {
+        // TODO: - Add localized
+        return all[id]?.name
+    }
+    static func getAllItemNames(isLocalized: Bool = false) -> [String] {
+        // TODO: - Add localized
+        return all.map { $0.value.name }
+    }
+    static func getAllItemIDs() -> [FoodID] {
+        return Array(all.keys)
     }
 }
 extension Food {

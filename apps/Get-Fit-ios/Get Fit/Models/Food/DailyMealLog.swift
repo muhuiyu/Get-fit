@@ -21,10 +21,33 @@ struct DailyMealLog: Identifiable, Codable {
     // Firebase
     static var collectionName: String { "mealLogs" }
 }
+extension DailyMealLog {
+    init(userID: UserID, date: Date = Date.today, preferredNumberOfMeals: Int = 3) {
+        self.id = ""
+        self.userID = userID
+        self.year = date.year
+        self.month = date.month
+        self.day = date.dayOfMonth
+        self.mealLogs = [MealLog](repeating: MealLog(hour: 0,
+                                                     minute: 0,
+                                                     foodLogs: [FoodLog]()),
+                                  count: preferredNumberOfMeals)
+    }
+}
 
 // MARK: - Interface
 extension DailyMealLog {
     var totalCalories: Int { mealLogs.totalCalories }
+    func getTotalGram(for item: MacroItem) -> Double {
+        switch item {
+        case .carbs:
+            return mealLogs.map { $0.totalCarbs }.reduce(0, +)
+        case .protein:
+            return mealLogs.map { $0.totalProtein }.reduce(0, +)
+        case .fat:
+            return mealLogs.map { $0.totalFat }.reduce(0, +)
+        }
+    }
 }
 
 // MARK: - Firebase

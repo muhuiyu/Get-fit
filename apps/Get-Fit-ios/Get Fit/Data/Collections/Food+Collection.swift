@@ -10,28 +10,38 @@ import Foundation
 extension Food {
     static let all: [FoodID: Food] = [
         egg.id: egg,
+        eggWhite.id: eggWhite,
         eggYolk.id: eggYolk,
         chickenBreast.id: chickenBreast,
         chickenLeg.id: chickenLeg,
         chickenWing.id: chickenWing,
+        chickenFat.id: chickenFat,
         rawChickenSkin.id: rawChickenSkin,
         groundBeef80.id: groundBeef80,
         beefLiver.id: beefLiver,
         porkLard.id: porkLard,
+        porkSkin.id: porkSkin,
     ]
     static let egg: Food = Food(id: "egg",
                                 name: "Egg",
                                 unitNutritions: [
                                     UnitNutrition(amount: 1,
                                                   unit: .each,
-                                                  nutritionFacts: NutritionFacts(calories: 70, carbs: 0, protein: 6, fat: 5))
+                                                  nutritionFacts: NutritionFacts(calories: 70, carbs: 0, protein: 6, fat: 5, cholesterol: 740, sodium: 280, potassium: 70))
                                 ])
     static let eggYolk: Food = Food(id: "egg-yolk",
                                 name: "Egg yolk",
                                 unitNutritions: [
                                     UnitNutrition(amount: 1,
                                                   unit: .each,
-                                                  nutritionFacts: NutritionFacts(calories: 55, carbs: 0, protein: 2.7, fat: 4.5))
+                                                  nutritionFacts: NutritionFacts(calories: 53, carbs: 0, protein: 2.7, fat: 4.5))
+                                ])
+    static let eggWhite: Food = Food(id: "egg-white",
+                                name: "Egg white",
+                                unitNutritions: [
+                                    UnitNutrition(amount: 1,
+                                                  unit: .each,
+                                                  nutritionFacts: NutritionFacts(calories: 17, carbs: 0, protein: 3.3, fat: 0.5))
                                 ])
     static let chickenBreast: Food = Food(id: "chicken-breast",
                                           name: "Chicken breast",
@@ -98,5 +108,12 @@ extension Food {
                                             UnitNutrition(amount: 1,
                                                           unit: .tablespoon,
                                                           nutritionFacts: NutritionFacts(calories: 115, carbs: 0, protein: 0, fat: 12.8, vitaminD: 0.3, vitaminE: 0.1))
+                                          ])
+    static let porkSkin: Food = Food(id: "pork-skin",
+                                          name: "Pork skin",
+                                          unitNutritions: [
+                                            UnitNutrition(amount: 100,
+                                                          unit: .gram,
+                                                          nutritionFacts: NutritionFacts(calories: 564, carbs: 0, protein: 7.1, fat: 35.3, cholesterol: 141.1, sodium: 1904.8, vitaminD: 0.3, vitaminE: 0.1))
                                           ])
 }

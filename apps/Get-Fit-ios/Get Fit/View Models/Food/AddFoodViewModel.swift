@@ -11,35 +11,47 @@ import RxRelay
 
 class AddFoodViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
+    private var previousFoodLogs = [FoodLog]()
     var displayFoods: BehaviorRelay<[FoodLog]> = BehaviorRelay(value: [])
     var date: Date = Date()
     var mealIndex: Int = 0
-    
-    override init() {
-        super.init()
-        Task {
-            await fetchLoggedFood()
-        }
-    }
 }
 
 extension AddFoodViewModel {
+    func setup() async {
+        await fetchLoggedFood()
+        displayFoods.accept(previousFoodLogs)
+    }
     private func fetchLoggedFood() async {
         guard
             let userID = appCoordinator?.userManager.id,
-            let loggedFoods = await appCoordinator?.dataProvider.fetchLoggedFood(for: userID) else { return }
-        
-        self.displayFoods.accept(Array(loggedFoods.values))
+            let data = await appCoordinator?.dataProvider.fetchPreviousFoodLogs(for: userID) else {
+            return
+        }
+        self.previousFoodLogs = Array(data.values)
     }
-    func searchFoods(contain keyword: String) {
-        let foodIDs = getFoodIDs(contain: keyword)
-        let foodLogs: [FoodLog] = foodIDs.compactMap { Food.getFood(for: $0)?.getDefaultFoodLog() }
-        self.displayFoods.accept(foodLogs)
+    /// Filters previous foodLogs
+    func filterOptions(for searchText: String) {
+        let filteredOptions = previousFoodLogs.filter({ log in
+            guard let name = Food.getItemName(of: log.foodID) else { return false }
+            return name.lowercased().contains(searchText.lowercased())
+        })
+        displayFoods.accept(filteredOptions)
     }
-    private func getFoodIDs(contain keyword: String) -> [FoodID] {
-        // TODO: - Connect to database
-//        guard let foodIDs = appCoordinator?.dataProvider.searchFoods(contain: keyword) else { return [] }
-        return Food.searchFoods(contain: keyword)
+    /// Returns food items from database
+    func globalSearchFoods(contain keyword: String) async {
+        if let foodIDs = await appCoordinator?.dataProvider.searchFoods(contain: keyword) {
+            let foodLogs: [FoodLog] = foodIDs.compactMap { Food.getFood(for: $0)?.getDefaultFoodLog() }
+            self.displayFoods.accept(foodLogs)
+        }
+    }
+    func selectFoodLog(_ log: FoodLog) {
+        print("select \(log.foodID)")
+        // show toast
+    }
+    func quickAddFoodLog(_ log: FoodLog) {
+        print("quick add \(log.foodID)")
+        // show toast "added"
     }
 }
 

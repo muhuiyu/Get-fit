@@ -13,17 +13,16 @@ protocol DataProvider {
     
     // User
     func fetchUserPreference(for userID: UserID) async -> UserPreference?
-//    func fetchCurrentUser() async -> User?
     
     // Food, Database
     func fetchCustomizedMeals(for userID: UserID) async -> [CustomizedMeal]
-    func fetchMealLogs(for userID: UserID, on date: Date) async -> [MealLog]
+    func fetchDailyMealLog(for userID: UserID, on date: Date) async -> DailyMealLog?
     func updateMealLog(for userID: UserID, to value: MealLog) async -> VoidResult
     func removeMealLog(for userID: UserID) async -> VoidResult
-    func fetchLoggedFood(for userID: UserID) async -> [FoodID: FoodLog]
+    func fetchPreviousFoodLogs(for userID: UserID) async -> [FoodID: FoodLog]
     
     // Search
-    // func searchFoods(contain keyword: String) async -> [FoodID]
+    func searchFoods(contain keyword: String) async -> [FoodID]
     
     // Workout
     func fetchWorkoutRoutines(for userID: UserID) async -> [WorkoutRoutine]

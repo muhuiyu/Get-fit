@@ -17,14 +17,14 @@ class Database: DataProvider {
 //
 //    internal var merchantList = [MerchantID: Merchant]()
     
-    internal let mealLogRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.mealLogs)
+    internal let dailyMealLogRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.dailyMealLogs)
     internal let workoutSessionRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.workoutSessions)
     internal let workoutRoutineRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.workoutRoutines)
     internal let progressRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.progress)
     internal let userPreferenceRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.userPreference)
     
     struct FirebaseCollection {
-        static let mealLogs = "mealLogs"
+        static let dailyMealLogs = "dailyMealLogs"
         static let workoutSessions = "workoutSessions"
         static let workoutRoutines = "workoutRoutines"
         static let progress = "progress"
@@ -68,25 +68,25 @@ extension Database {
 extension Database {
     func writeData() {
         // mealLog
-//        do {
-//            let _ = try mealLogRef.addDocument(from: DailyMealLog.testEntries[2]) { error in
-//                if let error = error {
-//                    print(error)
-//                } else {
-//                    print("done")
+//        for log in DailyMealLog.testEntries {
+//            if log.id == "" {
+//                do {
+//                    let documentRef = try dailyMealLogRef.addDocument(from: log) { error in
+//                        if let error = error {
+//                            print(error)
+//                        }
+//                    }
+//                    print(log.day)
+//                    print(documentRef.documentID)
+//                } catch {
+//
 //                }
 //            }
-//        } catch {
-//
 //        }
     }
 }
 // MARK: - Users
 extension Database {
-    internal func fetchCurrentUser() async -> User? {
-        // TODO: - connect to database
-        return User.testUser
-    }
     internal func fetchUserPreference(for userID: UserID) async -> UserPreference? {
         do {
             let snapshot = try await userPreferenceRef.whereField(Attribute.userID, isEqualTo: userID).getDocuments()
@@ -111,17 +111,36 @@ extension Database {
     func fetchCustomizedMeals(for userID: UserID) async -> [CustomizedMeal] {
         return CustomizedMeal.testEntries
     }
-    func fetchMealLogs(for userID: UserID, on date: Date) async -> [MealLog] {
-        return []
-//        return MealLog.testEntries.filter { $0.date == date.toDateTriple }.sorted(by: { $0.id < $1.id } )
+    func fetchDailyMealLog(for userID: UserID, on date: Date) async -> DailyMealLog? {
+        do {
+            let snapshot = try await dailyMealLogRef
+                .whereField(Attribute.userID, isEqualTo: userID)
+                .whereField(Attribute.year, isEqualTo: date.year)
+                .whereField(Attribute.month, isEqualTo: date.month)
+                .whereField(Attribute.day, isEqualTo: date.dayOfMonth)
+                .getDocuments()
+            guard snapshot.documentChanges.count == 1, snapshot.documentChanges[0].type == .added else {
+                return nil
+            }
+            return try DailyMealLog(snapshot: snapshot.documentChanges[0].document)
+        } catch {
+            return nil
+        }
     }
-    func fetchLoggedFood(for userID: UserID) async -> [FoodID: FoodLog] {
+    func fetchPreviousFoodLogs(for userID: UserID) async -> [FoodID: FoodLog] {
         let loggedFoods = [
             Food.chickenBreast.id: FoodLog(foodID: Food.chickenBreast.id, amount: 500, unit: .gram),
             Food.egg.id: FoodLog(foodID: Food.egg.id, amount: 5, unit: .each),
             Food.eggYolk.id: FoodLog(foodID: Food.eggYolk.id, amount: 2, unit: .each),
         ]
         return loggedFoods
+    }
+}
+// MARK: - Search Food
+extension Database {
+    func searchFoods(contain keyword: String) async -> [FoodID] {
+        // TODO: - Connect to database
+        return Food.getItemIDs(contain: keyword)
     }
 }
 // MARK: - Workout

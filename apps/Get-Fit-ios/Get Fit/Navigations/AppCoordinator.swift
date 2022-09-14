@@ -40,29 +40,27 @@ class AppCoordinator {
             self.setupMainTabBar()
         }
         Task {
-            await configureManagers()
+            await configureDatabase()
             await window.makeKeyAndVisible()
         }
     }
 }
 // MARK: - Services and managers
 extension AppCoordinator {
-    private func configureManagers() async {
+    private func configureDatabase() async {
         await dataProvider.setup()
-        if userManager.isUserLoggedIn, let userID = userManager.id {
-            if let preference = await dataProvider.fetchUserPreference(for: userID) {
-                userManager.setPreference(preference)
-            }
-        }
     }
     private func configureAuthViewModel() {
         authViewModel.appCoordinator = self
         authViewModel.state
             .asObservable()
             .subscribe(onNext: { state in
-                if state == .signedIn && self.userManager.isUserLoggedIn {
+                switch state {
+                case .loading:
+                    self.showLoadingScreen()
+                case .signedIn:
                     self.showHome()
-                } else {
+                case .signedOut:
                     self.showLogin()
                 }
             })
