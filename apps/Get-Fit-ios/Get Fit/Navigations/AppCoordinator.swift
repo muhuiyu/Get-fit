@@ -33,7 +33,6 @@ class AppCoordinator {
     }
 
     func start() {
-        showLoadingScreen()
         configureAuthViewModel()
         DispatchQueue.main.async {
             self.configureCoordinators()
@@ -42,6 +41,7 @@ class AppCoordinator {
         Task {
             await configureDatabase()
             await window.makeKeyAndVisible()
+            authViewModel.signIn()
         }
     }
 }

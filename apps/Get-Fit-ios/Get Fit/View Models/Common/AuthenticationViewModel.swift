@@ -22,46 +22,49 @@ class AuthenticationViewModel: BaseViewModel {
     
     override init() {
         super.init()
-        self.state
+        configureSignals()
+        configureGoogleSignInClientID()
+    }
+}
+extension AuthenticationViewModel {
+    private func configureSignals() {
+        state
             .asObservable()
             .subscribe { _ in
                 self.appCoordinator?.userManager.clearData()
-                if let user = Auth.auth().currentUser {
-                    let newUser = User(id: user.uid,
-                                       displayName: user.displayName,
-                                       email: user.email,
-                                       photoURL: user.photoURL)
-                    self.appCoordinator?.userManager.setData(newUser)
-                    Task {
-                        if let preference = await self.appCoordinator?.dataProvider.fetchUserPreference(for: user.uid) {
-                            self.appCoordinator?.userManager.setPreference(preference)
-                        }
+                guard let user = Auth.auth().currentUser else { return }
+                let newUser = User(id: user.uid,
+                                   displayName: user.displayName,
+                                   email: user.email,
+                                   photoURL: user.photoURL)
+                self.appCoordinator?.userManager.setData(newUser)
+                Task {
+                    if let preference = await self.appCoordinator?.dataProvider.fetchUserPreference(for: user.uid) {
+                        self.appCoordinator?.userManager.setPreference(preference)
                     }
                 }
             }
             .disposed(by: disposeBag)
     }
-}
-extension AuthenticationViewModel {
+    private func configureGoogleSignInClientID() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            state.accept(.signedOut)
+            return
+        }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+    }
     private func authenticateUser(for user: GIDGoogleUser?, with error: Error?) {
         if let error = error {
             print(error.localizedDescription)
             self.state.accept(.signedOut)
             return
         }
-        guard let authentication = user?.authentication, let idToken = authentication.idToken else {
+        guard let _ = user else {
             self.state.accept(.signedOut)
             return
         }
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
-
-        Auth.auth().signIn(with: credential) { [unowned self] (_, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                self.state.accept(.signedOut)
-            }
-            self.state.accept(.signedIn)
-        }
+        self.state.accept(.signedIn)
     }
     func signIn() {
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {
@@ -69,20 +72,14 @@ extension AuthenticationViewModel {
                 authenticateUser(for: user, with: error)
             }
         } else {
-            guard let clientID = FirebaseApp.app()?.options.clientID else {
-                self.state.accept(.signedOut)
-                return
-            }
-            
-            let configuration = GIDConfiguration(clientID: clientID)
             guard
                 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                 let rootViewController = windowScene.windows.first?.rootViewController else {
                 self.state.accept(.signedOut)
                 return
             }
-            GIDSignIn.sharedInstance.signIn(with: configuration, presenting: rootViewController) { [unowned self] user, error in
-                authenticateUser(for: user, with: error)
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] signInResult, error in
+                self?.authenticateUser(for: signInResult?.user, with: error)
             }
         }
     }

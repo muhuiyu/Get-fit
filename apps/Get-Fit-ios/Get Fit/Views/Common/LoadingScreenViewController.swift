@@ -11,7 +11,7 @@ import Lottie
 class LoadingScreenViewController: BaseViewController {
     
     private let titleLabel = UILabel()
-    private let animationView = AnimationView(name: "loading")
+    private let animationView = LottieAnimationView(name: "loading")
     
     override func viewDidLoad() {
         super.viewDidLoad()

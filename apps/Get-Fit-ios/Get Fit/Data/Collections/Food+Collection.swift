@@ -21,6 +21,8 @@ extension Food {
         beefLiver.id: beefLiver,
         porkLard.id: porkLard,
         porkSkin.id: porkSkin,
+        porkRind.id: porkRind,
+        salmonSkin.id: salmonSkin
     ]
     static let egg: Food = Food(id: "egg",
                                 name: "Egg",
@@ -115,5 +117,19 @@ extension Food {
                                             UnitNutrition(amount: 100,
                                                           unit: .gram,
                                                           nutritionFacts: NutritionFacts(calories: 564, carbs: 0, protein: 7.1, fat: 35.3, cholesterol: 141.1, sodium: 1904.8, vitaminD: 0.3, vitaminE: 0.1))
+                                          ])
+    static let porkRind: Food = Food(id: "pork-rind",
+                                          name: "Pork rind",
+                                          unitNutritions: [
+                                            UnitNutrition(amount: 100,
+                                                          unit: .gram,
+                                                          nutritionFacts: NutritionFacts(calories: 544, carbs: 0, protein: 61.3, fat: 31.3, cholesterol: 95, sodium: 1818, potassium: 127))
+                                          ])
+    static let salmonSkin: Food = Food(id: "salmon-skin",
+                                          name: "Salmon skin",
+                                          unitNutritions: [
+                                            UnitNutrition(amount: 100,
+                                                          unit: .gram,
+                                                          nutritionFacts: NutritionFacts(calories: 188, carbs: 0, protein: 25.9, fat: 8.2, cholesterol: 58.8, sodium: 58.8, vitaminD: 0.3, vitaminE: 0.1))
                                           ])
 }

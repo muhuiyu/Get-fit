@@ -16,4 +16,5 @@ enum WorkoutMachine: String {
     case seatedLegPressMachine
     case seatedLegCurlMachine
     case seatedLegExtensionMachine
+    case seatedPecDeckMachine
 }

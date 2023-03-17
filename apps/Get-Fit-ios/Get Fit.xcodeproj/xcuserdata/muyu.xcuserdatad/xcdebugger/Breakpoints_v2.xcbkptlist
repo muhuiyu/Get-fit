@@ -7,48 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "96DAECA9-5BC4-4081-820E-C24CE5382E59"
-            shouldBeEnabled = "Yes"
+            uuid = "D8FA5F74-2591-495B-BCA6-8CB4AAB1DB5F"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Get Fit/View Models/Common/AuthenticationViewModel.swift"
+            filePath = "Get Fit/Navigations/AppCoordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "signIn()"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "configureAuthViewModel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1FC68D31-929E-4EE0-A978-3EF9EEFB5E8D"
-            shouldBeEnabled = "Yes"
+            uuid = "B898D229-B662-46C4-A665-BED63B52B7EF"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Get Fit/View Models/Common/AuthenticationViewModel.swift"
+            filePath = "Get Fit/Navigations/AppCoordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "signOut()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1B055F82-53D7-43B7-8872-556365571662"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Get Fit/View Models/Common/AuthenticationViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "signOut()"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "configureAuthViewModel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
