@@ -8,7 +8,7 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct UserGoal {
+struct UserGoal: Codable {
     var dailyDietaryCalories: Int
     var macroRatio: MacroRatio
     var exerciseMinute: Int
@@ -45,7 +45,4 @@ extension UserGoal {
     var fatGramGoal: Double {
         return Double(dailyDietaryCalories) * macroRatio.fat / 9
     }
-}
-extension UserGoal: Codable {
-    
 }

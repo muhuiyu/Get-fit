@@ -7,6 +7,8 @@
 
 import Foundation
 import HealthKit
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 typealias UserID = String
 
@@ -42,6 +44,9 @@ extension User {
         self.email = nil
         self.photoURL = nil
     }
+//    init(snapshot: DocumentSnapshot) throws {
+//        self = try snapshot.data(as: User.self)
+//    }
 }
 extension User {
     enum Attribute {

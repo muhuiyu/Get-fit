@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct DateAndTime: Codable {
+struct DateAndTime: Codable, Comparable, Equatable {
     var year: Int
     var month: Int
     var day: Int
@@ -34,7 +34,7 @@ extension DateAndTime {
         self.minute = date.minute
         self.second = date.second
     }
-    init(date: DateTriple) {
+    init(date: YearMonthDay) {
         self.year = date.year
         self.month = date.month
         self.day = date.day
@@ -55,6 +55,8 @@ extension DateAndTime {
         dateComponents.timeZone = TimeZone(abbreviation: timeZone)
         return Calendar.current.date(from: dateComponents)
     }
+    var toYearMonthDay: YearMonthDay { YearMonthDay(year: self.year, month: self.month, day: self.day) }
+    
     static func difference(from start: DateAndTime, to end: DateAndTime) -> TimeInterval {
         guard
             let startTime = start.toDate(),
@@ -89,4 +91,16 @@ extension DateAndTime {
         }
         return self
     }
+}
+extension DateAndTime {
+    static func < (lhs: DateAndTime, rhs: DateAndTime) -> Bool {
+        if lhs.year != rhs.year { return lhs.year < rhs.year }
+        if lhs.month != rhs.month { return lhs.month < rhs.month }
+        if lhs.day != rhs.day { return lhs.day < rhs.day }
+        if lhs.hour != rhs.hour { return lhs.hour < rhs.hour }
+        if lhs.minute != rhs.minute { return lhs.minute < rhs.minute }
+        
+        return lhs.second < rhs.second
+    }
+    
 }

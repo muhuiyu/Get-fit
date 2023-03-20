@@ -76,6 +76,10 @@ extension AppText {
         static var days: String { "days" }
         static var minutes: String { "minutes" }
         static var minuteShort: String { "min" }
+        static var kg: String { "kg" }
+        static var g: String { "g" }
+        static var oz: String { "oz" }
+        static var lb: String { "lb" }
     }
 }
 // MARK: - Workout

@@ -6,6 +6,7 @@
 //
 
 enum WorkoutMachine: String {
+    case barbell
     case chestPressMachine
     case shoulderPressMachine
     case cableMachine
@@ -17,4 +18,7 @@ enum WorkoutMachine: String {
     case seatedLegCurlMachine
     case seatedLegExtensionMachine
     case seatedPecDeckMachine
+    case smithMachine
+    case bicepCurlMachine
+    case tricepPressMachine
 }

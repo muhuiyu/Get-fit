@@ -13,15 +13,14 @@ class Database: DataProvider {
 //    internal var cachedTransactions = [TransactionID: Transaction]()
 //    internal var cachedRecurringTransactions = [RecurringTransactionID: RecurringTransaction]()
 //    internal var cachedBudgets = [BudgetID: Budget]()
-//    internal var currencyDictionary = [CurrencyCode: Currency]()
-//
-//    internal var merchantList = [MerchantID: Merchant]()
+    internal var workoutSessionsCache = WorkoutSessionsCache()
     
     internal let dailyMealLogRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.dailyMealLogs)
     internal let workoutSessionRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.workoutSessions)
     internal let workoutRoutineRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.workoutRoutines)
     internal let progressRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.progress)
     internal let userPreferenceRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.userPreference)
+    internal let usersRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.users)
     
     struct FirebaseCollection {
         static let dailyMealLogs = "dailyMealLogs"
@@ -29,6 +28,7 @@ class Database: DataProvider {
         static let workoutRoutines = "workoutRoutines"
         static let progress = "progress"
         static let userPreference = "userPreference"
+        static let users = "users"
     }
     
     struct Attribute {
@@ -48,6 +48,8 @@ class Database: DataProvider {
         case invalidDocumentID
         case invalidQuery
         case setDataFailure
+        case deleteDataFailure
+        case dataEncodingError
     }
     
     init() {
@@ -83,6 +85,45 @@ extension Database {
 //                }
 //            }
 //        }
+        // workout log
+//        let workoutEntry = WorkoutSession(id: "VIdfe662ae2dISKD6MrJ",
+//                                          userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+//                                          startTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 11, minute: 0, second: 0),
+//                                          endTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 12, minute: 15, second: 0),
+//                                          title: "Full body",
+//                                          itemLogs: [
+//                                            WorkoutItemLog(itemID: WorkoutItem.assistedPullUp.id,
+//                                                           sets: [
+//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
+//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
+//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
+//                                                           ],
+//                                                           restTime: TimeInterval(30)),
+//                                            WorkoutItemLog(itemID: WorkoutItem.seatedLegPress.id,
+//                                                           sets: [
+//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
+//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
+//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
+//                                                           ],
+//                                                           restTime: TimeInterval(60)),
+//                                            WorkoutItemLog(itemID: WorkoutItem.bicepCurlWithMachine.id,
+//                                                           sets: [
+//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
+//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
+//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
+//                                                           ],
+//                                                           restTime: TimeInterval(30)),
+//                                          ])
+//        do {
+//            let documentRef = try workoutSessionRef.addDocument(from: workoutEntry) { error in
+//                if let error = error {
+//                    print(error)
+//                }
+//            }
+//            print(documentRef.documentID)
+//        } catch {
+//
+//        }
     }
 }
 // MARK: - Users
@@ -90,11 +131,23 @@ extension Database {
     internal func fetchUserPreference(for userID: UserID) async -> UserPreference? {
         do {
             let snapshot = try await userPreferenceRef.whereField(Attribute.userID, isEqualTo: userID).getDocuments()
+            guard !snapshot.documentChanges.isEmpty else { return nil }
             let userPreference = try? UserPreference(snapshot: snapshot.documentChanges[0].document)
             return userPreference
         } catch {
             return nil
         }
+    }
+    func fetchUserProfile(for userID: UserID) async -> User? {
+//        do {
+//            let snapshot = try await usersRef.whereField(Attribute.userID, isEqualTo: userID).getDocuments()
+//            guard !snapshot.documentChanges.isEmpty else { return nil }
+//            let user = try? User(snapshot: snapshot.documentChanges[0].document)
+//            return user
+//        } catch {
+//            return nil
+//        }
+        return nil
     }
 }
 // MARK: - Food set
@@ -128,6 +181,7 @@ extension Database {
         }
     }
     func fetchPreviousFoodLogs(for userID: UserID) async -> [FoodID: FoodLog] {
+        // TODO: - 
         let loggedFoods = [
             Food.chickenBreast.id: FoodLog(foodID: Food.chickenBreast.id, amount: 500, unit: .gram),
             Food.egg.id: FoodLog(foodID: Food.egg.id, amount: 5, unit: .each),
@@ -138,39 +192,128 @@ extension Database {
 }
 // MARK: - Search Food
 extension Database {
-    func searchFoods(contain keyword: String) async -> [FoodID] {
-        // TODO: - Connect to database
-        return Food.getItemIDs(contain: keyword)
+    func searchFoods(contain keyword: String) -> [FoodID] {
+        return Food.all
+            .filter({ $0.value.name.lowercased().contains(keyword.lowercased()) })
+            .map({ $0.key })
     }
 }
 // MARK: - Workout
 extension Database {
-    func fetchWorkoutRoutines(for userID: UserID) async -> [WorkoutRoutine] {
-        return WorkoutRoutine.testEntries
+    func fetchWorkoutRoutines(for userID: UserID) async {
+//        return WorkoutRoutine.testEntries
     }
     func removeWorkoutRoutine(for userID: UserID, at workoutRoutine: WorkoutRoutineID) async -> VoidResult {
         return .success
     }
-    func fetchAllWorkoutSessions(for userID: UserID) async -> [WorkoutSession] {
-        return WorkoutSession.testEntries
+    internal func fetchAllWorkoutSessions(for userID: UserID) async {
+        do {
+            let snapshot = try await workoutSessionRef
+                .whereField(Attribute.userID, isEqualTo: userID)
+                .getDocuments()
+            let sessions = snapshot.documentChanges.compactMap { try? WorkoutSession(snapshot: $0.document) }
+            workoutSessionsCache.updateData(sessions)
+        } catch {
+            // TODO: - error handle
+        }
     }
-    func fetchWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) async -> [WorkoutSession] {
-        return WorkoutSession.testEntries
+    internal func fetchWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) async {
+        do {
+            let snapshot = try await workoutSessionRef
+                .whereField(Attribute.userID, isEqualTo: userID)
+                .getDocuments()
+            let sessions = snapshot.documentChanges
+                .compactMap { try? WorkoutSession(snapshot: $0.document) }
+                .filter { session in
+                    session.startTime >= startDate.toDateAndTime && session.startTime <= endDate.toDateAndTime
+                }
+            workoutSessionsCache.updateData(sessions)
+        } catch {
+            // TODO: -
+        }
     }
-    func removeWorkoutSession(for userID: UserID, at workoutSession: WorkoutSessionID) async -> VoidResult {
-        return .success
+    internal func fetchWorkoutSessions(for userID: UserID, on date: YearMonthDay) async {
+        // TODO: - add some check?
+//        if workoutSessionsCache.isEmpty {
+//
+//        }
+        do {
+            let snapshot = try await workoutSessionRef
+                .whereField(Attribute.userID, isEqualTo: userID)
+                .getDocuments()
+            let sessions = snapshot.documentChanges
+                .compactMap { try? WorkoutSession(snapshot: $0.document) }
+                .filter { $0.startTime.toYearMonthDay == date || $0.endTime.toYearMonthDay == date }
+            workoutSessionsCache.updateData(sessions)
+        } catch {
+            // TODO: -
+        }
     }
-    func getWorkoutSessions(on date: DateTriple) -> [WorkoutSession] {
-        // TODO: - connect to real data
-        return WorkoutSession.testEntries
+    func removeWorkoutSession(for userID: UserID, at sessionID: WorkoutSessionID) async -> VoidResult {
+        do {
+            try await workoutSessionRef.document(sessionID).delete()
+            return .success
+        } catch {
+            return .failure(FirebaseError.deleteDataFailure)
+        }
     }
-    func getAllWorkoutSessions() -> [WorkoutSession] {
-        return WorkoutSession.testEntries
+    func getWorkoutSessions(for userID: UserID, on date: YearMonthDay) async -> [WorkoutSession] {
+        await fetchWorkoutSessions(for: userID, on: date)
+        return workoutSessionsCache.getSessions(on: date)
+    }
+    func getAllWorkoutSessions(for userID: UserID) async -> [WorkoutSession] {
+        await fetchAllWorkoutSessions(for: userID)
+        return workoutSessionsCache.getAllSessions()
+    }
+    func updateWorkoutSession(for userID: UserID, _ session: WorkoutSession) async -> VoidResult {
+        do {
+            guard let data = session.dictionary else {
+                return .failure(FirebaseError.dataEncodingError)
+            }
+            try await workoutSessionRef
+                .document(session.id)
+                .setData(data)
+            return .success
+        } catch {
+            return .failure(FirebaseError.setDataFailure)
+        }
     }
 }
 // MARK: - Journal
 extension Database {
     func fetchJournal(for userID: UserID, on date: Date) async -> [Journal] {
+        // TODO: -
         return Journal.testEntries.filter { $0.year == date.year && $0.month == date.month && $0.day == date.dayOfMonth }
     }
+}
+
+
+// MARK: - Cache
+struct WorkoutSessionsCache {
+    var data: [WorkoutSessionID: WorkoutSession]
+    var lastUpdatedTime: Date?
+    
+    init() {
+        data = [WorkoutSessionID: WorkoutSession]()
+        lastUpdatedTime = nil
+    }
+    
+    var isEmpty: Bool { lastUpdatedTime == nil || data.isEmpty }
+    
+    mutating func updateData(_ sessions: [WorkoutSession]) {
+        lastUpdatedTime = Date()
+        sessions.forEach { data[$0.id] = $0 }
+    }
+    
+    func getSessions(on date: YearMonthDay, isSorted: Bool = false) -> [WorkoutSession] {
+        if data.isEmpty { return [] }
+        return data.values.filter({ $0.startTime.toYearMonthDay == date || $0.endTime.toYearMonthDay == date })
+    }
+    
+    func getAllSessions(isSorted: Bool = false) -> [WorkoutSession] {
+        return data.values.map({ $0 })
+    }
+}
+struct DailyMealLogsCache {
+    
 }

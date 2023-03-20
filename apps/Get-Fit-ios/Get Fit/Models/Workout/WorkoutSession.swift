@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 typealias WorkoutSessionID = String
@@ -66,27 +67,25 @@ extension WorkoutSession {
         self.itemLogs = routine.itemLogs
         self.note = routine.note
     }
+    private struct WorkoutSessionData: Codable {
+        var userID: UserID
+        var startTime: DateAndTime
+        var endTime: DateAndTime
+        var title: String
+        var itemLogs: [WorkoutItemLog]
+        var note: String
+    }
+    init(snapshot: DocumentSnapshot) throws {
+        id = snapshot.documentID
+        let data = try snapshot.data(as: WorkoutSessionData.self)
+        userID = data.userID
+        startTime = data.startTime
+        endTime = data.endTime
+        title = data.title
+        itemLogs = data.itemLogs
+        note = data.note
+    }
 }
-//extension WorkoutSession {
-//    private struct WorkoutSessionData {
-//        var userID: UserID
-//        var startTime: DateAndTime
-//        var endTime: DateAndTime
-//        var title: String
-//        var itemLogs: [WorkoutItemLog]
-//        var note: String
-//
-//        private enum CodingKeys: String, CodingKey {
-//            case userID
-//            case startTime
-//            case endTime
-//            case title
-//            case itemLogs
-//            case note
-//        }
-//
-//    }
-//}
 
 extension WorkoutSession {
     var durationInHourMinuteString: String {
@@ -104,5 +103,10 @@ extension WorkoutSession {
     }
     var allItemNames: String {
         return itemLogs.compactMap { WorkoutItem.getWorkoutItemName(of: $0.itemID) }.joined(separator: ", ")
+    }
+    var previewText: String {
+        return itemLogs
+            .compactMap({ WorkoutItem.getWorkoutItem(of: $0.itemID)?.name })
+            .joined(separator: ", ")
     }
 }

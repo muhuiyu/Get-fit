@@ -13,6 +13,7 @@ protocol DataProvider {
     
     // User
     func fetchUserPreference(for userID: UserID) async -> UserPreference?
+    func fetchUserProfile(for userID: UserID) async -> User?
     
     // Food, Database
     func fetchCustomizedMeals(for userID: UserID) async -> [CustomizedMeal]
@@ -22,14 +23,17 @@ protocol DataProvider {
     func fetchPreviousFoodLogs(for userID: UserID) async -> [FoodID: FoodLog]
     
     // Search
-    func searchFoods(contain keyword: String) async -> [FoodID]
+    func searchFoods(contain keyword: String) -> [FoodID]
     
     // Workout
-    func fetchWorkoutRoutines(for userID: UserID) async -> [WorkoutRoutine]
+    func fetchWorkoutRoutines(for userID: UserID) async
     func removeWorkoutRoutine(for userID: UserID, at workoutRoutine: WorkoutRoutineID) async -> VoidResult
-    func fetchAllWorkoutSessions(for userID: UserID) async -> [WorkoutSession]
-    func fetchWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) async -> [WorkoutSession]
-    func removeWorkoutSession(for userID: UserID, at workoutSession: WorkoutSessionID) async -> VoidResult
+    func fetchAllWorkoutSessions(for userID: UserID) async
+    func fetchWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) async
+    func getWorkoutSessions(for userID: UserID, on date: YearMonthDay) async -> [WorkoutSession]
+    func getAllWorkoutSessions(for userID: UserID) async -> [WorkoutSession]
+    func removeWorkoutSession(for userID: UserID, at sessionID: WorkoutSessionID) async -> VoidResult
+    func updateWorkoutSession(for userID: UserID, _ session: WorkoutSession) async -> VoidResult
     
     // Journal
     func fetchJournal(for userID: UserID, on date: Date) async -> [Journal]

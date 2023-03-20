@@ -16,5 +16,5 @@ enum WorkoutBodyPart: String {
     case quads
     case hamstrings
     case calves
-    case abs
+    case core
 }

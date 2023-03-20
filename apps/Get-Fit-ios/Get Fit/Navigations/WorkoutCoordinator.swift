@@ -23,29 +23,31 @@ extension WorkoutCoordinator {
     private func makeViewController(for destination: Destination) -> ViewController? {
         switch destination {
         case .viewSessionLog(let session):
-            let viewController = WorkoutSessionViewController(appCoordinator: self.parentCoordinator,
-                                                              workoutCoordinator: self)
+            let viewController = WorkoutSessionViewController(appCoordinator: parentCoordinator,
+                                                              coordinator: self,
+                                                              viewModel: WorkoutSessionViewModel())
             viewController.viewModel.session.accept(session)
             return viewController
         case .viewWorkoutRoutineList:
-            let viewController = WorkoutRoutineListViewController(appCoordinator: self.parentCoordinator,
-                                                                  workoutCoordinator: self)
+            let viewController = WorkoutRoutineListViewController(appCoordinator: parentCoordinator,
+                                                                  coordinator: self)
             return viewController
         case .viewWorkoutRoutine(let routine):
-            let viewController = WorkoutRoutineViewController(appCoordinator: self.parentCoordinator,
-                                                              workoutCoordinator: self)
+            let viewController = WorkoutRoutineViewController(appCoordinator: parentCoordinator,
+                                                              coordinator: self)
             viewController.viewModel.routine.accept(routine)
             return viewController
         case .viewCreateRoutine:
-            let viewController = WorkoutRoutineViewController(appCoordinator: self.parentCoordinator,
-                                                              workoutCoordinator: self)
+            let viewController = WorkoutRoutineViewController(appCoordinator: parentCoordinator,
+                                                              coordinator: self)
             viewController.viewModel.routine.accept(WorkoutRoutine())
             return viewController
         case .editItemLog(let itemLog):
             // TODO: -
             return BaseViewController()
         case .selectFromExerciseList(let workoutSessionViewModel, let workoutRoutineViewModel):
-            let viewController = WorkoutExerciseListViewController(workoutCoordinator: self,
+            let viewController = WorkoutExerciseListViewController(appCoordinator: parentCoordinator,
+                                                                   coordinator: self,
                                                                    routineViewModel: workoutRoutineViewModel,
                                                                    sessionViewModel: workoutSessionViewModel)
             return viewController

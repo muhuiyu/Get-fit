@@ -108,4 +108,5 @@ class Icons {
     static var textBookClosedFill: String { "text.book.closed.fill" }
     static var crossFill: String { "cross.fill" }
     static var heartFill: String { "heart.fill" }
+    static var timer: String { "timer" }
 }

@@ -213,7 +213,8 @@ extension Date {
     }
 }
 
-// MARK: - DateTriple
+// MARK: - YearMonthDay
 extension Date {
-    var toDateTriple: DateTriple { DateTriple(year: self.year, month: self.month, day: self.dayOfMonth) }
+    var toYearMonthDay: YearMonthDay { YearMonthDay(year: self.year, month: self.month, day: self.dayOfMonth) }
+    var toDateAndTime: DateAndTime { DateAndTime(year: self.year, month: self.month, day: self.dayOfMonth, hour: self.hour, minute: self.minute, second: self.second) }
 }

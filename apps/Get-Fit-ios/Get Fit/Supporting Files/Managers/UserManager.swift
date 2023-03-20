@@ -7,13 +7,14 @@
 
 import UIKit
 import HealthKit
+import GoogleSignIn
 
 class UserManager {
     private var user: User?
     private var healthStore = HKHealthStore()
     private var hasRequestedHealthData = false
-    private var healthData = [DateTriple: UserHealthData]()
-    private var workoutData = [DateTriple: [HKWorkout]]()
+    private var healthData = [YearMonthDay: UserHealthData]()
+    private var workoutData = [YearMonthDay: [HKWorkout]]()
     
     init() {
         setupHealthRequest()
@@ -56,18 +57,18 @@ extension UserManager {
     var waterIntakeGoal: Double { user?.goal.waterIntakeGoal ?? 0 }
     
     // Health
-    func stepCount(on date: Date) -> Int { healthData[date.toDateTriple]?.stepCount ?? 0 }
-    func sleepHours(on date: Date) -> Double { healthData[date.toDateTriple]?.sleepHours ?? 0 }
-    func basalEnergyBurned(on date: Date) -> Int { healthData[date.toDateTriple]?.basalEnergyBurned ?? 0 }
-    func activeEnergyBurned(on date: Date) -> Int { healthData[date.toDateTriple]?.activeEnergyBurned ?? 0 }
+    func stepCount(on date: Date) -> Int { healthData[date.toYearMonthDay]?.stepCount ?? 0 }
+    func sleepHours(on date: Date) -> Double { healthData[date.toYearMonthDay]?.sleepHours ?? 0 }
+    func basalEnergyBurned(on date: Date) -> Int { healthData[date.toYearMonthDay]?.basalEnergyBurned ?? 0 }
+    func activeEnergyBurned(on date: Date) -> Int { healthData[date.toYearMonthDay]?.activeEnergyBurned ?? 0 }
     func totalEnergyBurned(on date: Date) -> Int { self.basalEnergyBurned(on: date) + self.activeEnergyBurned(on: date) }
-    func height(on date: Date) -> Double { healthData[date.toDateTriple]?.height ?? 0 }
-    func bodyMass(on date: Date) -> Double { healthData[date.toDateTriple]?.bodyMass ?? 0 }
-    func bodyFatPercentage(on date: Date) -> Double { healthData[date.toDateTriple]?.bodyFatPercentage ?? 0 }
-    func dietaryWater(on date: Date) -> Double { healthData[date.toDateTriple]?.dietaryWater ?? 0 }
+    func height(on date: Date) -> Double { healthData[date.toYearMonthDay]?.height ?? 0 }
+    func bodyMass(on date: Date) -> Double { healthData[date.toYearMonthDay]?.bodyMass ?? 0 }
+    func bodyFatPercentage(on date: Date) -> Double { healthData[date.toYearMonthDay]?.bodyFatPercentage ?? 0 }
+    func dietaryWater(on date: Date) -> Double { healthData[date.toYearMonthDay]?.dietaryWater ?? 0 }
     
     // Workout
-    func workout(on date: Date) -> [HKWorkout] { workoutData[date.toDateTriple] ?? [] }
+    func workout(on date: Date) -> [HKWorkout] { workoutData[date.toYearMonthDay] ?? [] }
 }
 // MARK: - Set data
 extension UserManager {
@@ -208,7 +209,7 @@ extension UserManager {
                     } else {
                         results?.forEach({ result in
                             let date = result.startDate
-                            self.healthData[date.toDateTriple]?.updateData(of: type, to: result)
+                            self.healthData[date.toYearMonthDay]?.updateData(of: type, to: result)
                         })
                     }
                 }
@@ -243,7 +244,7 @@ extension UserManager {
     private func updateWorkoutData(data: [HKWorkout]) {
         for workout in data {
             let date = workout.startDate
-            self.workoutData[date.toDateTriple, default: []].append(workout)
+            self.workoutData[date.toYearMonthDay, default: []].append(workout)
         }
     }
 }

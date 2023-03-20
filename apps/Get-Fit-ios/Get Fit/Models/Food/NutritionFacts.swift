@@ -33,6 +33,9 @@ struct NutritionFacts {
     var vitaminB9: Double?
     var cobalamin: Double?  // vitamin B12
     
+    var omega3: Double?
+    var omega6: Double?
+    
     init(calories: Int,
          carbs: Double,
          protein: Double,
@@ -55,32 +58,37 @@ struct NutritionFacts {
          vitaminB3: Double? = nil,
          vitaminB6: Double? = nil,
          vitaminB9: Double? = nil,
-         cobalamin: Double? = nil) {
+         cobalamin: Double? = nil,
+         omega3: Double? = nil,
+         omega6: Double? = nil
+    ) {
         
         self.calories = calories
         self.carbs = carbs
         self.protein = protein
         self.fat = fat
         
-        self.fiber = nil
-        self.sugar = nil
-        self.cholesterol = nil
-        self.sodium = nil
-        self.potassium = nil
-        self.calcium = nil
-        self.magnesium = nil
-        self.iron = nil
-        self.vitaminA = nil
-        self.vitaminC = nil
-        self.vitaminD = nil
-        self.vitaminE = nil
-        self.vitaminK = nil
-        self.vitaminB1 = nil
-        self.vitaminB2 = nil
-        self.vitaminB3 = nil
-        self.vitaminB6 = nil
-        self.vitaminB9 = nil
-        self.cobalamin = nil
+        self.fiber = fiber
+        self.sugar = sugar
+        self.cholesterol = cholesterol
+        self.sodium = sodium
+        self.potassium = potassium
+        self.calcium = calcium
+        self.magnesium = magnesium
+        self.iron = iron
+        self.vitaminA = vitaminA
+        self.vitaminC = vitaminC
+        self.vitaminD = vitaminD
+        self.vitaminE = vitaminE
+        self.vitaminK = vitaminK
+        self.vitaminB1 = vitaminB1
+        self.vitaminB2 = vitaminB2
+        self.vitaminB3 = vitaminB3
+        self.vitaminB6 = vitaminB6
+        self.vitaminB9 = vitaminB9
+        self.cobalamin = cobalamin
+        self.omega3 = omega3
+        self.omega6 = omega6
     }
 }
 

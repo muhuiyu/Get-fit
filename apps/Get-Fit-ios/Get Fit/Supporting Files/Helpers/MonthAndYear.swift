@@ -25,7 +25,7 @@ extension MonthAndYear {
 }
 extension MonthAndYear {
     func toDate(dayOfMonth: Int = 1) -> Date? {
-        DateTriple(year: self.year, month: self.month, day: dayOfMonth).toDate()
+        YearMonthDay(year: self.year, month: self.month, day: dayOfMonth).toDate()
     }
     var toMonthAndYearString: String? {
         self.toDate()?.toMonthAndYearString

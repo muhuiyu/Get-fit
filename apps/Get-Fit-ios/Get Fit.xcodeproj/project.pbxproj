@@ -22,7 +22,7 @@
 		E416BC9528BE4F15008CBEE4 /* Food+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9428BE4F15008CBEE4 /* Food+Collection.swift */; };
 		E416BC9728BE4F38008CBEE4 /* WorkoutItem+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9628BE4F38008CBEE4 /* WorkoutItem+Collection.swift */; };
 		E416BC9928BE5426008CBEE4 /* IconTitleSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9828BE5426008CBEE4 /* IconTitleSubtitleView.swift */; };
-		E416BC9B28BEEA97008CBEE4 /* DateTriple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9A28BEEA97008CBEE4 /* DateTriple.swift */; };
+		E416BC9B28BEEA97008CBEE4 /* YearMonthDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9A28BEEA97008CBEE4 /* YearMonthDay.swift */; };
 		E416BC9D28BEEAC0008CBEE4 /* MonthAndYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9C28BEEAC0008CBEE4 /* MonthAndYear.swift */; };
 		E416BC9F28BEF29A008CBEE4 /* DiaryDateControllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC9E28BEF29A008CBEE4 /* DiaryDateControllCell.swift */; };
 		E416BCA128BEFA6F008CBEE4 /* DailyMealLog+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BCA028BEFA6F008CBEE4 /* DailyMealLog+Collection.swift */; };
@@ -78,6 +78,8 @@
 		E4C25E4629C43DAC006734A5 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4529C43DAC006734A5 /* Lottie */; };
 		E4C25E4929C43E07006734A5 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4829C43E07006734A5 /* Collections */; };
 		E4C25E4B29C43E07006734A5 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4A29C43E07006734A5 /* OrderedCollections */; };
+		E4C25E4D29C5DACB006734A5 /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25E4C29C5DACB006734A5 /* Encodable+Extensions.swift */; };
+		E4C25E5629C7031C006734A5 /* BaseMVVMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25E5529C7031C006734A5 /* BaseMVVMViewController.swift */; };
 		E4C78BE528B12124005AE5C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C78BE428B12124005AE5C4 /* AppDelegate.swift */; };
 		E4C78BEE28B12126005AE5C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4C78BED28B12126005AE5C4 /* Assets.xcassets */; };
 		E4C78BF128B12126005AE5C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4C78BEF28B12126005AE5C4 /* LaunchScreen.storyboard */; };
@@ -174,7 +176,7 @@
 		E416BC9428BE4F15008CBEE4 /* Food+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Food+Collection.swift"; sourceTree = "<group>"; };
 		E416BC9628BE4F38008CBEE4 /* WorkoutItem+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutItem+Collection.swift"; sourceTree = "<group>"; };
 		E416BC9828BE5426008CBEE4 /* IconTitleSubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleView.swift; sourceTree = "<group>"; };
-		E416BC9A28BEEA97008CBEE4 /* DateTriple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTriple.swift; sourceTree = "<group>"; };
+		E416BC9A28BEEA97008CBEE4 /* YearMonthDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthDay.swift; sourceTree = "<group>"; };
 		E416BC9C28BEEAC0008CBEE4 /* MonthAndYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthAndYear.swift; sourceTree = "<group>"; };
 		E416BC9E28BEF29A008CBEE4 /* DiaryDateControllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDateControllCell.swift; sourceTree = "<group>"; };
 		E416BCA028BEFA6F008CBEE4 /* DailyMealLog+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyMealLog+Collection.swift"; sourceTree = "<group>"; };
@@ -214,6 +216,8 @@
 		E48912B528CEA8D9009AFB09 /* TitleTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableHeaderView.swift; sourceTree = "<group>"; };
 		E490D12F28BCA1EA0074E28F /* Get Fit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Get Fit.entitlements"; sourceTree = "<group>"; };
 		E490D13128BCA1EB0074E28F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		E4C25E4C29C5DACB006734A5 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
+		E4C25E5529C7031C006734A5 /* BaseMVVMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMVVMViewController.swift; sourceTree = "<group>"; };
 		E4C78BE128B12124005AE5C4 /* Get Fit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Get Fit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C78BE428B12124005AE5C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4C78BED28B12126005AE5C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -325,7 +329,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E416BC7D28BCEB50008CBEE4 /* Food */ = {
+		E416BC7D28BCEB50008CBEE4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E416BC7E28BCEC69008CBEE4 /* NutritionAnalysisViewController.swift */,
@@ -333,14 +337,14 @@
 				E416BC8228BCEC92008CBEE4 /* EditFoodLogViewController.swift */,
 				E416BC8728BCF7E6008CBEE4 /* FoodLogCell.swift */,
 			);
-			path = Food;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E416BC8428BCECF0008CBEE4 /* Food */ = {
 			isa = PBXGroup;
 			children = (
-				E416BC8528BCED05008CBEE4 /* AddFoodViewModel.swift */,
-				E416BC8B28BD9019008CBEE4 /* FoodLogViewModel.swift */,
+				E4C25E5329C70119006734A5 /* View Models */,
+				E416BC7D28BCEB50008CBEE4 /* Controllers */,
 			);
 			path = Food;
 			sourceTree = "<group>";
@@ -358,18 +362,19 @@
 			path = Collections;
 			sourceTree = "<group>";
 		};
-		E416BCA228BEFF14008CBEE4 /* Progress */ = {
+		E416BCA228BEFF14008CBEE4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E416BCA328BEFF23008CBEE4 /* ProgressViewController.swift */,
 			);
-			path = Progress;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E416BCA528BEFF38008CBEE4 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
-				E416BCA628BEFF42008CBEE4 /* ProgressViewModel.swift */,
+				E416BCA228BEFF14008CBEE4 /* Controllers */,
+				E4C25E5429C7012F006734A5 /* View Models */,
 			);
 			path = Progress;
 			sourceTree = "<group>";
@@ -398,6 +403,78 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E4C25E4E29C70097006734A5 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				E4C78C0228B12173005AE5C4 /* HomeViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		E4C25E4F29C700A9006734A5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E416BC9E28BEF29A008CBEE4 /* DiaryDateControllCell.swift */,
+				E4C78D4528B1D6D2005AE5C4 /* CaloriesSummaryCell.swift */,
+				E416BC9128BE4594008CBEE4 /* MacroRatioBarView.swift */,
+				E416BC8D28BD91E8008CBEE4 /* DoubleUnitsCell.swift */,
+				E416BC9828BE5426008CBEE4 /* IconTitleSubtitleView.swift */,
+				E44B6B9428B451D900CCB19C /* IconTitleSubtitleNumberUnitView.swift */,
+				E48912B328CEA857009AFB09 /* MealSummaryHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E4C25E5029C700CD006734A5 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				E4C78D5728B20D3F005AE5C4 /* WorkoutViewModel.swift */,
+				E4C78D6D28B274C0005AE5C4 /* WorkoutSessionViewModel.swift */,
+				E42E45BD28B4A3AE0088A9BF /* WorkoutRoutineListViewModel.swift */,
+				E42E45C128B4CF420088A9BF /* WorkoutRoutineViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		E4C25E5129C700E0006734A5 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				E4C78D4228B1268F005AE5C4 /* Common */,
+				E4C78D4328B12699005AE5C4 /* Home */,
+				E416BC8428BCECF0008CBEE4 /* Food */,
+				E4C78D4428B126A4005AE5C4 /* Workout */,
+				E4C78D3F28B1268C005AE5C4 /* Me */,
+				E416BCA528BEFF38008CBEE4 /* Progress */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		E4C25E5229C70108006734A5 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				E44C592E28C59363007DA562 /* AuthenticationViewModel.swift */,
+				E4C78C0328B12173005AE5C4 /* BaseViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		E4C25E5329C70119006734A5 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				E416BC8528BCED05008CBEE4 /* AddFoodViewModel.swift */,
+				E416BC8B28BD9019008CBEE4 /* FoodLogViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		E4C25E5429C7012F006734A5 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				E416BCA628BEFF42008CBEE4 /* ProgressViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		E4C78BD828B12124005AE5C4 = {
 			isa = PBXGroup;
 			children = (
@@ -421,9 +498,7 @@
 				E490D12F28BCA1EA0074E28F /* Get Fit.entitlements */,
 				E4C78C1628B12173005AE5C4 /* Data */,
 				E4C78C0A28B12173005AE5C4 /* Models */,
-				E4C78C9228B12174005AE5C4 /* Data Source */,
-				E4C78BF828B12173005AE5C4 /* View Models */,
-				E4C78C2128B12173005AE5C4 /* Views */,
+				E4C25E5129C700E0006734A5 /* Features */,
 				E4C78C8B28B12174005AE5C4 /* Navigations */,
 				E4C78C5F28B12174005AE5C4 /* Supporting Files */,
 				E4C78BE428B12124005AE5C4 /* AppDelegate.swift */,
@@ -434,19 +509,6 @@
 				E44C592928C4EE8C007DA562 /* GoogleService-Info.plist */,
 			);
 			path = "Get Fit";
-			sourceTree = "<group>";
-		};
-		E4C78BF828B12173005AE5C4 /* View Models */ = {
-			isa = PBXGroup;
-			children = (
-				E4C78D4228B1268F005AE5C4 /* Common */,
-				E4C78D4328B12699005AE5C4 /* Home */,
-				E416BC8428BCECF0008CBEE4 /* Food */,
-				E4C78D4428B126A4005AE5C4 /* Workout */,
-				E416BCA528BEFF38008CBEE4 /* Progress */,
-				E4C78D3F28B1268C005AE5C4 /* Me */,
-			);
-			path = "View Models";
 			sourceTree = "<group>";
 		};
 		E4C78C0A28B12173005AE5C4 /* Models */ = {
@@ -469,19 +531,6 @@
 				E4C78D2728B122F0005AE5C4 /* Localized Strings */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		E4C78C2128B12173005AE5C4 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E4C78D3128B125D5005AE5C4 /* Common */,
-				E4C78D2D28B12564005AE5C4 /* Home */,
-				E416BC7D28BCEB50008CBEE4 /* Food */,
-				E4C78D2E28B1256B005AE5C4 /* Workout */,
-				E416BCA228BEFF14008CBEE4 /* Progress */,
-				E4C78D3C28B12665005AE5C4 /* Me */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		E4C78C5F28B12174005AE5C4 /* Supporting Files */ = {
@@ -577,7 +626,8 @@
 				E4C78C8A28B12174005AE5C4 /* Double+Extensions.swift */,
 				E4C78D5528B209A3005AE5C4 /* DateAndTime.swift */,
 				E416BC9C28BEEAC0008CBEE4 /* MonthAndYear.swift */,
-				E416BC9A28BEEA97008CBEE4 /* DateTriple.swift */,
+				E416BC9A28BEEA97008CBEE4 /* YearMonthDay.swift */,
+				E4C25E4C29C5DACB006734A5 /* Encodable+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -613,22 +663,15 @@
 			path = "Localized Strings";
 			sourceTree = "<group>";
 		};
-		E4C78D2D28B12564005AE5C4 /* Home */ = {
+		E4C78D2D28B12564005AE5C4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E4C78D2F28B1259C005AE5C4 /* HomeViewController.swift */,
-				E416BC9E28BEF29A008CBEE4 /* DiaryDateControllCell.swift */,
-				E4C78D4528B1D6D2005AE5C4 /* CaloriesSummaryCell.swift */,
-				E416BC9128BE4594008CBEE4 /* MacroRatioBarView.swift */,
-				E416BC8D28BD91E8008CBEE4 /* DoubleUnitsCell.swift */,
-				E416BC9828BE5426008CBEE4 /* IconTitleSubtitleView.swift */,
-				E44B6B9428B451D900CCB19C /* IconTitleSubtitleNumberUnitView.swift */,
-				E48912B328CEA857009AFB09 /* MealSummaryHeaderView.swift */,
 			);
-			path = Home;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E4C78D2E28B1256B005AE5C4 /* Workout */ = {
+		E4C78D2E28B1256B005AE5C4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E4C78D3A28B12660005AE5C4 /* WorkoutViewController.swift */,
@@ -639,10 +682,10 @@
 				E42E45BF28B4CF290088A9BF /* WorkoutRoutineViewController.swift */,
 				E42E45C328B4D8720088A9BF /* WorkoutExerciseListViewController.swift */,
 			);
-			path = Workout;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E4C78D3128B125D5005AE5C4 /* Common */ = {
+		E4C78D3128B125D5005AE5C4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E4C78D3228B125D5005AE5C4 /* BaseViewController.swift */,
@@ -656,22 +699,24 @@
 				E44C591028BF8E63007DA562 /* TitleSubtitleDetailCell.swift */,
 				E48912AF28CC828E009AFB09 /* TitleSubtitleButtonCell.swift */,
 				E48912B528CEA8D9009AFB09 /* TitleTableHeaderView.swift */,
+				E4C25E5529C7031C006734A5 /* BaseMVVMViewController.swift */,
 			);
-			path = Common;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E4C78D3C28B12665005AE5C4 /* Me */ = {
+		E4C78D3C28B12665005AE5C4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E4C78D3D28B1267E005AE5C4 /* MeViewController.swift */,
 				E42E45C528B509ED0088A9BF /* MeAccountDetailViewController.swift */,
 			);
-			path = Me;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E4C78D3F28B1268C005AE5C4 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				E4C78D3C28B12665005AE5C4 /* Controllers */,
 				E4C78D4028B1268C005AE5C4 /* MeViewModel.swift */,
 			);
 			path = Me;
@@ -680,8 +725,8 @@
 		E4C78D4228B1268F005AE5C4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E44C592E28C59363007DA562 /* AuthenticationViewModel.swift */,
-				E4C78C0328B12173005AE5C4 /* BaseViewModel.swift */,
+				E4C25E5229C70108006734A5 /* View Models */,
+				E4C78D3128B125D5005AE5C4 /* Controllers */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -689,7 +734,9 @@
 		E4C78D4328B12699005AE5C4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E4C78C0228B12173005AE5C4 /* HomeViewModel.swift */,
+				E4C25E4F29C700A9006734A5 /* Views */,
+				E4C25E4E29C70097006734A5 /* View Models */,
+				E4C78D2D28B12564005AE5C4 /* Controllers */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -697,10 +744,9 @@
 		E4C78D4428B126A4005AE5C4 /* Workout */ = {
 			isa = PBXGroup;
 			children = (
-				E4C78D5728B20D3F005AE5C4 /* WorkoutViewModel.swift */,
-				E4C78D6D28B274C0005AE5C4 /* WorkoutSessionViewModel.swift */,
-				E42E45BD28B4A3AE0088A9BF /* WorkoutRoutineListViewModel.swift */,
-				E42E45C128B4CF420088A9BF /* WorkoutRoutineViewModel.swift */,
+				E4C78D2E28B1256B005AE5C4 /* Controllers */,
+				E4C25E5029C700CD006734A5 /* View Models */,
+				E4C78C9228B12174005AE5C4 /* Data Source */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -885,7 +931,7 @@
 				E42E45BE28B4A3AE0088A9BF /* WorkoutRoutineListViewModel.swift in Sources */,
 				E4C78D2A28B1232C005AE5C4 /* AppText.swift in Sources */,
 				E4C78CA328B12174005AE5C4 /* BaseViewModel.swift in Sources */,
-				E416BC9B28BEEA97008CBEE4 /* DateTriple.swift in Sources */,
+				E416BC9B28BEEA97008CBEE4 /* YearMonthDay.swift in Sources */,
 				E4C78D1C28B12183005AE5C4 /* SceneDelegate.swift in Sources */,
 				E4C78CFA28B12174005AE5C4 /* Constants.swift in Sources */,
 				E416BC8328BCEC92008CBEE4 /* EditFoodLogViewController.swift in Sources */,
@@ -939,6 +985,7 @@
 				E4C78D0C28B12174005AE5C4 /* UILabel+Extensions.swift in Sources */,
 				E4C78D0828B12174005AE5C4 /* UIStack+RemoveAll.swift in Sources */,
 				E42E45C228B4CF420088A9BF /* WorkoutRoutineViewModel.swift in Sources */,
+				E4C25E4D29C5DACB006734A5 /* Encodable+Extensions.swift in Sources */,
 				E4C78CFF28B12174005AE5C4 /* ViewController.swift in Sources */,
 				E4C78CF428B12174005AE5C4 /* UserManager.swift in Sources */,
 				E4C78CF528B12174005AE5C4 /* CacheManager.swift in Sources */,
@@ -952,6 +999,7 @@
 				E4F73B9628BA1D120056E1DD /* CustomizedMeal.swift in Sources */,
 				E4C78CA228B12174005AE5C4 /* HomeViewModel.swift in Sources */,
 				E416BCA928BEFF97008CBEE4 /* ProgressCoordinator.swift in Sources */,
+				E4C25E5629C7031C006734A5 /* BaseMVVMViewController.swift in Sources */,
 				E416BC9F28BEF29A008CBEE4 /* DiaryDateControllCell.swift in Sources */,
 				E44C590428BF46ED007DA562 /* WorkoutCircuitSet.swift in Sources */,
 				E416BC8C28BD9019008CBEE4 /* FoodLogViewModel.swift in Sources */,
