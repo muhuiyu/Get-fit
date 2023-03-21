@@ -28,29 +28,36 @@ class BaseCoordinator: Coordinator {
 // MARK: - Navigation
 extension BaseCoordinator {
     /// To navigate to ViewController
-    internal func navigate(to viewController: UIViewController, presentModally: Bool, options: ModalOptions? = nil) {
+    internal func navigate(to viewController: UIViewController,
+                           presentModally: Bool,
+                           _ detents: [UISheetPresentationController.Detent] = [],
+                           options: ModalOptions? = nil) {
         if presentModally {
             if let options = options {
                 viewController.modalPresentationStyle = options.modalPresentationStyle
                 viewController.isModalInPresentation = options.isModalInPresentation
                 if options.isEmbedInNavigationController {
-                    present(viewController.embedInNavgationController())
+                    present(viewController.embedInNavgationController(), detents)
                 } else {
-                    present(viewController)
+                    present(viewController, detents)
                 }
             } else {
-                present(viewController)
+                present(viewController, detents)
             }
         } else {
             navigationController.pushViewController(viewController, animated: true)
         }
     }
-    private func present(_ viewController: UIViewController) {
-        if let presentedViewController = navigationController.presentedViewController {
-            presentedViewController.present(viewController, animated: true)
+    private func present(_ viewController: UIViewController,
+                         _ detents: [UISheetPresentationController.Detent] = []) {
+        let presentedViewController = navigationController.presentedViewController ?? navigationController
+        if !detents.isEmpty, let sheet = viewController.sheetPresentationController {
+            viewController.modalPresentationStyle = .pageSheet
+            sheet.detents = [.medium()]
         } else {
-            navigationController.present(viewController, animated: true)
+            viewController.modalPresentationStyle = .automatic
         }
+        presentedViewController.present(viewController, animated: true)
     }
 }
 
@@ -66,6 +73,21 @@ extension BaseCoordinator {
 }
 
 // MARK: - Alert
+struct AlertControllerOption {
+    let title: String?
+    let message: String?
+    let preferredStyle: UIAlertController.Style
+}
+struct AlertActionOption {
+    let title: String?
+    let style: UIAlertAction.Style
+    let handler: ((UIAlertAction) -> Void)?
+    
+    static var cancel: AlertActionOption {
+        AlertActionOption(title: AppText.General.cancel, style: .cancel, handler: nil)
+    }
+}
+
 extension BaseCoordinator {
     func presentAlert(option: AlertControllerOption, actions: [AlertActionOption], completion: (() -> Void)? = nil) {
         let alert = configureAlertController(option: option, actions: actions)
@@ -84,18 +106,9 @@ extension BaseCoordinator {
         }
         return alert
     }
-    struct AlertControllerOption {
-        let title: String?
-        let message: String?
-        let preferredStyle: UIAlertController.Style
-    }
-    struct AlertActionOption {
-        let title: String?
-        let style: UIAlertAction.Style
-        let handler: ((UIAlertAction) -> Void)?
-    }
 }
 
+// MARK: - Modals
 struct ModalOptions {
     let isEmbedInNavigationController: Bool
     let modalPresentationStyle: UIModalPresentationStyle

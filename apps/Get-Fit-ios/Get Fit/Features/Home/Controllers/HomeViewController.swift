@@ -195,17 +195,17 @@ extension HomeViewController {
     @objc
     private func didTapAdd(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator as? HomeCoordinator else { return }
-        let alertControllerOption = BaseCoordinator.AlertControllerOption(title: AppText.General.add,
-                                                                          message: nil,
-                                                                          preferredStyle: .actionSheet)
+        let alertControllerOption = AlertControllerOption(title: AppText.General.add,
+                                                          message: nil,
+                                                          preferredStyle: .actionSheet)
         let alertActions = [
 //            BaseCoordinator.AlertActionOption(title: AppText.Home.addMeal, style: .default) { _ in
 //                self.homeCoordinator?.showAddMeal(on: self.viewModel.currentDate.value)
 //            },
-            BaseCoordinator.AlertActionOption(title: AppText.Home.addJournal, style: .default) { _ in
+            AlertActionOption(title: AppText.Home.addJournal, style: .default) { _ in
                 coordinator.showAddJournal()
             },
-            BaseCoordinator.AlertActionOption(title: AppText.General.cancel, style: .cancel, handler: nil)
+            AlertActionOption.cancel
         ]
         
         coordinator.presentAlert(option: alertControllerOption, actions: alertActions)

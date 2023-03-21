@@ -11,8 +11,8 @@ class DiaryDateControllCell: UITableViewCell {
     static let reuseID = NSStringFromClass(DiaryDateControllCell.self)
     
     private let datePicker = UIDatePicker()
-    private let previousDayButton = IconButton(icon: UIImage(systemName: Icons.chevronBackward))
-    private let nextDayButton = IconButton(icon: UIImage(systemName: Icons.chevronForward))
+    private let previousDayButton = IconButton(Icons.chevronBackward)
+    private let nextDayButton = IconButton(Icons.chevronForward)
     
     var date: Date {
         get { return datePicker.date }

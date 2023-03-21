@@ -15,17 +15,44 @@ struct YearMonthDay: Comparable, Hashable, Codable {
 }
 extension YearMonthDay {
     static func < (lhs: YearMonthDay, rhs: YearMonthDay) -> Bool {
-        guard let ldate = lhs.toDate(), let rdate = rhs.toDate() else { return false }
+        guard let ldate = lhs.toDate, let rdate = rhs.toDate else { return false }
         return ldate < rdate
+    }
+    var firstDayOfNextMonth: YearMonthDay {
+        return day(after: Date.getNumberOfDays(year: year, month: month))
+    }
+    var firstDayOfPreviousMonth: YearMonthDay {
+        return YearMonthDay(year: year, month: month, day: 1).day(after: -1).firstDayOfMonth
+    }
+    func day(after numberOfDays: Int) -> YearMonthDay {
+        return toDate?.day(after: numberOfDays).toYearMonthDay ?? YearMonthDay.today
+    }
+    var firstDayOfMonth: YearMonthDay {
+        return YearMonthDay(year: year, month: month, day: 1)
     }
 }
 extension YearMonthDay {
-    func toDate(timeZone: String = "SGT") -> Date? {
+    static var today: YearMonthDay {
+        let today = Date()
+        return YearMonthDay(year: today.year, month: today.month, day: today.dayOfMonth)
+    }
+    
+    var toDate: Date? {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
         dateComponents.day = day
-        dateComponents.timeZone = TimeZone(abbreviation: timeZone)
+        dateComponents.timeZone = .current
         return Calendar.current.date(from: dateComponents)
+    }
+    
+    func toString(in format: String) -> String {
+        guard let date = self.toDate else { return "" }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = .current
+        dateFormatter.calendar = .current
+        dateFormatter.locale = .current
+        return dateFormatter.string(from: date)
     }
 }

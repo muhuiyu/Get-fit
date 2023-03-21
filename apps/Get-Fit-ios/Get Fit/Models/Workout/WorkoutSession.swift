@@ -109,4 +109,7 @@ extension WorkoutSession {
             .compactMap({ WorkoutItem.getWorkoutItem(of: $0.itemID)?.name })
             .joined(separator: ", ")
     }
+    var dateString: String {
+        return startTime.dateString
+    }
 }

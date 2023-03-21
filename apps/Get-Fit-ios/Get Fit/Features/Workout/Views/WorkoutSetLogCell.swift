@@ -10,12 +10,14 @@ import UIKit
 class WorkoutSetLogCell: UITableViewCell {
     static let reuseID = NSStringFromClass(WorkoutSetLogCell.self)
     
+    // MARK: - Views
     private let setIndexView = UIView()
     private let setIndexLabel = UILabel()
     private let setIndexCircle = UIView()
     private let weightStack = WorkoutSetLogCellFieldView()
     private let repsStack = WorkoutSetLogCellFieldView()
     private let noteStack = WorkoutSetLogCellFieldView()
+    private let moreButton = IconButton(Icons.ellipsis)
     
     var setIndex: Int = 0 {
         didSet {
@@ -47,6 +49,11 @@ class WorkoutSetLogCell: UITableViewCell {
     var noteValueChangedHandler: (() -> Void)? {
         didSet {
             noteStack.valueChangedHandler = noteValueChangedHandler
+        }
+    }
+    var moreButtonTapHandler: (() -> Void)? {
+        didSet {
+            moreButton.tapHandler = moreButtonTapHandler
         }
     }
     
@@ -102,6 +109,8 @@ extension WorkoutSetLogCell {
         noteStack.title = AppText.Workout.note
         noteStack.keyboardType = .default
         contentView.addSubview(noteStack)
+        moreButton.tintColor = UIColor.Brand.primary
+        contentView.addSubview(moreButton)
     }
     private func configureConstraints() {
         setIndexLabel.snp.remakeConstraints { make in
@@ -129,6 +138,11 @@ extension WorkoutSetLogCell {
         noteStack.snp.remakeConstraints { make in
             make.top.bottom.equalTo(contentView.layoutMarginsGuide)
             make.leading.equalTo(repsStack.snp.trailing)
+            make.trailing.equalTo(moreButton.snp.leading)
+        }
+        moreButton.snp.remakeConstraints { make in
+            make.size.equalTo(Constants.IconButtonSize.small)
+            make.centerY.equalToSuperview()
             make.trailing.equalTo(contentView.layoutMarginsGuide)
         }
     }

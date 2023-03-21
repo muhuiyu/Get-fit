@@ -92,39 +92,21 @@ extension WorkoutSessionPreviewCell {
     private func configureGestures() {
         
     }
+    private func reconfigureCellData(for session: WorkoutSession) {
+        self.titleLabel.text = session.title
+        self.contentLabel.text = session.previewText
+        self.dayLabel.text = String(session.startTime.day)
+        self.weekdayLabel.text = session.startTime.toDate()?.toWeekDayString() ?? ""
+        self.durationLabel.text = session.durationInHourMinuteString
+    }
+
     private func configureSignals() {
-        viewModel.displayTitleString
+        viewModel.session
             .asObservable()
             .subscribe { value in
-                self.titleLabel.text = value
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.displayContentString
-            .asObservable()
-            .subscribe { value in
-                self.contentLabel.text = value
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.displayDayString
-            .asObservable()
-            .subscribe { value in
-                self.dayLabel.text = value
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.displayWeekdayString
-            .asObservable()
-            .subscribe { value in
-                self.weekdayLabel.text = value
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.displayDurationString
-            .asObservable()
-            .subscribe { value in
-                self.durationLabel.text = value
+                if let value = value {
+                    self.reconfigureCellData(for: value)
+                }
             }
             .disposed(by: disposeBag)
     }

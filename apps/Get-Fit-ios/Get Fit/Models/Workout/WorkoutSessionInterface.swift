@@ -15,8 +15,3 @@ protocol WorkoutSessionInterface {
     
     var allItemNames: String { get }
 }
-//extension WorkoutSessionInterface {
-//    var allItemNames: String {
-//        return itemLogs.compactMap { WorkoutItem.getWorkoutItemName(of: $0.itemID) }.joined(separator: ", ")
-//    }
-//}

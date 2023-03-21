@@ -17,6 +17,7 @@ extension AppText {
         static var save: String { "Save" }
         static var cancel: String { "Cancel" }
         static var delete: String { "Delete" }
+        static var share: String { "Share" }
         static var search: String { "Search" }
         static var pullToRefresh: String { "Pull to refresh" }
         static var goal: String { "Goal" }
@@ -85,18 +86,26 @@ extension AppText {
 // MARK: - Workout
 extension AppText {
     struct Workout {
-        static var newSession: String { "New session" }
-        static var workoutRoutine: String { "Workout routine" }
-        static var workoutRoutines: String { "Workout routines" }
-        static var startTime: String { "Start time" }
-        static var endTime: String { "End time" }
+        static var newSession: String { "New Session" }
+        static var workoutRoutine: String { "Workout Routine" }
+        static var workoutRoutines: String { "Workout Routines" }
+        static var startTime: String { "Start Time" }
+        static var endTime: String { "End Time" }
         static var note: String { "Note" }
-        static var addExercise: String { "Add exercise" }
+        static var addExercise: String { "Add Exercise" }
+        static var addSuperSet: String { "Add Super Set" }
         static var startThisRoutine: String { "Start this routine" }
-        static var addSet: String { "Add set" }
+        static var addSet: String { "Add Set" }
         static var weight: String { "Weight" }
         static var reps: String { "Reps" }
-        static var selectExercise: String { "Select exercise" }
+        static var selectExercise: String { "Select Exercise" }
+        static var warmUp: String { "Warm up" }
+        static var dropSet: String { "Drop set" }
+        static var normal: String { "Normal" }
+        static var reorderExercises: String { "Reorder Exercises" }
+        static var SaveAsRoutine: String { "Save as Routine" }
+        static var superSet: String { "Super Set" }
+        static var circuit: String { "Circuit" }
     }
 }
 // MARK: - Me

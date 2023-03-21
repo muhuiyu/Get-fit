@@ -56,7 +56,10 @@ extension DateAndTime {
         return Calendar.current.date(from: dateComponents)
     }
     var toYearMonthDay: YearMonthDay { YearMonthDay(year: self.year, month: self.month, day: self.day) }
-    
+    var dateString: String {
+        guard let month = Date.MonthInNumber(rawValue: month) else { return "" }
+        return month.name + " " + String(day)
+    }
     static func difference(from start: DateAndTime, to end: DateAndTime) -> TimeInterval {
         guard
             let startTime = start.toDate(),

@@ -13,7 +13,7 @@ class TitleSubtitleButtonCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let cellTappingArea = UIView()
-    private let iconButton = IconButton(icon: UIImage(systemName: Icons.questionmark))
+    private let iconButton = IconButton(Icons.questionmark)
     
     var title: String? {
         didSet {

@@ -50,12 +50,19 @@ struct Constants {
         static let small: CGFloat = 24
     }
     struct IconButtonSize {
+        /// 80
         static let superb: CGFloat = 80
+        /// 60
         static let enormous: CGFloat = 60
+        /// 44
         static let large: CGFloat = 44
+        /// 32
         static let medium: CGFloat = 32
+        /// 24
         static let small: CGFloat = 24
+        /// 20
         static let trivial: CGFloat = 20
+        /// 12
         static let slight: CGFloat = 12
     }
     struct ChipView {

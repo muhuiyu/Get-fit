@@ -14,7 +14,7 @@ class WorkoutCoordinator: BaseCoordinator {
         case viewWorkoutRoutine(WorkoutRoutine)
         case viewCreateRoutine
         case editItemLog(WorkoutItemLog)
-        case selectFromExerciseList(WorkoutSessionViewModel?, WorkoutRoutineViewModel?)
+        case selectFromExerciseList(WorkoutSessionViewModel?, WorkoutRoutineViewModel?, Bool)
     }
 }
 
@@ -45,11 +45,12 @@ extension WorkoutCoordinator {
         case .editItemLog(let itemLog):
             // TODO: -
             return BaseViewController()
-        case .selectFromExerciseList(let workoutSessionViewModel, let workoutRoutineViewModel):
+        case .selectFromExerciseList(let workoutSessionViewModel, let workoutRoutineViewModel, let allowsMultipleSelection):
             let viewController = WorkoutExerciseListViewController(appCoordinator: parentCoordinator,
                                                                    coordinator: self,
                                                                    routineViewModel: workoutRoutineViewModel,
-                                                                   sessionViewModel: workoutSessionViewModel)
+                                                                   sessionViewModel: workoutSessionViewModel,
+                                                                   allowsMultipleSelection: allowsMultipleSelection)
             return viewController
         }
     }
@@ -78,9 +79,11 @@ extension WorkoutCoordinator {
         self.navigate(to: viewController, presentModally: false)
     }
     func showExerciseList(routineViewModel: WorkoutRoutineViewModel? = nil,
-                          sessionViewModel: WorkoutSessionViewModel? = nil) {
+                          sessionViewModel: WorkoutSessionViewModel? = nil,
+                          allowsMultipleSelection: Bool = false) {
         guard let viewController = makeViewController(for: .selectFromExerciseList(sessionViewModel,
-                                                                                   routineViewModel)) else { return }
+                                                                                   routineViewModel,
+                                                                                   allowsMultipleSelection)) else { return }
         let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: true)
         self.navigate(to: viewController, presentModally: true, options: options)
     }

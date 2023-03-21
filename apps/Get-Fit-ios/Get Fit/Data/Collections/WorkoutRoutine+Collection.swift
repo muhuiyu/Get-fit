@@ -15,7 +15,7 @@ extension WorkoutRoutine {
                         WorkoutItemLog(
                             itemID: WorkoutItem.legPress.id,
                             sets: [
-                                WorkoutSetLog(weight: 20, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 20, reps: 20, type: .warmUp),
                                 WorkoutSetLog(weight: 50, reps: 15),
                                 WorkoutSetLog(weight: 55, reps: 12),
                                 WorkoutSetLog(weight: 55, reps: 12),
@@ -25,7 +25,7 @@ extension WorkoutRoutine {
                         WorkoutItemLog(
                             itemID: WorkoutItem.latPullDown.id,
                             sets: [
-                                WorkoutSetLog(weight: 20, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 20, reps: 20, type: .warmUp),
                                 WorkoutSetLog(weight: 22.5, reps: 15),
                                 WorkoutSetLog(weight: 30, reps: 12),
                                 WorkoutSetLog(weight: 30, reps: 12),
@@ -35,7 +35,7 @@ extension WorkoutRoutine {
                         WorkoutItemLog(
                             itemID: WorkoutItem.machineChestPress.id,
                             sets: [
-                                WorkoutSetLog(weight: 10, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 10, reps: 20, type: .warmUp),
                                 WorkoutSetLog(weight: 15, reps: 15),
                                 WorkoutSetLog(weight: 17.5, reps: 12),
                                 WorkoutSetLog(weight: 17.5, reps: 12),
@@ -76,7 +76,7 @@ extension WorkoutRoutine {
                         WorkoutItemLog(
                             itemID: WorkoutItem.romanianDeadlift.id,
                             sets: [
-                                WorkoutSetLog(weight: 15, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 15, reps: 20, type: .warmUp),
                                 WorkoutSetLog(weight: 25, reps: 15),
                                 WorkoutSetLog(weight: 35, reps: 12),
                                 WorkoutSetLog(weight: 35, reps: 12),
@@ -86,7 +86,7 @@ extension WorkoutRoutine {
                         WorkoutItemLog(
                             itemID: WorkoutItem.seatedCableRow.id,
                             sets: [
-                                WorkoutSetLog(weight: 20, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 20, reps: 20, type: .warmUp),
                                 WorkoutSetLog(weight: 22.5, reps: 15),
                                 WorkoutSetLog(weight: 30, reps: 12),
                                 WorkoutSetLog(weight: 30, reps: 12),
@@ -96,7 +96,7 @@ extension WorkoutRoutine {
                         WorkoutItemLog(
                             itemID: WorkoutItem.dumbbellBenchPress.id,
                             sets: [
-                                WorkoutSetLog(weight: 10, reps: 20, isWarmUpSet: true),
+                                WorkoutSetLog(weight: 10, reps: 20, type: .warmUp),
                                 WorkoutSetLog(weight: 15, reps: 15),
                                 WorkoutSetLog(weight: 17.5, reps: 12),
                                 WorkoutSetLog(weight: 17.5, reps: 12),

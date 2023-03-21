@@ -27,6 +27,9 @@ extension Date {
         return Calendar.current.date(byAdding: .day, value: numberOfDays, to: noon)!
     }
     
+    var monthBefore: Int { self.month == 1 ? 12 : self.month + 1 }
+    var monthAfter: Int { self.month == 12 ? 1 : self.month + 1 }
+    
     var noon: Date { Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)! }
     var year: Int { Calendar.current.component(.year, from: self) }
     var month: Int { Calendar.current.component(.month, from: self) }
@@ -34,6 +37,8 @@ extension Date {
     var hour: Int { Calendar.current.component(.hour, from: self) }
     var minute: Int { Calendar.current.component(.minute, from: self) }
     var second: Int { Calendar.current.component(.second, from: self) }
+    
+    var toYearMonthDay: YearMonthDay { return YearMonthDay(year: year, month: month, day: dayOfMonth) }
     
     func getDateInThisWeek(on weekday: Int) -> Date {
         let calendar = Calendar(identifier: .gregorian)
@@ -48,8 +53,7 @@ extension Date {
     
     var firstDayOfMonth: Date { self.day(before: self.dayOfMonth-1) }
     var numberOfDaysRemainingToEndOfMonth: Int {
-        guard let monthInNumber = MonthInNumber(rawValue: self.month) else { return -1 }
-        return Date.getNumberOfDays(in: monthInNumber, of: self.year) - self.dayOfMonth + 1
+        return Date.getNumberOfDays(year: year, month: month) - dayOfMonth + 1
     }
 }
 // MARK: - Get certain time
@@ -97,15 +101,10 @@ extension Date {
         default: return false
         }
     }
-    static func getNumberOfDays(in month: MonthInNumber, of year: Int) -> Int {
-        switch month {
-        case .january, .march, .may, .july, .august, .october, .december:
-            return 31
-        case .april, .june, .september, .november:
-            return 30
-        case .february:
-            return isLeapYear(year: year) ? 29 : 28
-        }
+    static func getNumberOfDays(year: Int, month: Int) -> Int {
+        guard let month = MonthInNumber(rawValue: month) else { return 31 }
+        if month == .december { return 31 }
+        return YearMonthDay(year: year, month: month.rawValue+1, day: 1).toDate?.dayBefore.dayOfMonth ?? 31
     }
     static func isValid(month: Int) -> Bool {
         return month >= 1 && month <= 12
@@ -138,12 +137,46 @@ extension Date {
         case october = 10
         case november = 11
         case december = 12
+        
+        var name: String {
+            switch self {
+            case .january:
+                return "January"
+            case .february:
+                return "February"
+            case .march:
+                return "March"
+            case .april:
+                return "April"
+            case .may:
+                return "May"
+            case .june:
+                return "June"
+            case .july:
+                return "July"
+            case .august:
+                return "August"
+            case .september:
+                return "September"
+            case .october:
+                return "October"
+            case .november:
+                return "November"
+            case .december:
+                return "December"
+            }
+        }
+    }
+    
+    static func getMonthString(from month: Int) -> String? {
+        guard let month = MonthInNumber(rawValue: month) else { return nil }
+        return month.name
     }
 }
 
 // MARK: - Determine
 extension Date {
-    var isFirstDayOfMonth: Bool { dayBefore.month != month }
+    var isFirstDayOfMonth: Bool { dayOfMonth == 1 }
     var isLastDayOfMonth: Bool { dayAfter.month != month }
     func isTodayWeekend() -> Bool {
         let calendar = Calendar(identifier: .gregorian)
@@ -215,6 +248,5 @@ extension Date {
 
 // MARK: - YearMonthDay
 extension Date {
-    var toYearMonthDay: YearMonthDay { YearMonthDay(year: self.year, month: self.month, day: self.dayOfMonth) }
     var toDateAndTime: DateAndTime { DateAndTime(year: self.year, month: self.month, day: self.dayOfMonth, hour: self.hour, minute: self.minute, second: self.second) }
 }

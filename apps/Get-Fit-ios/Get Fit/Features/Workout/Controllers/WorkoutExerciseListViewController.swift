@@ -17,6 +17,7 @@ class WorkoutExerciseListViewController: BaseViewController {
     private let sessionViewModel: WorkoutSessionViewModel?
     private let options: [WorkoutItemID] = WorkoutItem.getAllWorkoutItemIDs()
     private var selectedIndex: Int?
+    private let allowsMultipleSelection: Bool
     
     private var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
@@ -29,9 +30,11 @@ class WorkoutExerciseListViewController: BaseViewController {
     init(appCoordinator: AppCoordinator? = nil,
          coordinator: BaseCoordinator? = nil,
          routineViewModel: WorkoutRoutineViewModel? = nil,
-         sessionViewModel: WorkoutSessionViewModel? = nil) {
+         sessionViewModel: WorkoutSessionViewModel? = nil,
+         allowsMultipleSelection: Bool = false) {
         self.routineViewModel = routineViewModel
         self.sessionViewModel = sessionViewModel
+        self.allowsMultipleSelection = allowsMultipleSelection
         super.init()
         self.appCoordinator = appCoordinator
         self.coordinator = coordinator
@@ -51,21 +54,17 @@ extension WorkoutExerciseListViewController {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         coordinator.dismissCurrentModal()
     }
+    @objc
+    private func didTapSave() {
+        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        // TODO: -
+        coordinator.dismissCurrentModal()
+    }
 }
 // MARK: - View Config
 extension WorkoutExerciseListViewController {
     private func configureViews() {
-        title = AppText.Workout.selectExercise
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = AppText.General.search
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        navigationItem.setBarButtonItem(at: .left,
-                                        with: AppText.General.cancel,
-                                        isBold: false,
-                                        target: self,
-                                        action: #selector(didTapCancel))
+        configureNavigationBar()
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -78,6 +77,24 @@ extension WorkoutExerciseListViewController {
     private func configureGestures() {
 
     }
+    private func configureNavigationBar() {
+        title = AppText.Workout.selectExercise
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = AppText.General.search
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        navigationItem.setBarButtonItem(at: .left,
+                                        with: AppText.General.cancel,
+                                        isBold: false,
+                                        target: self,
+                                        action: #selector(didTapCancel))
+        
+        if allowsMultipleSelection {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave))
+        }
+    }
+
 }
 // MARK: - Data Source
 extension WorkoutExerciseListViewController: UITableViewDataSource {
@@ -100,18 +117,37 @@ extension WorkoutExerciseListViewController: UITableViewDataSource {
 }
 // MARK: - Delegate
 extension WorkoutExerciseListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    private func reconfigureTableView(_ tableView: UITableView, didSelectWorkoutItem itemID: WorkoutItemID) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        
+        if let routineViewModel = routineViewModel {
+            routineViewModel.addExercise(for: itemID)
+        } else if let sessionViewModel = sessionViewModel {
+            sessionViewModel.addExercise(for: itemID)
+        }
+    }
+    private func didSelectSingleWorkoutItem(in tableView: UITableView, at itemID: WorkoutItemID) {
+        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        if let routineViewModel = routineViewModel {
+            routineViewModel.addExercise(for: itemID)
+        } else if let sessionViewModel = sessionViewModel {
+            sessionViewModel.addExercise(for: itemID)
+        }
+        coordinator.dismissCurrentModal()
+    }
+
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer {
             tableView.deselectRow(at: indexPath, animated: true)
         }
-        let selectedWorkoutItemID = isFiltering ? self.filteredOptions[indexPath.row] : self.options[indexPath.row]
-        if let routineViewModel = routineViewModel {
-            routineViewModel.addExercise(for: selectedWorkoutItemID)
-        } else if let sessionViewModel = sessionViewModel {
-            sessionViewModel.addExercise(for: selectedWorkoutItemID)
+        let selectedWorkoutItemID = isFiltering ? filteredOptions[indexPath.row] : options[indexPath.row]
+        
+        if allowsMultipleSelection {
+            reconfigureTableView(tableView, didSelectWorkoutItem: selectedWorkoutItemID)
+        } else {
+            didSelectSingleWorkoutItem(in: tableView, at: selectedWorkoutItemID)
         }
-        coordinator.dismissCurrentModal()
     }
 }
 // MARK: - SearchController

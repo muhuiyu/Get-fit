@@ -14,6 +14,7 @@ class WorkoutViewController: BaseMVVMViewController<WorkoutViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.appCoordinator = appCoordinator
         
         configureViews()
         configureConstraints()
@@ -38,11 +39,11 @@ extension WorkoutViewController {
     private func didTapAdd() {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         // TODO: - Add settings page
-        let alertControllerOption = BaseCoordinator.AlertControllerOption(title: AppText.Workout.addExercise,
-                                                                          message: nil,
-                                                                          preferredStyle: .actionSheet)
+        let alertControllerOption = AlertControllerOption(title: AppText.Workout.addExercise,
+                                                          message: nil,
+                                                          preferredStyle: .actionSheet)
         let alertActions = [
-            BaseCoordinator.AlertActionOption(title: AppText.Workout.newSession, style: .default) { _ in
+            AlertActionOption(title: AppText.Workout.newSession, style: .default) { _ in
                 guard
                     let userID = self.appCoordinator?.userManager.id,
                     let preferredWorkoutLength = self.appCoordinator?.userManager.preferredWorkoutLength else {
@@ -52,10 +53,10 @@ extension WorkoutViewController {
                                              preferredWorkoutLength: preferredWorkoutLength)
                 coordinator.showSessionLog(for: session)
             },
-            BaseCoordinator.AlertActionOption(title: AppText.Workout.workoutRoutine, style: .default) { _ in
+            AlertActionOption(title: AppText.Workout.workoutRoutine, style: .default) { _ in
                 coordinator.showWorkoutRoutineList()
             },
-            BaseCoordinator.AlertActionOption(title: AppText.General.cancel, style: .cancel, handler: nil)
+            AlertActionOption.cancel
         ]
 
         coordinator.presentAlert(option: alertControllerOption, actions: alertActions)
@@ -108,14 +109,14 @@ extension WorkoutViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return nil }
         
-        let alertOption = BaseCoordinator.AlertControllerOption(title: "Delete workout?",
-                                                                message: "The record will be permanently deleted from the database.",
-                                                                preferredStyle: .alert)
-        let deleteAction = BaseCoordinator.AlertActionOption(title: "Delete", style: .destructive) { _ in
+        let alertOption = AlertControllerOption(title: "Delete workout?",
+                                                message: "The record will be permanently deleted from the database.",
+                                                preferredStyle: .alert)
+        let deleteAction = AlertActionOption(title: "Delete", style: .destructive) { _ in
             self.viewModel.deleteWorkoutSession(at: indexPath)
             self.tableView.isEditing = false
         }
-        let cancelAction = BaseCoordinator.AlertActionOption(title: "Cancel", style: .cancel) { _ in
+        let cancelAction = AlertActionOption(title: "Cancel", style: .cancel) { _ in
             self.tableView.isEditing = false
         }
         let action = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in

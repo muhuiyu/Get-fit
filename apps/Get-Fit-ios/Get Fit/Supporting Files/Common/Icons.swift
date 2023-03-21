@@ -109,4 +109,5 @@ class Icons {
     static var crossFill: String { "cross.fill" }
     static var heartFill: String { "heart.fill" }
     static var timer: String { "timer" }
+    static var ellipsis: String { "ellipsis" }
 }

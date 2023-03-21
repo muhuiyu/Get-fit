@@ -24,12 +24,16 @@ class IconButton: UIView {
     var tapHandler: (() -> Void)?
     // button size?
     
-    init(frame: CGRect = .zero, icon: UIImage?) {
-        super.init(frame: frame)
+    init(icon: UIImage?) {
+        super.init(frame: .zero)
         self.icon = icon
         configureViews()
         configureConstraints()
         configureGestures()
+    }
+    
+    convenience init(_ iconName: String) {
+        self.init(icon: UIImage(systemName: iconName))
     }
     
     required init?(coder: NSCoder) {

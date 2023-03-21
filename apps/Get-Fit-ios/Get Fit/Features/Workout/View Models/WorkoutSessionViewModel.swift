@@ -11,11 +11,6 @@ import RxRelay
 
 class WorkoutSessionViewModel: BaseViewModel {
     var session: BehaviorRelay<WorkoutSession?> = BehaviorRelay(value: nil)
-    var displayTitleString: BehaviorRelay<String> = BehaviorRelay(value: "")
-    var displayContentString: BehaviorRelay<String> = BehaviorRelay(value: "")
-    var displayDayString: BehaviorRelay<String> = BehaviorRelay(value: "")
-    var displayWeekdayString: BehaviorRelay<String> = BehaviorRelay(value: "")
-    var displayDurationString: BehaviorRelay<String> = BehaviorRelay(value: "")
     
     override init() {
         super.init()
@@ -97,6 +92,12 @@ extension WorkoutSessionViewModel {
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
+    func didChangeItemLogsOrder(to value: [WorkoutItemLog]) {
+        guard var updatedSession = session.value else { return }
+        updatedSession.itemLogs = value
+        session.accept(updatedSession)
+        updateSessionToDatabase()
+    }
     func didChangeWeightValue(itemLogAt indexOfItemLog: Int, setLogAt indexOfSetLog: Int, to value: Double) {
         guard var updatedSession = session.value else { return }
         updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].weight = value
@@ -114,6 +115,23 @@ extension WorkoutSessionViewModel {
         updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].note = value
         session.accept(updatedSession)
         updateSessionToDatabase()
+    }
+    func didChangeSetType(itemLogAt indexOfItemLog: Int, setLogAt indexOfSetLog: Int, to value: WorkoutSetType) {
+        guard var updatedSession = session.value else { return }
+        updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].type = value
+        session.accept(updatedSession)
+        updateSessionToDatabase()
+    }
+    func deleteSession() {
+        guard
+            let sessionID = session.value?.id,
+            let userID = appCoordinator?.userManager.id,
+            let dataProvider = appCoordinator?.dataProvider
+        else { return }
+        
+        Task {
+            await dataProvider.removeWorkoutSession(for: userID, at: sessionID)
+        }
     }
     func saveSession() {
         
@@ -133,18 +151,7 @@ extension WorkoutSessionViewModel {
         }
     }
     private func configureSignals() {
-        session
-            .asObservable()
-            .subscribe(onNext: { value in
-                if let value = value {
-                    self.displayTitleString.accept(value.title)
-                    self.displayContentString.accept(value.previewText)
-                    self.displayDayString.accept(String(value.startTime.day))
-                    self.displayWeekdayString.accept(value.startTime.toDate()?.toWeekDayString() ?? "")
-                    self.displayDurationString.accept(value.durationInHourMinuteString)
-                }
-            })
-            .disposed(by: disposeBag)
+        
     }
     private func getIndexOfItemLogAndSetLog(at indexPath: IndexPath) -> (Int, Int)? {
         guard

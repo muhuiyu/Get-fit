@@ -5,20 +5,26 @@
 //  Created by Mu Yu on 8/27/22.
 //
 
+enum WorkoutSetType: String, Codable {
+    case normal
+    case warmUp
+    case dropSet
+}
+
 struct WorkoutSetLog: Codable {
     var weight: Double
     var reps: Int
     var note: String
-    var isWarmUpSet: Bool
+    var type: WorkoutSetType
 
     init(weight: Double,
          reps: Int,
          note: String = "",
-         isWarmUpSet: Bool = false) {
+         type: WorkoutSetType = .normal) {
         
         self.weight = weight
         self.reps = reps
         self.note = note
-        self.isWarmUpSet = isWarmUpSet
+        self.type = type
     }
 }

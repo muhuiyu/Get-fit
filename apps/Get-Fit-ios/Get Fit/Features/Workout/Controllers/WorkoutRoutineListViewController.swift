@@ -92,14 +92,14 @@ extension WorkoutRoutineListViewController: UITableViewDelegate {
         
         guard let coordinator = coordinator as? WorkoutCoordinator else { return nil }
 
-        let alertOption = BaseCoordinator.AlertControllerOption(title: "Delete routine?",
-                                                                message: "This action cannot be undone",
-                                                                preferredStyle: .actionSheet)
-        let deleteAction = BaseCoordinator.AlertActionOption(title: AppText.General.delete, style: .destructive) { _ in
+        let alertOption = AlertControllerOption(title: "Delete routine?",
+                                                message: "This action cannot be undone",
+                                                preferredStyle: .actionSheet)
+        let deleteAction = AlertActionOption(title: AppText.General.delete, style: .destructive) { _ in
             self.viewModel.deleteRoutine(at: indexPath)
             self.tableView.isEditing = false
         }
-        let cancelAction = BaseCoordinator.AlertActionOption(title: AppText.General.cancel, style: .cancel) { _ in
+        let cancelAction = AlertActionOption(title: AppText.General.cancel, style: .cancel) { _ in
             self.tableView.isEditing = false
         }
         
