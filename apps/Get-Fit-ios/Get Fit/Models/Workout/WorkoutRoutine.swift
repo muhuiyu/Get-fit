@@ -10,16 +10,16 @@ typealias WorkoutRoutineID = String
 struct WorkoutRoutine: WorkoutSessionInterface {
     var id: WorkoutRoutineID
     var title: String
-    var itemLogs: [WorkoutItemLog]
+    var circuits: [WorkoutCircuit]
     var note: String
     
     init(id: WorkoutRoutineID,
          title: String,
-         itemLogs: [WorkoutItemLog],
+         circuits: [WorkoutCircuit],
          note: String = "") {
         self.id = id
         self.title = title
-        self.itemLogs = itemLogs
+        self.circuits = circuits
         self.note = note
     }
 }
@@ -27,12 +27,7 @@ extension WorkoutRoutine {
     init() {
         id = ""
         title = "New Routine"
-        itemLogs = []
+        circuits = []
         note = ""
-    }
-}
-extension WorkoutRoutine {
-    var allItemNames: String {
-        return itemLogs.compactMap { WorkoutItem.getWorkoutItemName(of: $0.itemID) }.joined(separator: ", ")
     }
 }

@@ -50,75 +50,104 @@ extension WorkoutSessionViewModel {
 }
 // MARK: - Update exercise and sets
 extension WorkoutSessionViewModel {
-    func addExercise(for itemID: WorkoutItemID) {
+    func addCircuit(for itemIDs: [WorkoutItemID], as type: WorkoutCircuitType) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs.append(
-            WorkoutItemLog(
-                itemID: itemID,
-                sets: [ WorkoutSetLog(weight: 0, reps: 0) ],
-                restTime: TimeInterval(60))
-        )
+        
+        switch type {
+        case .singleExercise:
+            guard let itemID = itemIDs.first else { return }
+            updatedSession.circuits.append(
+                WorkoutCircuit(type: .singleExercise,
+                               sets: [
+                                WorkoutSet(itemID: itemID, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "")
+                               ])
+            )
+        case .superSet, .circuit:
+            updatedSession.circuits.append(WorkoutCircuit(type: .superSet,
+                                                          sets: itemIDs.compactMap({ WorkoutSet(itemID: $0, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "") })))
+        }
+        
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func addSet(for indexOfItemLog: Int) {
+    func addWorkItem(to circuitIndex: Int) {
+        
+    }
+    func addSet(for circuitIndex: Int) {
         guard
             var updatedSession = session.value,
-            !updatedSession.itemLogs.isEmpty,
-            let lastSet = updatedSession.itemLogs[indexOfItemLog].sets.last else { return }
+            !updatedSession.circuits.isEmpty else { return }
         
-        updatedSession.itemLogs[indexOfItemLog].sets.append(lastSet)
-        session.accept(updatedSession)
-        updateSessionToDatabase()
+        let circuit = updatedSession.circuits[circuitIndex]
+        
+        switch circuit.type {
+        case .superSet:
+            let lastGroupOfSet = circuit.lastGroupOfSetsOfSuperSet
+            guard !lastGroupOfSet.isEmpty else { return }
+            updatedSession.circuits[circuitIndex].sets.addAll(lastGroupOfSet)
+        case .singleExercise, .circuit:
+            guard let lastSet = updatedSession.circuits[circuitIndex].sets.last else { return }
+            updatedSession.circuits[circuitIndex].sets.append(lastSet)
+            session.accept(updatedSession)
+            updateSessionToDatabase()
+        }
     }
-    func isSetLogCell(at indexPath: IndexPath) -> Bool {
-        guard let session = session.value, !session.itemLogs.isEmpty else { return false }
+    func isSetCell(at indexPath: IndexPath) -> Bool {
+        guard let session = session.value, !session.circuits.isEmpty else { return false }
         return indexPath.section > 0
             && indexPath.row > 0
-            && indexPath.row <= session.itemLogs[indexPath.section-1].sets.count
+            && indexPath.row <= session.circuits[indexPath.section-1].sets.count
     }
     func deleteSet(at indexPath: IndexPath) {
-        guard let (indexOfItemLog, indexOfSetLog) = getIndexOfItemLogAndSetLog(at: indexPath) else {
-            return
-        }
-        // Remove set
+        guard let (circuitIndex, setIndex) = getIndexOfCircuitAndSet(at: indexPath) else { return }
+        
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs[indexOfItemLog].sets.remove(at: indexOfSetLog)
+        let circuit = updatedSession.circuits[circuitIndex]
+        
+        // Remove set
+        switch circuit.type {
+        case .singleExercise, .circuit:
+            guard !circuit.sets.isEmpty else { return }
+            updatedSession.circuits[circuitIndex].sets.remove(at: setIndex)
+        case .superSet:
+            guard circuit.sets.count >= circuit.superSetWorkoutItems.count else { return }
+            updatedSession.circuits[circuitIndex].sets.removeLast(circuit.superSetWorkoutItems.count)
+        }
         
         // Remove workout item if there's no set
-        if updatedSession.itemLogs[indexOfItemLog].sets.isEmpty {
-            updatedSession.itemLogs.remove(at: indexOfItemLog)
+        if updatedSession.circuits[circuitIndex].sets.isEmpty {
+            updatedSession.circuits.remove(at: circuitIndex)
         }
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeItemLogsOrder(to value: [WorkoutItemLog]) {
+    func didChangeCircuitsOrder(to value: [WorkoutCircuit]) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs = value
+        updatedSession.circuits = value
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeWeightValue(itemLogAt indexOfItemLog: Int, setLogAt indexOfSetLog: Int, to value: Double) {
+    func didChangeWeightValue(circuitAt circuitIndex: Int, setAt setIndex: Int, to value: Double) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].weight = value
+        updatedSession.circuits[circuitIndex].sets[setIndex].weight = value
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeRepsValue(itemLogAt indexOfItemLog: Int, setLogAt indexOfSetLog: Int, to value: Int) {
+    func didChangeRepsValue(circuitAt circuitIndex: Int, setAt setIndex: Int, to value: Int) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].reps = value
+        updatedSession.circuits[circuitIndex].sets[setIndex].reps = value
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeNoteValue(itemLogAt indexOfItemLog: Int, setLogAt indexOfSetLog: Int, to value: String) {
+    func didChangeNoteValue(circuitAt circuitIndex: Int, setAt setIndex: Int, to value: String) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].note = value
+        updatedSession.circuits[circuitIndex].sets[setIndex].note = value
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func didChangeSetType(itemLogAt indexOfItemLog: Int, setLogAt indexOfSetLog: Int, to value: WorkoutSetType) {
+    func didChangeSetType(circuitAt circuitIndex: Int, setAt setIndex: Int, to value: WorkoutSetType) {
         guard var updatedSession = session.value else { return }
-        updatedSession.itemLogs[indexOfItemLog].sets[indexOfItemLog].type = value
+        updatedSession.circuits[circuitIndex].sets[setIndex].type = value
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
@@ -153,10 +182,10 @@ extension WorkoutSessionViewModel {
     private func configureSignals() {
         
     }
-    private func getIndexOfItemLogAndSetLog(at indexPath: IndexPath) -> (Int, Int)? {
+    private func getIndexOfCircuitAndSet(at indexPath: IndexPath) -> (Int, Int)? {
         guard
             let session = session.value,
-            !session.itemLogs.isEmpty
+            !session.circuits.isEmpty
         else { return nil }
         return (indexPath.section-1, indexPath.row-1)
     }

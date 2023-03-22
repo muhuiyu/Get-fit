@@ -17,7 +17,13 @@ class WorkoutExerciseListViewController: BaseViewController {
     private let sessionViewModel: WorkoutSessionViewModel?
     private let options: [WorkoutItemID] = WorkoutItem.getAllWorkoutItemIDs()
     private var selectedIndex: Int?
-    private let allowsMultipleSelection: Bool
+    private let circuitType: WorkoutCircuitType
+    
+    private var selectedItemIDs = [String]()
+    
+    private var allowsMultipleSelection: Bool {
+        circuitType != .singleExercise
+    }
     
     private var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
@@ -31,10 +37,10 @@ class WorkoutExerciseListViewController: BaseViewController {
          coordinator: BaseCoordinator? = nil,
          routineViewModel: WorkoutRoutineViewModel? = nil,
          sessionViewModel: WorkoutSessionViewModel? = nil,
-         allowsMultipleSelection: Bool = false) {
+         circuitType: WorkoutCircuitType) {
         self.routineViewModel = routineViewModel
         self.sessionViewModel = sessionViewModel
-        self.allowsMultipleSelection = allowsMultipleSelection
+        self.circuitType = circuitType
         super.init()
         self.appCoordinator = appCoordinator
         self.coordinator = coordinator
@@ -117,36 +123,40 @@ extension WorkoutExerciseListViewController: UITableViewDataSource {
 }
 // MARK: - Delegate
 extension WorkoutExerciseListViewController: UITableViewDelegate {
-    private func reconfigureTableView(_ tableView: UITableView, didSelectWorkoutItem itemID: WorkoutItemID) {
+    private func reconfigureTableView(_ tableView: UITableView) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        
-        if let routineViewModel = routineViewModel {
-            routineViewModel.addExercise(for: itemID)
-        } else if let sessionViewModel = sessionViewModel {
-            sessionViewModel.addExercise(for: itemID)
-        }
+        // Select and update tableViewHeader
+        // update session
+//        if let routineViewModel = routineViewModel {
+//            // TODO: -
+////            routineViewModel.addExercise(for: itemID)
+//        } else if let sessionViewModel = sessionViewModel {
+//            sessionViewModel.addWorkItem(to: <#T##Int#>)
+//            sessionViewModel.addCircuit(for: itemID, as: circuitType)
+//        }
     }
-    private func didSelectSingleWorkoutItem(in tableView: UITableView, at itemID: WorkoutItemID) {
-        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+    private func didSelectSingleWorkoutItem() {
+        guard let coordinator = coordinator as? WorkoutCoordinator, selectedItemIDs.count == 1 else { return }
         if let routineViewModel = routineViewModel {
-            routineViewModel.addExercise(for: itemID)
+            // TODO: -
+//            routineViewModel.addExercise(for: itemID)
         } else if let sessionViewModel = sessionViewModel {
-            sessionViewModel.addExercise(for: itemID)
+            sessionViewModel.addCircuit(for: selectedItemIDs, as: .singleExercise)
         }
         coordinator.dismissCurrentModal()
     }
-
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer {
             tableView.deselectRow(at: indexPath, animated: true)
         }
         let selectedWorkoutItemID = isFiltering ? filteredOptions[indexPath.row] : options[indexPath.row]
+        selectedItemIDs.append(selectedWorkoutItemID)
         
         if allowsMultipleSelection {
-            reconfigureTableView(tableView, didSelectWorkoutItem: selectedWorkoutItemID)
+            reconfigureTableView(tableView)
         } else {
-            didSelectSingleWorkoutItem(in: tableView, at: selectedWorkoutItemID)
+            didSelectSingleWorkoutItem()
         }
     }
 }

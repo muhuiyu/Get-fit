@@ -15,7 +15,7 @@ class MeCoordinator: BaseCoordinator {
 }
 // MARK: - ViewController List
 extension MeCoordinator {
-    private func makeViewController(for destination: Destination) -> ViewController? {
+    private func makeViewController(to destination: Destination) -> ViewController? {
         switch destination {
         case .viewAccountDetails:
             let viewController = MeAccountDetailViewController(appCoordinator: parentCoordinator,
@@ -31,11 +31,11 @@ extension MeCoordinator {
 // MARK: - Navigation
 extension MeCoordinator {
     func showAccountDetails() {
-        guard let viewController = makeViewController(for: .viewAccountDetails) else { return }
+        guard let viewController = makeViewController(to: .viewAccountDetails) else { return }
         self.navigate(to: viewController, presentModally: false)
     }
     func showGoals() {
-        guard let viewController = makeViewController(for: .viewGoals) else { return }
+        guard let viewController = makeViewController(to: .viewGoals) else { return }
         self.navigate(to: viewController, presentModally: false)
     }
 }

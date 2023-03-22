@@ -1,5 +1,5 @@
 //
-//  WorkoutSetLogCell.swift
+//  WorkoutSetCell.swift
 //  Get Fit
 //
 //  Created by Mu Yu on 8/23/22.
@@ -7,32 +7,32 @@
 
 import UIKit
 
-class WorkoutSetLogCell: UITableViewCell {
-    static let reuseID = NSStringFromClass(WorkoutSetLogCell.self)
+class WorkoutSetCell: UITableViewCell {
+    static let reuseID = NSStringFromClass(WorkoutSetCell.self)
     
     // MARK: - Views
     private let setIndexView = UIView()
     private let setIndexLabel = UILabel()
     private let setIndexCircle = UIView()
-    private let weightStack = WorkoutSetLogCellFieldView()
-    private let repsStack = WorkoutSetLogCellFieldView()
-    private let noteStack = WorkoutSetLogCellFieldView()
+    private let weightStack = WorkoutSetCellFieldView()
+    private let repsStack = WorkoutSetCellFieldView()
+    private let noteStack = WorkoutSetCellFieldView()
     private let moreButton = IconButton(Icons.ellipsis)
     
-    var setIndex: Int = 0 {
+    var setIndexString: String? {
         didSet {
-            setIndexLabel.text = setIndex == 0 ? "" : String(setIndex)
+            setIndexLabel.text = setIndexString
         }
     }
-    var setLog: WorkoutSetLog? {
+    var set: WorkoutSet? {
         didSet {
-            guard let setLog = setLog else {
+            guard let set = set else {
                 return
             }
-            weightStack.value = String(setLog.weight)
-            repsStack.value = String(setLog.reps)
-            if !setLog.note.isEmpty {
-                noteStack.value = setLog.note
+            weightStack.value = String(set.weight)
+            repsStack.value = String(set.reps)
+            if !set.note.isEmpty {
+                noteStack.value = set.note
             }
         }
     }
@@ -70,7 +70,7 @@ class WorkoutSetLogCell: UITableViewCell {
     
 }
 // MARK: - Interface
-extension WorkoutSetLogCell {
+extension WorkoutSetCell {
     var weight: Double {
         guard
             let rawValue = weightStack.value,
@@ -89,11 +89,11 @@ extension WorkoutSetLogCell {
     }
 }
 // MARK: - View Config
-extension WorkoutSetLogCell {
+extension WorkoutSetCell {
     private func configureViews() {
         setIndexCircle.layer.borderColor = UIColor.tertiaryLabel.cgColor
         setIndexCircle.layer.borderWidth = 1
-        setIndexCircle.layer.cornerRadius = 10
+        setIndexCircle.layer.cornerRadius = 12
         setIndexView.addSubview(setIndexCircle)
         setIndexLabel.font = UIFont.desc
         setIndexLabel.textColor = .tertiaryLabel
@@ -119,7 +119,7 @@ extension WorkoutSetLogCell {
         }
         setIndexCircle.snp.remakeConstraints { make in
             make.edges.equalToSuperview()
-            make.size.equalTo(20)
+            make.size.equalTo(24)
         }
         setIndexView.snp.remakeConstraints { make in
             make.leading.equalTo(contentView.layoutMarginsGuide)
@@ -155,7 +155,7 @@ extension WorkoutSetLogCell {
 }
 
 // MARK: - Field View
-class WorkoutSetLogCellFieldView: UIView {
+class WorkoutSetCellFieldView: UIView {
     
     private let titleLabel = UILabel()
     private let textField = UITextField()
@@ -186,14 +186,14 @@ class WorkoutSetLogCellFieldView: UIView {
     }
 }
 // MARK: - Handlers
-extension WorkoutSetLogCellFieldView {
+extension WorkoutSetCellFieldView {
     @objc
     private func didChangeValue(_ : UITextViewDelegate) {
         valueChangedHandler?()
     }
 }
 // MARK: - View Config
-extension WorkoutSetLogCellFieldView {
+extension WorkoutSetCellFieldView {
     private func configureViews() {
         titleLabel.font = UIFont.desc
         titleLabel.textColor = .secondaryLabel

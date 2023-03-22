@@ -15,7 +15,7 @@ class ProgressCoordinator: BaseCoordinator {
 
 // MARK: - ViewController List
 extension ProgressCoordinator {
-    private func makeViewController(for destination: Destination) -> ViewController? {
+    private func makeViewController(to destination: Destination) -> ViewController? {
         switch destination {
         case .addProgress:
             // TODO: -
@@ -27,7 +27,7 @@ extension ProgressCoordinator {
 // MARK: - Navigation
 extension ProgressCoordinator {
     func showAddProgress() {
-        guard let viewController = makeViewController(for: .addProgress) else { return }
+        guard let viewController = makeViewController(to: .addProgress) else { return }
         let options = ModalOptions(isEmbedInNavigationController: true, isModalInPresentation: true)
         self.navigate(to: viewController, presentModally: true, options: options)
     }

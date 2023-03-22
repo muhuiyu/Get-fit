@@ -9,10 +9,6 @@ import UIKit
 import FirebaseFirestore
 
 class Database: DataProvider {
-    
-//    internal var cachedTransactions = [TransactionID: Transaction]()
-//    internal var cachedRecurringTransactions = [RecurringTransactionID: RecurringTransaction]()
-//    internal var cachedBudgets = [BudgetID: Budget]()
     internal var workoutSessionsCache = WorkoutSessionsCache()
     
     internal let dailyMealLogRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.dailyMealLogs)
@@ -23,19 +19,19 @@ class Database: DataProvider {
     internal let usersRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.users)
     
     struct FirebaseCollection {
-        static let dailyMealLogs = "dailyMealLogs"
-        static let workoutSessions = "workoutSessions"
-        static let workoutRoutines = "workoutRoutines"
-        static let progress = "progress"
-        static let userPreference = "userPreference"
-        static let users = "users"
+        static var dailyMealLogs: String { "dailyMealLogs" }
+        static var workoutSessions: String { "workoutSessions" }
+        static var workoutRoutines: String { "workoutRoutines" }
+        static var progress: String { "progress" }
+        static var userPreference: String { "userPreference" }
+        static var users: String { "users" }
     }
     
     struct Attribute {
-        static let userID = "userID"
-        static let year = "year"
-        static let month = "month"
-        static let day = "day"
+        static var userID: String { "userID" }
+        static var year: String { "year" }
+        static var month: String { "month" }
+        static var day: String { "day" }
     }
     
     enum FirebaseError: Error {
@@ -63,7 +59,7 @@ extension Database {
         // establishing connection
         
         print("set up database")
-        writeData()
+//        writeData()
     }
 }
 // MARK: - write data
@@ -86,34 +82,72 @@ extension Database {
 //            }
 //        }
         // workout log
-//        let workoutEntry = WorkoutSession(id: "VIdfe662ae2dISKD6MrJ",
+//        let workoutEntry = WorkoutSession(id: "",
 //                                          userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
-//                                          startTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 11, minute: 0, second: 0),
-//                                          endTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 12, minute: 15, second: 0),
-//                                          title: "Full body",
-//                                          itemLogs: [
-//                                            WorkoutItemLog(itemID: WorkoutItem.assistedPullUp.id,
-//                                                           sets: [
-//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
-//                                                           ],
-//                                                           restTime: TimeInterval(30)),
-//                                            WorkoutItemLog(itemID: WorkoutItem.seatedLegPress.id,
-//                                                           sets: [
-//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
-//                                                           ],
-//                                                           restTime: TimeInterval(60)),
-//                                            WorkoutItemLog(itemID: WorkoutItem.bicepCurlWithMachine.id,
-//                                                           sets: [
-//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
-//                                                           ],
-//                                                           restTime: TimeInterval(30)),
+//                                          startTime: DateAndTime(year: 2022, month: 3, day: 21, hour: 13, minute: 10, second: 0),
+//                                          endTime: DateAndTime(year: 2022, month: 3, day: 21, hour: 13, minute: 46, second: 0),
+//                                          title: "Full body #1",
+//                                          circuits: [
+//                                               WorkoutCircuit(type: .singleExercise, sets: [
+//                                                   WorkoutSet(itemID: WorkoutItem.legPress.id,
+//                                                              type: .normal,
+//                                                              weight: 40,
+//                                                              reps: 15,
+//                                                              restTime: TimeInterval(120),
+//                                                              note: "not heavy"),
+//                                                   WorkoutSet(itemID: WorkoutItem.legPress.id,
+//                                                              type: .normal,
+//                                                              weight: 40,
+//                                                              reps: 15,
+//                                                              restTime: TimeInterval(120),
+//                                                              note: ""),
+//                                                   WorkoutSet(itemID: WorkoutItem.legPress.id,
+//                                                              type: .normal,
+//                                                              weight: 50,
+//                                                              reps: 15,
+//                                                              restTime: TimeInterval(120),
+//                                                              note: "too heavy"),
+//                                               ]),
+//                                               WorkoutCircuit(type: .superSet, sets: [
+//                                                   WorkoutSet(itemID: WorkoutItem.barbellSquat.id,
+//                                                              type: .normal,
+//                                                              weight: 70,
+//                                                              reps: 15,
+//                                                              restTime: TimeInterval(10),
+//                                                              note: ""),
+//                                                   WorkoutSet(itemID: WorkoutItem.dumbbellBenchPress.id,
+//                                                              type: .normal,
+//                                                              weight: 10,
+//                                                              reps: 12,
+//                                                              restTime: TimeInterval(10),
+//                                                              note: ""),
+//                                                   WorkoutSet(itemID: WorkoutItem.barbellSquat.id,
+//                                                              type: .normal,
+//                                                              weight: 70,
+//                                                              reps: 15,
+//                                                              restTime: TimeInterval(10),
+//                                                              note: ""),
+//                                                   WorkoutSet(itemID: WorkoutItem.dumbbellBenchPress.id,
+//                                                              type: .normal,
+//                                                              weight: 10,
+//                                                              reps: 12,
+//                                                              restTime: TimeInterval(10),
+//                                                              note: ""),
+//                                                   WorkoutSet(itemID: WorkoutItem.barbellSquat.id,
+//                                                              type: .normal,
+//                                                              weight: 70,
+//                                                              reps: 15,
+//                                                              restTime: TimeInterval(10),
+//                                                              note: ""),
+//                                                   WorkoutSet(itemID: WorkoutItem.dumbbellBenchPress.id,
+//                                                              type: .normal,
+//                                                              weight: 10,
+//                                                              reps: 12,
+//                                                              restTime: TimeInterval(10),
+//                                                              note: ""),
+//                                               ]),
 //                                          ])
+        
 //        do {
 //            let documentRef = try workoutSessionRef.addDocument(from: workoutEntry) { error in
 //                if let error = error {

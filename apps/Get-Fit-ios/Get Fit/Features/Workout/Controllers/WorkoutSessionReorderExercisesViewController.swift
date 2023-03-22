@@ -10,14 +10,14 @@ import UIKit
 class WorkoutSessionReorderExercisesViewController: ViewController {
     
     private let tableView = UITableView()
-    private var itemLogs: [WorkoutItemLog]
+    private var items: [WorkoutCircuit]
     
-    init(_ itemLogs: [WorkoutItemLog]) {
-        self.itemLogs = itemLogs
+    init(_ items: [WorkoutCircuit]) {
+        self.items = items
         super.init()
     }
     
-    var completion: (([WorkoutItemLog]) -> Void)?
+    var completion: (([WorkoutCircuit]) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +35,14 @@ extension WorkoutSessionReorderExercisesViewController {
     }
     @objc
     private func didTapDone() {
-        completion?(itemLogs)
+        completion?(items)
     }
 }
 
 // MARK: - View Config
 extension WorkoutSessionReorderExercisesViewController {
     private func configureViews() {
-        title = AppText.Workout.reorderExercises
+        title = AppText.Workout.reorderCircuits
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(didTapDone))
         tableView.dataSource = self
@@ -68,12 +68,12 @@ extension WorkoutSessionReorderExercisesViewController {
 // MARK: - Delegate
 extension WorkoutSessionReorderExercisesViewController: UITableViewDataSource, UITableViewDelegate, UITableViewDragDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemLogs.count
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        guard let name = WorkoutItem.getWorkoutItemName(of: itemLogs[indexPath.row].itemID) else { return UITableViewCell() }
+        guard let name = WorkoutItem.getWorkoutItemName(of: items[indexPath.row].title) else { return UITableViewCell() }
         var content = cell.defaultContentConfiguration()
         content.text = name
         cell.contentConfiguration = content
@@ -83,7 +83,7 @@ extension WorkoutSessionReorderExercisesViewController: UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
-            dragItem.localObject = itemLogs[indexPath.row]
+            dragItem.localObject = items[indexPath.row]
             return [ dragItem ]
     }
     
@@ -92,13 +92,13 @@ extension WorkoutSessionReorderExercisesViewController: UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let mover = itemLogs.remove(at: sourceIndexPath.row)
-        itemLogs.insert(mover, at: destinationIndexPath.row)
+        let mover = items.remove(at: sourceIndexPath.row)
+        items.insert(mover, at: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            itemLogs.remove(at: indexPath.row)
+            items.remove(at: indexPath.row)
             tableView.reloadData()
         }
     }
