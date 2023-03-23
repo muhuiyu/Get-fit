@@ -17,7 +17,7 @@ class WorkoutSetCell: UITableViewCell {
     private let weightStack = WorkoutSetCellFieldView()
     private let repsStack = WorkoutSetCellFieldView()
     private let noteStack = WorkoutSetCellFieldView()
-    private let moreButton = IconButton(Icons.ellipsis)
+    private let moreButton = IconButton(name: Icons.ellipsis)
     
     var setIndexString: String? {
         didSet {

@@ -108,6 +108,25 @@ extension WorkoutSessionViewController {
                                  ])
     }
 
+    private func didTapInfoButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
+        switch circuit.type {
+        case .singleExercise:
+            guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
+            let viewController = WorkoutItemInfoViewController(workoutItem: workoutItem)
+            coordinator?.navigate(to: viewController, presentModally: true)
+        case .superSet, .circuit:
+            var actions = circuit.workoutItems.map { item in
+                return AlertActionOption(title: item.name, style: .default) { _ in
+                    let viewController = WorkoutItemInfoViewController(workoutItem: item)
+                    self.coordinator?.navigate(to: viewController, presentModally: true)
+                }
+            }
+            actions.append(AlertActionOption.cancel)
+            
+            coordinator?.presentAlert(option: AlertControllerOption(title: "Choose exercise", message: nil, preferredStyle: .actionSheet), actions: actions)
+        }
+    }
+
 }
 
 // MARK: - View Config
@@ -217,10 +236,21 @@ extension WorkoutSessionViewController {
             var section = [UITableViewCell]()
             
             // Header cell
-            let headerCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-            var content = headerCell.defaultContentConfiguration()
-            content.text = circuit.title
-            headerCell.contentConfiguration = content
+            let headerCell = TitleSubtitleButtonCell()
+            headerCell.icon = UIImage(systemName: Icons.questionmark)
+            headerCell.buttonTapHandler = { [weak self] in
+                self?.didTapInfoButton(at: circuitIndex, circuit)
+            }
+            switch circuit.type {
+            case .singleExercise, .circuit:
+                headerCell.title = circuit.title
+                headerCell.titleFont = UIFont.bodyBold
+            case .superSet:
+                headerCell.title = AppText.Workout.superSet
+                headerCell.titleFont = UIFont.small
+                headerCell.subtitle = circuit.title
+                headerCell.subtitleFont = UIFont.body
+            }
             section.append(headerCell)
             
             // Set cells
@@ -283,6 +313,14 @@ extension WorkoutSessionViewController: UITableViewDataSource {
         return cells[indexPath.section][indexPath.row]
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return nil }
+        let view = UIView()
+        view.snp.remakeConstraints { make in
+            make.height.equalTo(Constants.Spacing.small)
+        }
+        return view
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
         view.snp.remakeConstraints { make in
             make.height.equalTo(Constants.Spacing.small)

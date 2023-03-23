@@ -32,8 +32,8 @@ class IconButton: UIView {
         configureGestures()
     }
     
-    convenience init(_ iconName: String) {
-        self.init(icon: UIImage(systemName: iconName))
+    convenience init(name: String) {
+        self.init(icon: UIImage(systemName: name))
     }
     
     required init?(coder: NSCoder) {

@@ -30,6 +30,7 @@ class WorkoutSettingsViewController: BaseMVVMViewController<WorkoutSettingsViewM
 extension WorkoutSettingsViewController {
     private func configureViews() {
         title = AppText.Workout.settings
+        tableView.backgroundColor = .secondarySystemBackground
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)

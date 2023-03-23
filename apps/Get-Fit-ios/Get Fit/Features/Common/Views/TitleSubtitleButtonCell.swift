@@ -13,7 +13,7 @@ class TitleSubtitleButtonCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let cellTappingArea = UIView()
-    private let iconButton = IconButton(Icons.questionmark)
+    private let iconButton = IconButton(name: Icons.questionmark)
     
     var title: String? {
         didSet {
@@ -34,6 +34,30 @@ class TitleSubtitleButtonCell: UITableViewCell {
     var buttonTapHandler: (() -> Void)? {
         didSet {
             iconButton.tapHandler = buttonTapHandler
+        }
+    }
+    
+    var titleFont: UIFont? {
+        didSet {
+            titleLabel.font = titleFont
+        }
+    }
+    
+    var subtitleFont: UIFont? {
+        didSet {
+            subtitleLabel.font = subtitleFont
+        }
+    }
+    
+    var numberOfLinesOfTitle: Int = 1 {
+        didSet {
+            titleLabel.numberOfLines = numberOfLinesOfTitle
+        }
+    }
+    
+    var numberOfLinesOfSubtitle: Int = 1 {
+        didSet {
+            subtitleLabel.numberOfLines = numberOfLinesOfSubtitle
         }
     }
     

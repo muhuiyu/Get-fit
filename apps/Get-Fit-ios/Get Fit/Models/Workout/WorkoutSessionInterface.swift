@@ -19,8 +19,15 @@ extension WorkoutSessionInterface {
         return circuits
             .compactMap({ circuit in
                 circuit.sets.compactMap({ WorkoutItem.getWorkoutItemName(of: $0.itemID) })
+                    .reduce(into: Set<String>(), { $0.insert($1) })
                     .joined(separator: ", ")
             })
             .joined(separator: ", ")
+    }
+    var numberOfSets: Int {
+        return circuits.reduce(into: 0) { $0 += $1.sets.count }
+    }
+    var totalWeight: Double {
+        return circuits.reduce(into: 0) { $0 += $1.sets.reduce(into: 0) { $0 += $1.weight } }
     }
 }

@@ -35,7 +35,7 @@ class WorkoutSettingsViewModel: BaseViewModel {
         
         var cell: UITableViewCell {
             let cell = UITableViewCell()
-            cell.accessoryType = .detailButton
+            cell.accessoryType = .disclosureIndicator
             var content = cell.defaultContentConfiguration()
             content.text = name
             cell.contentConfiguration = content

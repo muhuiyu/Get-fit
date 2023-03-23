@@ -31,6 +31,30 @@ class TitleSubtitleDetailCell: UITableViewCell {
     }
     var tapHandler: (() -> Void)?
     
+    var titleFont: UIFont? {
+        didSet {
+            titleLabel.font = titleFont
+        }
+    }
+    
+    var subtitleFont: UIFont? {
+        didSet {
+            subtitleLabel.font = subtitleFont
+        }
+    }
+    
+    var numberOfLinesOfTitle: Int = 1 {
+        didSet {
+            titleLabel.numberOfLines = numberOfLinesOfTitle
+        }
+    }
+    
+    var numberOfLinesOfSubtitle: Int = 1 {
+        didSet {
+            subtitleLabel.numberOfLines = numberOfLinesOfSubtitle
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViews()

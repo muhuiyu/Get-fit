@@ -33,8 +33,13 @@ extension WorkoutCircuit {
         }
     }
     
-    var superSetWorkoutItems: [WorkoutItem] {
-        guard type == .superSet else { return [] }
+    var workoutItems: [WorkoutItem] {
+        if type == .singleExercise {
+            if let item = WorkoutItem.getWorkoutItem(of: sets.first?.itemID ?? "") {
+                return [ item ]
+            }
+            return []
+        }
         
         var itemIDs = [String]()
         for set in sets {
@@ -47,7 +52,7 @@ extension WorkoutCircuit {
     var lastGroupOfSetsOfSuperSet: [WorkoutSet] {
         guard type == .superSet, !sets.isEmpty else { return [] }
         
-        let superSetWorkoutItems = superSetWorkoutItems
+        let superSetWorkoutItems = workoutItems
         guard !superSetWorkoutItems.isEmpty, sets.count >= superSetWorkoutItems.count else { return [] }
         
         return sets.suffix(superSetWorkoutItems.count)

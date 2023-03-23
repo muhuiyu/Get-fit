@@ -105,6 +105,11 @@ extension WorkoutSession {
     var dateString: String {
         return startTime.dateString
     }
+    var sessionPreviewCellSummary: String {
+        let weightString = "Total weight: " + String(totalWeight)
+        let setString = "Total sets: " + String(numberOfSets)
+        return weightString + ", " + setString
+    }
 }
 
 // MARK: - WorkoutSessionList
