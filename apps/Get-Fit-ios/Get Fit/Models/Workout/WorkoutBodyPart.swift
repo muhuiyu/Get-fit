@@ -5,7 +5,7 @@
 //  Created by Mu Yu on 8/27/22.
 //
 
-enum WorkoutBodyPart: String {
+enum WorkoutBodyPart: String, Codable {
     case shoulders
     case lateral
     case back

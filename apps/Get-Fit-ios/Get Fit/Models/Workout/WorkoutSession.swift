@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Collections
 
 typealias WorkoutSessionID = String
 
@@ -18,7 +19,7 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
     var startTime: DateAndTime
     var endTime: DateAndTime
     var title: String
-    var itemLogs: [WorkoutItemLog]
+    var circuits: [WorkoutCircuit]
     var note: String
     
     // Firebase
@@ -29,14 +30,14 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
          startTime: DateAndTime,
          endTime: DateAndTime,
          title: String,
-         itemLogs:[WorkoutItemLog],
+         circuits: [WorkoutCircuit],
          note: String = "") {
         self.id = id
         self.userID = userID
         self.title = title
         self.startTime = startTime
         self.endTime = endTime
-        self.itemLogs = itemLogs
+        self.circuits = circuits
         self.note = note
     }
 }
@@ -51,7 +52,7 @@ extension WorkoutSession {
         self.title = "New workout session"
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
-        self.itemLogs = []
+        self.circuits = []
         self.note = ""
     }
     init(createdFrom routine: WorkoutRoutine,
@@ -64,7 +65,7 @@ extension WorkoutSession {
         self.title = routine.title
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
-        self.itemLogs = routine.itemLogs
+        self.circuits = routine.circuits
         self.note = routine.note
     }
     private struct WorkoutSessionData: Codable {
@@ -72,7 +73,7 @@ extension WorkoutSession {
         var startTime: DateAndTime
         var endTime: DateAndTime
         var title: String
-        var itemLogs: [WorkoutItemLog]
+        var circuits: [WorkoutCircuit]
         var note: String
     }
     init(snapshot: DocumentSnapshot) throws {
@@ -82,7 +83,7 @@ extension WorkoutSession {
         startTime = data.startTime
         endTime = data.endTime
         title = data.title
-        itemLogs = data.itemLogs
+        circuits = data.circuits
         note = data.note
     }
 }
@@ -101,15 +102,46 @@ extension WorkoutSession {
         guard startTime.day == endTime.day else { return "" }
         return startTime.toDate()?.formatted(.dateTime.year().month(.wide)) ?? ""
     }
-    var allItemNames: String {
-        return itemLogs.compactMap { WorkoutItem.getWorkoutItemName(of: $0.itemID) }.joined(separator: ", ")
-    }
-    var previewText: String {
-        return itemLogs
-            .compactMap({ WorkoutItem.getWorkoutItem(of: $0.itemID)?.name })
-            .joined(separator: ", ")
-    }
     var dateString: String {
         return startTime.dateString
+    }
+    var sessionPreviewCellSummary: String {
+        let weightString = "Total weight: " + String(totalWeight)
+        let setString = "Total sets: " + String(numberOfSets)
+        return weightString + ", " + setString
+    }
+}
+
+// MARK: - WorkoutSessionList
+typealias WorkoutSessionList = [WorkoutSession]
+typealias WorkoutSessionGroup = OrderedDictionary<String, [WorkoutSession]>
+
+extension WorkoutSessionList {
+    mutating func remove(id: WorkoutSessionID) {
+        guard let index = self.firstIndex(where: { $0.id == id }) else { return }
+        self.remove(at: index)
+    }
+    func sortedByTime(isAscending: Bool = true) -> WorkoutSessionList {
+        return self.sorted(by: {
+            guard let first = $0.startTime.toDate(), let second = $1.startTime.toDate() else { return false }
+            if isAscending {
+                return first < second
+            } else {
+                return first > second
+            }
+        })
+    }
+}
+
+extension WorkoutSessionList {
+    func groupedByMonth() -> WorkoutSessionGroup {
+        guard !self.isEmpty else { return [:] }
+        let groupedSessions = WorkoutSessionGroup(grouping: self) { $0.monthParsed }
+        return groupedSessions
+    }
+    func groupedByDay() -> WorkoutSessionGroup {
+        guard !self.isEmpty else { return [:] }
+        let groupedSessions = WorkoutSessionGroup(grouping: self) { $0.dayParsed }
+        return groupedSessions
     }
 }

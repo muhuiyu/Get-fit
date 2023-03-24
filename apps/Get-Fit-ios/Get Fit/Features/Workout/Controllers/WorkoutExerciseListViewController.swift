@@ -12,12 +12,19 @@ import RxSwift
 class WorkoutExerciseListViewController: BaseViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private let tableView = UITableView()
+    private var selectedItemsView = UIView()
     
     private let routineViewModel: WorkoutRoutineViewModel?
     private let sessionViewModel: WorkoutSessionViewModel?
     private let options: [WorkoutItemID] = WorkoutItem.getAllWorkoutItemIDs()
     private var selectedIndex: Int?
-    private let allowsMultipleSelection: Bool
+    private let circuitType: WorkoutCircuitType
+    
+    private var selectedItemIDs = [String]()
+    
+    private var allowsMultipleSelection: Bool {
+        circuitType != .singleExercise
+    }
     
     private var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
@@ -31,10 +38,10 @@ class WorkoutExerciseListViewController: BaseViewController {
          coordinator: BaseCoordinator? = nil,
          routineViewModel: WorkoutRoutineViewModel? = nil,
          sessionViewModel: WorkoutSessionViewModel? = nil,
-         allowsMultipleSelection: Bool = false) {
+         circuitType: WorkoutCircuitType) {
         self.routineViewModel = routineViewModel
         self.sessionViewModel = sessionViewModel
-        self.allowsMultipleSelection = allowsMultipleSelection
+        self.circuitType = circuitType
         super.init()
         self.appCoordinator = appCoordinator
         self.coordinator = coordinator
@@ -44,7 +51,6 @@ class WorkoutExerciseListViewController: BaseViewController {
         super.viewDidLoad()
         configureViews()
         configureConstraints()
-        configureGestures()
     }
 }
 // MARK: - Navigation
@@ -56,6 +62,7 @@ extension WorkoutExerciseListViewController {
     }
     @objc
     private func didTapSave() {
+        // Only available for multiple selection
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         // TODO: -
         coordinator.dismissCurrentModal()
@@ -65,17 +72,19 @@ extension WorkoutExerciseListViewController {
 extension WorkoutExerciseListViewController {
     private func configureViews() {
         configureNavigationBar()
+        view.addSubview(selectedItemsView)
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
     }
     private func configureConstraints() {
-        tableView.snp.remakeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+        selectedItemsView.snp.remakeConstraints { make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    private func configureGestures() {
-
+        tableView.snp.remakeConstraints { make in
+            make.top.equalTo(selectedItemsView.snp.bottom)
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     private func configureNavigationBar() {
         title = AppText.Workout.selectExercise
@@ -94,7 +103,21 @@ extension WorkoutExerciseListViewController {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave))
         }
     }
-
+    private func reconfigureSelectedItemsView() -> UIView {
+        if selectedItemIDs.count == 0 {
+            return UIView()
+        }
+        
+        let stackView = UIStackView()
+        for id in selectedItemIDs {
+            if let item = WorkoutItem.getWorkoutItem(of: id) {
+                stackView.addArrangedSubview(ChipView(text: item.name))
+            }
+        }
+        stackView.axis = .horizontal
+        stackView.spacing = Constants.Spacing.trivial
+        return stackView
+    }
 }
 // MARK: - Data Source
 extension WorkoutExerciseListViewController: UITableViewDataSource {
@@ -107,6 +130,7 @@ extension WorkoutExerciseListViewController: UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         cell.textLabel?.text = WorkoutItem.getWorkoutItemName(of: workoutItemID)
         cell.selectionStyle = .none
+        cell.accessoryType = selectedItemIDs.contains(workoutItemID) ? .checkmark : .none
         
         if let item = WorkoutItem.getWorkoutItem(of: workoutItemID) {
             cell.detailTextLabel?.text = item.getBodyPartString
@@ -117,36 +141,29 @@ extension WorkoutExerciseListViewController: UITableViewDataSource {
 }
 // MARK: - Delegate
 extension WorkoutExerciseListViewController: UITableViewDelegate {
-    private func reconfigureTableView(_ tableView: UITableView, didSelectWorkoutItem itemID: WorkoutItemID) {
-        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        
+    private func didSelectSingleWorkoutItem() {
+        guard let coordinator = coordinator as? WorkoutCoordinator, selectedItemIDs.count == 1 else { return }
         if let routineViewModel = routineViewModel {
-            routineViewModel.addExercise(for: itemID)
+            // TODO: -
+//            routineViewModel.addExercise(for: itemID)
         } else if let sessionViewModel = sessionViewModel {
-            sessionViewModel.addExercise(for: itemID)
-        }
-    }
-    private func didSelectSingleWorkoutItem(in tableView: UITableView, at itemID: WorkoutItemID) {
-        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        if let routineViewModel = routineViewModel {
-            routineViewModel.addExercise(for: itemID)
-        } else if let sessionViewModel = sessionViewModel {
-            sessionViewModel.addExercise(for: itemID)
+            sessionViewModel.addCircuit(for: selectedItemIDs, as: .singleExercise)
         }
         coordinator.dismissCurrentModal()
     }
 
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defer {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
         let selectedWorkoutItemID = isFiltering ? filteredOptions[indexPath.row] : options[indexPath.row]
+        selectedItemIDs.append(selectedWorkoutItemID)
         
         if allowsMultipleSelection {
-            reconfigureTableView(tableView, didSelectWorkoutItem: selectedWorkoutItemID)
+            guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            cell.setSelected(!cell.isSelected, animated: true)
+            tableView.reloadData()
+            selectedItemsView = reconfigureSelectedItemsView()
         } else {
-            didSelectSingleWorkoutItem(in: tableView, at: selectedWorkoutItemID)
+            didSelectSingleWorkoutItem()
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
 }

@@ -7,12 +7,27 @@
 
 typealias WorkoutItemID = String
 
-struct WorkoutItem {
+struct WorkoutItem: Hashable, Codable {
     let id: WorkoutItemID
     let name: String
     let bodyPart: [WorkoutBodyPart]
     let machine: WorkoutMachine?
-    let isSideDifference: Bool = false
+    let isSideDifference: Bool
+    let videoURLString: String?
+    
+    init(id: WorkoutItemID,
+         name: String,
+         bodyPart: [WorkoutBodyPart],
+         machine: WorkoutMachine? = nil,
+         isSideDifference: Bool = false,
+         videoURLString: String? = nil) {
+        self.id = id
+        self.name = name
+        self.bodyPart = bodyPart
+        self.machine = machine
+        self.isSideDifference = isSideDifference
+        self.videoURLString = videoURLString
+    }
 }
 
 extension WorkoutItem {

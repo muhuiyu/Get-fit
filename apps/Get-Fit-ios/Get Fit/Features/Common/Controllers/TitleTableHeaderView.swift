@@ -28,7 +28,7 @@ class TitleTableHeaderView: UIView {
 // MARK: - View Config
 extension TitleTableHeaderView {
     private func configureViews() {
-        nameLabel.font = UIFont.bodyHeavy
+        nameLabel.font = UIFont.bodyBold
         nameLabel.textColor = .label
         nameLabel.textAlignment = .left
         addSubview(nameLabel)

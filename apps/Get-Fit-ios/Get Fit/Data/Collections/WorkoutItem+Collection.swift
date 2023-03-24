@@ -8,6 +8,7 @@
 extension WorkoutItem {
     static let all: [WorkoutItemID: WorkoutItem] = [
         // upper body
+        arnoldsPress.id: arnoldsPress,
         assistedDip.id: assistedDip,
         assistedPullUp.id: assistedPullUp,
         bicepCurlWithMachine.id: bicepCurlWithMachine,
@@ -17,10 +18,13 @@ extension WorkoutItem {
         dumbbellSkullCrusher.id: dumbbellSkullCrusher,
         flatDumbbellChestFly.id: flatDumbbellChestFly,
         latPullDown.id: latPullDown,
+        machineChestFly.id: machineChestFly,
         machineChestPress.id: machineChestPress,
         machineShoulderPress.id: machineShoulderPress,
+        machineShoulderPressAlternating.id: machineShoulderPressAlternating,
         pushUp.id: pushUp,
         reverseSeatedPecDeck.id: reverseSeatedPecDeck,
+        smithMachineBenchPress.id: smithMachineBenchPress,
         seatedCableRow.id: seatedCableRow,
         seatedPecDeck.id: seatedPecDeck,
         tricepPressWithMachine.id: tricepPressWithMachine,
@@ -37,6 +41,8 @@ extension WorkoutItem {
         cableSplitSquat.id: cableSplitSquat,
         cableSquat.id: cableSquat,
         cableSideKick.id: cableSideKick,
+        deadlift.id: deadlift,
+        dumbbellGobletSquat.id: dumbbellGobletSquat,
         hipAbduction.id: hipAbduction,
         hipExtension.id: hipExtension,
         kneelingHipThrust.id: kneelingHipThrust,
@@ -52,6 +58,11 @@ extension WorkoutItem {
     ]
     
     // Upper body
+    static let arnoldsPress = WorkoutItem(id: "arnoldsPress",
+                                          name: "Arnolds press",
+                                          bodyPart: [.shoulders],
+                                          machine: nil,
+                                          isSideDifference: false)
     static let dumbbellBenchPress = WorkoutItem(id: "dumbbellBenchPress",
                                                 name: "Dumbbell bench press",
                                                 bodyPart: [.chest],
@@ -60,6 +71,10 @@ extension WorkoutItem {
                                                 name: "Dumbbell incline press",
                                                 bodyPart: [.chest],
                                                 machine: nil)
+    static let machineChestFly = WorkoutItem(id: "machineChestFly",
+                                               name: "Machine chest fly",
+                                               bodyPart: [.chest],
+                                               machine: .seatedPecDeckMachine)
     static let machineChestPress = WorkoutItem(id: "machineChestPress",
                                                name: "Machine chest press",
                                                bodyPart: [.chest],
@@ -68,6 +83,10 @@ extension WorkoutItem {
                                                   name: "Machine shoulder press",
                                                   bodyPart: [.chest],
                                                   machine: .shoulderPressMachine)
+    static let machineShoulderPressAlternating = WorkoutItem(id: "machineShoulderPressAlternating",
+                                                             name: "Machine shoulder press alternating",
+                                                             bodyPart: [.chest],
+                                                             machine: .shoulderPressMachine)
     static let seatedPecDeck = WorkoutItem(id: "seatedPecDeck",
                                           name: "Seated pec deck",
                                           bodyPart: [.chest],
@@ -81,11 +100,11 @@ extension WorkoutItem {
                                                   bodyPart: [.chest, .biceps],
                                                   machine: nil)
     static let bicepCurlWithMachine = WorkoutItem(id: "bicepCurlWithMachine",
-                                                  name: "Bicep Curl with Machine",
+                                                  name: "Bicep curl with machine",
                                                   bodyPart: [.biceps],
                                                   machine: .bicepCurlMachine)
     static let tricepPressWithMachine = WorkoutItem(id: "tricepPressWithMachine",
-                                                    name: "Tricep Press with Machine",
+                                                    name: "Tricep press with machine",
                                                     bodyPart: [.triceps, .chest],
                                                     machine: .tricepPressMachine)
     static let pushUp = WorkoutItem(id: "pushUp",
@@ -104,6 +123,9 @@ extension WorkoutItem {
                                             name: "Seated cable row",
                                             bodyPart: [.back, .biceps],
                                             machine: .cableMachine)
+    static let smithMachineBenchPress = WorkoutItem(id: "smithMachineBenchPress",
+                                                    name: "Smith machine bench press",
+                                                    bodyPart: [.chest, .triceps])
     static let assistedDip = WorkoutItem(id: "assistedDip",
                                          name: "Assisted dip",
                                          bodyPart: [.triceps, .chest],
@@ -121,6 +143,11 @@ extension WorkoutItem {
                                                 bodyPart: [.shoulders, .lateral],
                                                 machine: nil)
     // Lower body
+    static let deadlift = WorkoutItem(id: "deadlift",
+                                      name: "Deadlift",
+                                      bodyPart: [.back, .hamstrings],
+                                      machine: .barbell)
+    
     static let cableReverseLunge = WorkoutItem(id: "cableReverseLunge",
                                                name: "Cable reverse lunge",
                                                bodyPart: [.quads],
@@ -200,5 +227,8 @@ extension WorkoutItem {
     static let romanianDeadlift = WorkoutItem(id: "RomanianDeadlift",
                                               name: "Romanian deadlift",
                                               bodyPart: [.glutes],
-                                              machine: nil)
+                                              machine: .barbell)
+    static let dumbbellGobletSquat = WorkoutItem(id: "dumbbellGobletSquat",
+                                                 name: "Dumbbell goblet squat",
+                                                 bodyPart: [.quads])
 }

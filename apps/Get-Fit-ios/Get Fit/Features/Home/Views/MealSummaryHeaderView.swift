@@ -44,7 +44,7 @@ extension MealSummaryHeaderView {
     private func configureViews() {
         backgroundColor = .secondarySystemBackground
         
-        nameLabel.font = UIFont.bodyHeavy
+        nameLabel.font = UIFont.bodyBold
         nameLabel.textColor = .label
         nameLabel.textAlignment = .left
         addSubview(nameLabel)
@@ -54,7 +54,7 @@ extension MealSummaryHeaderView {
         macroLabel.textAlignment = .left
         addSubview(macroLabel)
         
-        caloriesLabel.font = UIFont.bodyHeavy
+        caloriesLabel.font = UIFont.bodyBold
         caloriesLabel.textColor = .label
         caloriesLabel.textAlignment = .right
         addSubview(caloriesLabel)

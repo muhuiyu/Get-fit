@@ -45,6 +45,8 @@ class Icons {
     static var cartFill: String { "cart.fill" }
     static var giftcard: String { "giftcard" }
     static var questionmark: String { "questionmark" }
+    static var questionmarkCircle: String { "questionmark.circle" }
+    static var questionmarkCircleFill: String { "questionmark.circle.fill" }
     static var person: String { "person" }
     static var personFill: String { "person.fill" }
     static var plusminus: String { "plusminus" }
@@ -97,6 +99,10 @@ class Icons {
     static var filmFill: String { "film.fill" }
     static var ticketFill: String { "ticket.fill" }
     static var playTvFill: String { "play.tv.fill" }
+    static var play: String { "play" }
+    static var playFill: String { "play.fill" }
+    static var playCircle: String { "play.circle" }
+    static var playCircleFill: String { "play.circle.fill" }
     static var note: String { "note" }
     static var noteText: String { "note.text" }
     static var gamecontrollerFill: String { "gamecontroller.fill" }

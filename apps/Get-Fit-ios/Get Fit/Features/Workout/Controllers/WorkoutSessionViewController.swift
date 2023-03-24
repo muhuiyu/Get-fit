@@ -10,8 +10,18 @@ import RxSwift
 
 class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewModel> {
     
+    private let isNewSession: Bool
+    
     private let tableView = UITableView()
     private var cells = [[UITableViewCell]]()
+    
+    init(appCoordinator: AppCoordinator? = nil,
+         coordinator: BaseCoordinator? = nil,
+         viewModel: WorkoutSessionViewModel,
+         isNewSession: Bool = false) {
+        self.isNewSession = isNewSession
+        super.init(appCoordinator: appCoordinator, coordinator: coordinator, viewModel: viewModel)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,16 +35,28 @@ class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewMod
 }
 // MARK: - Handlers
 extension WorkoutSessionViewController {
-    private func didTapAddSet(for indexOfItemLog: Int) {
-        viewModel.addSet(for: indexOfItemLog)
+    private func didTapAddSet(for circuitIndex: Int) {
+        viewModel.addSet(for: circuitIndex)
     }
     private func didTapAddExercise() {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         coordinator.showExerciseList(sessionViewModel: viewModel)
     }
-    private func didTapAddSuperSet() {
+    private func didTapAddSpecialSet() {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        coordinator.showExerciseList(sessionViewModel: viewModel, allowsMultipleSelection: true)
+        coordinator.presentAlert(option: AlertControllerOption(title: AppText.Workout.addSpecialSet,
+                                                               message: "Choose type", preferredStyle: .actionSheet),
+                                 actions: [
+                                    AlertActionOption(title: AppText.Workout.addSuperSet, style: .default, handler: { _ in
+                                        coordinator.showExerciseList(sessionViewModel: self.viewModel,
+                                                                     circuitType: .superSet)
+                                    }),
+                                    AlertActionOption(title: AppText.Workout.addCircuit, style: .default, handler: { _ in
+                                        coordinator.showExerciseList(sessionViewModel: self.viewModel,
+                                                                     circuitType: .circuit)
+                                    }),
+                                    AlertActionOption.cancel,
+                                 ])
     }
     @objc
     private func didTapTimer() {
@@ -55,14 +77,14 @@ extension WorkoutSessionViewController {
                                  ])
     }
     
-    private func didTapReorderExercises() {
-        guard
-            let coordinator = coordinator as? WorkoutCoordinator,
-            let session = viewModel.session.value
-        else { return }
-        let viewController = WorkoutSessionReorderExercisesViewController(session.itemLogs)
-        viewController.completion = { [weak self] itemLogs in
-            self?.viewModel.didChangeItemLogsOrder(to: itemLogs)
+    private func didTapReorderCircuits() {
+        guard let coordinator = coordinator, let session = viewModel.session.value else { return }
+        let viewController = WorkoutSessionReorderExercisesViewController(session.circuits)
+        viewController.completion = { [weak self] (shouldUpdate, value) in
+            coordinator.dismissCurrentModal()
+            if shouldUpdate {
+                self?.viewModel.didChangeCircuitsOrder(to: value)
+            }
         }
         coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
     }
@@ -71,20 +93,19 @@ extension WorkoutSessionViewController {
         // TODO: -
     }
 
-    private func presentSetDetailsActionSheet(itemLogAt indexOfItemLog: Int,
-                                              setLogAt indexOfSetLog: Int) {
+    private func presentSetDetailsActionSheet(circuitAt circuitIndex: Int,
+                                              setAt setIndex: Int) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         
         let handler: ((UIAlertAction) -> Void) = { action in
+            let type: WorkoutSetType
             switch action.title {
-            case AppText.Workout.normal:
-                self.viewModel.didChangeSetType(itemLogAt: indexOfItemLog, setLogAt: indexOfSetLog, to: .normal)
-            case AppText.Workout.warmUp:
-                self.viewModel.didChangeSetType(itemLogAt: indexOfItemLog, setLogAt: indexOfSetLog, to: .warmUp)
-            case AppText.Workout.dropSet:
-                self.viewModel.didChangeSetType(itemLogAt: indexOfItemLog, setLogAt: indexOfSetLog, to: .dropSet)
-            default: return
+            case AppText.Workout.normal: type = .normal
+            case AppText.Workout.warmUp: type = .warmUp
+            case AppText.Workout.dropSet: type = .dropSet
+            default: type = .normal
             }
+            self.viewModel.didChangeSetType(circuitAt: circuitIndex, setAt: setIndex, to: type)
         }
         
         coordinator.presentAlert(option: AlertControllerOption(title: "Choose set type", message: nil, preferredStyle: .actionSheet),
@@ -96,6 +117,38 @@ extension WorkoutSessionViewController {
                                  ])
     }
 
+    private func didTapInfoButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
+        switch circuit.type {
+        case .singleExercise:
+            guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
+            let viewController = WorkoutItemInfoViewController(workoutItem: workoutItem)
+            coordinator?.navigate(to: viewController.embedInNavgationController(), presentModally: true)
+        case .superSet, .circuit:
+            var actions = circuit.workoutItems.map { item in
+                return AlertActionOption(title: item.name, style: .default) { _ in
+                    let viewController = WorkoutItemInfoViewController(workoutItem: item)
+                    self.coordinator?.navigate(to: viewController.embedInNavgationController(), presentModally: true)
+                }
+            }
+            actions.append(AlertActionOption.cancel)
+            
+            coordinator?.presentAlert(option: AlertControllerOption(title: "Choose exercise", message: nil, preferredStyle: .actionSheet), actions: actions)
+        }
+    }
+    
+    private func didTapMoreButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
+        // TODO: present half modal
+//        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+    }
+
+    
+    // MARK: - For
+    @objc
+    private func didTapSave() {
+        guard let coordinator = coordinator else { return }
+        coordinator.navigationController.popViewController(animated: true)
+        viewModel.saveNewSession()
+    }
 }
 
 // MARK: - View Config
@@ -131,8 +184,8 @@ extension WorkoutSessionViewController {
     private func configureNavigationItems() {
         // View more
         let items = UIMenu(options: .displayInline, children: [
-            UIAction(title: AppText.Workout.reorderExercises, image: nil, handler: { _ in
-                self.didTapReorderExercises()
+            UIAction(title: AppText.Workout.reorderCircuits, image: nil, handler: { _ in
+                self.didTapReorderCircuits()
             }),
             UIAction(title: AppText.Workout.SaveAsRoutine, image: nil, handler: { _ in
                 self.didTapSaveAsRoutine()
@@ -150,8 +203,14 @@ extension WorkoutSessionViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(didTapTimer))
+     
+        var barItems: [UIBarButtonItem] =  [ viewMoreButton, timerButton ]
         
-        navigationItem.rightBarButtonItems = [ viewMoreButton, timerButton ]
+        if isNewSession {
+            barItems.append(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave)))
+        }
+        
+        navigationItem.rightBarButtonItems = barItems
     }
 
 }
@@ -159,13 +218,15 @@ extension WorkoutSessionViewController {
 extension WorkoutSessionViewController {
     private func configureCells() {
         let headerSection = configureHeaderSection()
-        let itemLogsSections = configureItemLogsSections()
+        let circuitSections = configureCircuitSections()
         let addExerciseSection = configureAddExerciseSection()
+        let addSpeicalSection = configureAddSpecialSetSection()
         
         cells.removeAll()
         cells.append(headerSection)
-        cells += itemLogsSections
+        cells += circuitSections
         cells.append(addExerciseSection)
+        cells.append(addSpeicalSection)
     }
     private func configureHeaderSection() -> [UITableViewCell] {
         guard let session = viewModel.session.value else { return [] }
@@ -195,39 +256,73 @@ extension WorkoutSessionViewController {
         
         return [ titleCell, startTimeCell, endTimeCell, noteCell ]
     }
-    private func configureItemLogsSections() -> [[UITableViewCell]] {
+    private func configureCircuitSections() -> [[UITableViewCell]] {
         guard let session = viewModel.session.value else { return [] }
         var sections = [[UITableViewCell]]()
-        for (indexOfItemLog, itemLog) in session.itemLogs.enumerated() {
+        
+        for (circuitIndex, circuit) in session.circuits.enumerated() {
             var section = [UITableViewCell]()
-            let headerCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-            headerCell.textLabel?.text = WorkoutItem.getWorkoutItemName(of: itemLog.itemID)
-            headerCell.detailTextLabel?.text = itemLog.note
+            
+            // Header cell
+            let headerCell = TitleSubtitleButtonCell()
+            
+            let infoButton = IconButton(name: Icons.questionmarkCircle)
+            infoButton.tapHandler = { [weak self] in
+                self?.didTapInfoButton(at: circuitIndex, circuit)
+            }
+            infoButton.contentMode = .scaleAspectFit
+            infoButton.iconColor = .Brand.primary
+            
+            let moreButton = IconButton(name: Icons.ellipsis)
+            moreButton.tapHandler = { [weak self] in
+                self?.didTapMoreButton(at: circuitIndex, circuit)
+            }
+            moreButton.contentMode = .scaleAspectFit
+            moreButton.iconColor = .Brand.primary
+            
+            headerCell.icons = [infoButton, moreButton]
+            
+            switch circuit.type {
+            case .singleExercise, .circuit:
+                headerCell.title = circuit.title
+                headerCell.subtitle = ""
+                headerCell.titleFont = UIFont.bodyMedium
+            case .superSet:
+                headerCell.title = AppText.Workout.superSet
+                headerCell.titleColor = UIColor.secondaryLabel
+                headerCell.titleFont = UIFont.small
+                headerCell.subtitle = circuit.title
+                headerCell.subtitleColor = UIColor.label
+                headerCell.subtitleFont = UIFont.body
+                headerCell.numberOfLinesOfSubtitle = circuit.workoutItems.count
+            }
             section.append(headerCell)
-            for (indexOfSet, setLog) in itemLog.sets.enumerated() {
-                let cell = WorkoutSetLogCell()
+            
+            // Set cells
+            for (setIndex, set) in circuit.sets.enumerated() {
+                let cell = WorkoutSetCell()
                 cell.weightValueChangedHandler = { [weak self] in
-                    self?.viewModel.didChangeWeightValue(itemLogAt: indexOfItemLog, setLogAt: indexOfSet, to: cell.weight)
+                    self?.viewModel.didChangeWeightValue(circuitAt: circuitIndex, setAt: setIndex, to: cell.weight)
                 }
                 cell.repsValueChangedHandler = { [weak self] in
-                    self?.viewModel.didChangeRepsValue(itemLogAt: indexOfItemLog, setLogAt: indexOfSet, to: cell.reps)
+                    self?.viewModel.didChangeRepsValue(circuitAt: circuitIndex, setAt: setIndex, to: cell.reps)
                 }
                 cell.noteValueChangedHandler = { [weak self] in
-                    self?.viewModel.didChangeNoteValue(itemLogAt: indexOfItemLog, setLogAt: indexOfSet, to: cell.note)
+                    self?.viewModel.didChangeNoteValue(circuitAt: circuitIndex, setAt: setIndex, to: cell.note)
                 }
                 cell.moreButtonTapHandler = { [weak self] in
-                    self?.presentSetDetailsActionSheet(itemLogAt: indexOfItemLog, setLogAt: indexOfSet)
+                    self?.presentSetDetailsActionSheet(circuitAt: circuitIndex, setAt: setIndex)
                 }
-                // TODO: - Add WarmUpSet check
-                // cell.setIndex = setLog.isWarmUpSet ? 0 : index
-                cell.setIndex = indexOfSet + 1
-                cell.setLog = setLog
+                cell.setIndexString = circuit.setIndexString(forSetAt: setIndex)
+                cell.set = set
                 section.append(cell)
             }
+            
+            // Add set cell
             let addSetCell = ButtonCell()
             addSetCell.title = AppText.Workout.addSet
             addSetCell.tapHandler = { [weak self] in
-                self?.didTapAddSet(for: indexOfItemLog)
+                self?.didTapAddSet(for: circuitIndex)
             }
             section.append(addSetCell)
             sections.append(section)
@@ -242,11 +337,11 @@ extension WorkoutSessionViewController {
         }
         return [ cell ]
     }
-    private func configureAddSuperSetSection() -> [UITableViewCell] {
+    private func configureAddSpecialSetSection() -> [UITableViewCell] {
         let cell = ButtonCell()
-        cell.title = AppText.Workout.addSuperSet
+        cell.title = AppText.Workout.addSpecialSet
         cell.tapHandler = { [weak self] in
-            self?.didTapAddSuperSet()
+            self?.didTapAddSpecialSet()
         }
         return [ cell ]
     }
@@ -280,7 +375,7 @@ extension WorkoutSessionViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard
-            viewModel.isSetLogCell(at: indexPath),
+            viewModel.isSetCell(at: indexPath),
             let coordinator = coordinator as? WorkoutCoordinator
         else { return nil }
         

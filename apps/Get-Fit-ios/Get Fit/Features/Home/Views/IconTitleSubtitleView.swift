@@ -55,7 +55,7 @@ extension IconTitleSubtitleView {
         titleLabel.textAlignment = .left
         addSubview(titleLabel)
         subtitleLabel.text = "subtitle"
-        subtitleLabel.font = UIFont.smallHeavy
+        subtitleLabel.font = UIFont.smallBold
         subtitleLabel.textColor = .label
         subtitleLabel.textAlignment = .left
         addSubview(subtitleLabel)

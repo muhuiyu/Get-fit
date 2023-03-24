@@ -86,14 +86,20 @@ extension AppText {
 // MARK: - Workout
 extension AppText {
     struct Workout {
+        static var settings: String { "Settings" }
         static var newSession: String { "New Session" }
         static var workoutRoutine: String { "Workout Routine" }
         static var workoutRoutines: String { "Workout Routines" }
         static var startTime: String { "Start Time" }
         static var endTime: String { "End Time" }
         static var note: String { "Note" }
+        static var editExercise: String { "Edit Exercise" }
+        static var editCategory: String { "Edit Category" }
+        static var editRoutine: String { "Edit Routine" }
         static var addExercise: String { "Add Exercise" }
         static var addSuperSet: String { "Add Super Set" }
+        static var addCircuit: String { "Add Circuit" }
+        static var addSpecialSet: String { "Add Special Set" }
         static var startThisRoutine: String { "Start this routine" }
         static var addSet: String { "Add Set" }
         static var weight: String { "Weight" }
@@ -102,10 +108,11 @@ extension AppText {
         static var warmUp: String { "Warm up" }
         static var dropSet: String { "Drop set" }
         static var normal: String { "Normal" }
-        static var reorderExercises: String { "Reorder Exercises" }
+        static var reorderCircuits: String { "Reorder Circuits" }
         static var SaveAsRoutine: String { "Save as Routine" }
         static var superSet: String { "Super Set" }
         static var circuit: String { "Circuit" }
+        static var history: String { "History" }
     }
 }
 // MARK: - Me

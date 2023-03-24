@@ -9,10 +9,6 @@ import UIKit
 import FirebaseFirestore
 
 class Database: DataProvider {
-    
-//    internal var cachedTransactions = [TransactionID: Transaction]()
-//    internal var cachedRecurringTransactions = [RecurringTransactionID: RecurringTransaction]()
-//    internal var cachedBudgets = [BudgetID: Budget]()
     internal var workoutSessionsCache = WorkoutSessionsCache()
     
     internal let dailyMealLogRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.dailyMealLogs)
@@ -23,19 +19,19 @@ class Database: DataProvider {
     internal let usersRef: CollectionReference = Firestore.firestore().collection(FirebaseCollection.users)
     
     struct FirebaseCollection {
-        static let dailyMealLogs = "dailyMealLogs"
-        static let workoutSessions = "workoutSessions"
-        static let workoutRoutines = "workoutRoutines"
-        static let progress = "progress"
-        static let userPreference = "userPreference"
-        static let users = "users"
+        static var dailyMealLogs: String { "dailyMealLogs" }
+        static var workoutSessions: String { "workoutSessions" }
+        static var workoutRoutines: String { "workoutRoutines" }
+        static var progress: String { "progress" }
+        static var userPreference: String { "userPreference" }
+        static var users: String { "users" }
     }
     
     struct Attribute {
-        static let userID = "userID"
-        static let year = "year"
-        static let month = "month"
-        static let day = "day"
+        static var userID: String { "userID" }
+        static var year: String { "year" }
+        static var month: String { "month" }
+        static var day: String { "day" }
     }
     
     enum FirebaseError: Error {
@@ -63,7 +59,7 @@ extension Database {
         // establishing connection
         
         print("set up database")
-        writeData()
+//        writeData()
     }
 }
 // MARK: - write data
@@ -85,44 +81,15 @@ extension Database {
 //                }
 //            }
 //        }
-        // workout log
-//        let workoutEntry = WorkoutSession(id: "VIdfe662ae2dISKD6MrJ",
-//                                          userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
-//                                          startTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 11, minute: 0, second: 0),
-//                                          endTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 12, minute: 15, second: 0),
-//                                          title: "Full body",
-//                                          itemLogs: [
-//                                            WorkoutItemLog(itemID: WorkoutItem.assistedPullUp.id,
-//                                                           sets: [
-//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 32.5, reps: 12),
-//                                                           ],
-//                                                           restTime: TimeInterval(30)),
-//                                            WorkoutItemLog(itemID: WorkoutItem.seatedLegPress.id,
-//                                                           sets: [
-//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 67.5, reps: 12),
-//                                                           ],
-//                                                           restTime: TimeInterval(60)),
-//                                            WorkoutItemLog(itemID: WorkoutItem.bicepCurlWithMachine.id,
-//                                                           sets: [
-//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
-//                                                            WorkoutSetLog(weight: 12.5, reps: 12),
-//                                                           ],
-//                                                           restTime: TimeInterval(30)),
-//                                          ])
 //        do {
-//            let documentRef = try workoutSessionRef.addDocument(from: workoutEntry) { error in
+//            let documentRef = try workoutSessionRef.addDocument(from: workoutData[2]) { error in
 //                if let error = error {
 //                    print(error)
 //                }
 //            }
 //            print(documentRef.documentID)
 //        } catch {
-//
+//            print(error)
 //        }
     }
 }
@@ -317,3 +284,105 @@ struct WorkoutSessionsCache {
 struct DailyMealLogsCache {
     
 }
+
+
+
+let workoutData: [WorkoutSession] = [
+        WorkoutSession(id: "",
+                       userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+                       startTime: DateAndTime(year: 2023, month: 3, day: 23, hour: 11, minute: 0, second: 0),
+                       endTime: DateAndTime(year: 2023, month: 3, day: 23, hour: 12, minute: 0, second: 0),
+                       title: "Push",
+                       circuits: [
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.arnoldsPress.id, type: .warmUp, weight: 5, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.arnoldsPress.id, type: .warmUp, weight: 7, reps: 8, restTime: TimeInterval(30), note: "standing"),
+                            WorkoutSet(itemID: WorkoutItem.arnoldsPress.id, type: .warmUp, weight: 7, reps: 10, restTime: TimeInterval(30), note: "seated"),
+                            WorkoutSet(itemID: WorkoutItem.arnoldsPress.id, type: .warmUp, weight: 7, reps: 10, restTime: TimeInterval(30), note: "seated"),
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 10, reps: 10, restTime: TimeInterval(60), note: "5kg each side"),
+                            WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 12.5, reps: 8, restTime: TimeInterval(60), note: "6.25kg each side"),
+                            WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 12.5, reps: 8, restTime: TimeInterval(60), note: "6.25kg each side"),
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.machineShoulderPressAlternating.id, type: .normal, weight: 12.5, reps: 4, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.machineShoulderPressAlternating.id, type: .normal, weight: 7.5, reps: 8, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.machineShoulderPressAlternating.id, type: .normal, weight: 7.5, reps: 8, restTime: TimeInterval(30), note: ""),
+                            
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.tricepPushdown.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.tricepPushdown.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.tricepPushdown.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.machineChestFly.id, type: .normal, weight: 20, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.machineChestFly.id, type: .normal, weight: 17.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.machineChestFly.id, type: .normal, weight: 17.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                        ]),
+                       ],
+                       note: ""),
+        WorkoutSession(id: "",
+                       userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+                       startTime: DateAndTime(year: 2023, month: 3, day: 20, hour: 11, minute: 0, second: 0),
+                       endTime: DateAndTime(year: 2023, month: 3, day: 20, hour: 12, minute: 0, second: 0),
+                       title: "Lower body",
+                       circuits: [
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.deadlift.id, type: .warmUp, weight: 30, reps: 8, restTime: TimeInterval(60), note: "5kg each side"),
+                            WorkoutSet(itemID: WorkoutItem.deadlift.id, type: .normal, weight: 40, reps: 10, restTime: TimeInterval(60), note: "10kg each side"),
+                            WorkoutSet(itemID: WorkoutItem.deadlift.id, type: .normal, weight: 50, reps: 10, restTime: TimeInterval(60), note: "15kg each side"),
+                            WorkoutSet(itemID: WorkoutItem.deadlift.id, type: .normal, weight: 60, reps: 10, restTime: TimeInterval(60), note: "20kg each side"),
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.dumbbellGobletSquat.id, type: .normal, weight: 22.5, reps: 8, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.dumbbellGobletSquat.id, type: .normal, weight: 22.5, reps: 8, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.dumbbellGobletSquat.id, type: .normal, weight: 22.5, reps: 8, restTime: TimeInterval(30), note: ""),
+                        ]),
+                        WorkoutCircuit(type: .superSet,
+                                       sets: [
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegExtension.id, type: .normal, weight: 42.5, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegCurl.id, type: .normal, weight: 35, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegExtension.id, type: .normal, weight: 42.5, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegCurl.id, type: .normal, weight: 35, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegExtension.id, type: .normal, weight: 42.5, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegCurl.id, type: .normal, weight: 35, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegExtension.id, type: .normal, weight: 42.5, reps: 10, restTime: TimeInterval(0), note: ""),
+                                        WorkoutSet(itemID: WorkoutItem.seatedLegCurl.id, type: .normal, weight: 35, reps: 10, restTime: TimeInterval(0), note: ""),
+                                       ]),
+                       ],
+                       note: ""),
+        WorkoutSession(id: "",
+                       userID: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+                       startTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 11, minute: 0, second: 0),
+                       endTime: DateAndTime(year: 2023, month: 3, day: 16, hour: 12, minute: 0, second: 0),
+                       title: "Full body",
+                       circuits: [
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.assistedPullUp.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.assistedPullUp.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.assistedPullUp.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.assistedPullUp.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 65, reps: 10, restTime: TimeInterval(60), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 65, reps: 10, restTime: TimeInterval(60), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 65, reps: 10, restTime: TimeInterval(60), note: ""),
+                        ]),
+                        WorkoutCircuit(type: .superSet, sets: [
+                            WorkoutSet(itemID: WorkoutItem.machineShoulderPress.id, type: .normal, weight: 15, reps: 12, restTime: TimeInterval(0), note: "added 5kg RH only x8"),
+                            WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(0), note: "added 5kg RH only x12"),
+                            WorkoutSet(itemID: WorkoutItem.machineShoulderPress.id, type: .normal, weight: 15, reps: 12, restTime: TimeInterval(0), note: "added 5kg RH only x8"),
+                            WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(0), note: "added 5kg RH only x12"),
+                            WorkoutSet(itemID: WorkoutItem.machineShoulderPress.id, type: .normal, weight: 12.5, reps: 12, restTime: TimeInterval(0), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(0), note: "added 5kg RH only x12"),
+                        ]),
+                        WorkoutCircuit(type: .singleExercise, sets: [
+                            WorkoutSet(itemID: WorkoutItem.bicepCurlWithMachine.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.bicepCurlWithMachine.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                            WorkoutSet(itemID: WorkoutItem.bicepCurlWithMachine.id, type: .normal, weight: 12.5, reps: 10, restTime: TimeInterval(30), note: ""),
+                        ]),
+                       ],
+                       note: ""),
+    ]

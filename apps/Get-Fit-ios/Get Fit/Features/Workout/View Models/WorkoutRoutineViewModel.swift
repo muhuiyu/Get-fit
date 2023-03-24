@@ -34,21 +34,22 @@ class WorkoutRoutineViewModel {
 }
 
 extension WorkoutRoutineViewModel {
-    func getItemLog(at indexPath: IndexPath) -> WorkoutItemLog? {
-        guard
-            let routine = routine.value,
-            !routine.itemLogs.isEmpty,
-            indexPath.section == Section.itemLogs
-        else {
-            return nil
-        }
-        return routine.itemLogs[indexPath.row]
-    }
+//    func getItemLog(at indexPath: IndexPath) -> WorkoutItemLog? {
+//        guard
+//            let routine = routine.value,
+//            !routine.itemLogs.isEmpty,
+//            indexPath.section == Section.itemLogs
+//        else {
+//            return nil
+//        }
+//        return routine.itemLogs[indexPath.row]
+//    }
     func getItem(at indexPath: IndexPath) -> WorkoutItem? {
-        guard
-            let itemLog = getItemLog(at: indexPath),
-            let item = WorkoutItem.getWorkoutItem(of: itemLog.itemID) else { return nil }
-        return item
+//        guard
+//            let itemLog = getItemLog(at: indexPath),
+//            let item = WorkoutItem.getWorkoutItem(of: itemLog.itemID) else { return nil }
+//        return item
+        return nil
     }
 }
 extension WorkoutRoutineViewModel {

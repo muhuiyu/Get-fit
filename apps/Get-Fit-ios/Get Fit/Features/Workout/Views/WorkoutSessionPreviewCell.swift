@@ -43,7 +43,7 @@ extension WorkoutSessionPreviewCell {
         dateStack.addArrangedSubview(weekdayLabel)
         
         dayLabel.text = "01"
-        dayLabel.font = UIFont.bodyHeavy
+        dayLabel.font = UIFont.bodyBold
         dayLabel.textColor = .label
         dateStack.addArrangedSubview(dayLabel)
         
@@ -94,7 +94,7 @@ extension WorkoutSessionPreviewCell {
     }
     private func reconfigureCellData(for session: WorkoutSession) {
         self.titleLabel.text = session.title
-        self.contentLabel.text = session.previewText
+        self.contentLabel.text = session.sessionPreviewCellSummary
         self.dayLabel.text = String(session.startTime.day)
         self.weekdayLabel.text = session.startTime.toDate()?.toWeekDayString() ?? ""
         self.durationLabel.text = session.durationInHourMinuteString

@@ -5,7 +5,7 @@
 //  Created by Mu Yu on 8/27/22.
 //
 
-enum WorkoutMachine: String {
+enum WorkoutMachine: String, Codable {
     case barbell
     case chestPressMachine
     case shoulderPressMachine

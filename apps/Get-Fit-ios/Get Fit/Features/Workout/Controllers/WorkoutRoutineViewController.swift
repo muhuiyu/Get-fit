@@ -77,13 +77,13 @@ extension WorkoutRoutineViewController {
 extension WorkoutRoutineViewController {
     private func configureCells() {
         let headerSection = configureHeaderSection()
-        let itemLogsSection = configureItemLogsSection()
+//        let itemLogsSection = configureItemLogsSection()
         let addExerciseSection = configureAddExerciseSection()
         cells.removeAll()
         cells.append(headerSection)
-        if !itemLogsSection.isEmpty {
-            cells.append(itemLogsSection)
-        }
+//        if !itemLogsSection.isEmpty {
+//            cells.append(itemLogsSection)
+//        }
         cells.append(addExerciseSection)
     }
     private func configureHeaderSection() -> [UITableViewCell] {
@@ -109,20 +109,20 @@ extension WorkoutRoutineViewController {
         }
         return [ titleCell, noteCell, startButtonCell ]
     }
-    private func configureItemLogsSection() -> [UITableViewCell] {
-        guard let routine = viewModel.routine.value else { return [] }
-        var section = [UITableViewCell]()
-        if !routine.itemLogs.isEmpty {
-            routine.itemLogs.forEach { item in
-                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-                let numberOfSets = item.sets.count
-                cell.textLabel?.text = WorkoutItem.getWorkoutItemName(of: item.itemID)
-                cell.detailTextLabel?.text = numberOfSets > 1 ? "\(String(numberOfSets)) sets" : "1 set"
-                section.append(cell)
-            }
-        }
-        return section
-    }
+//    private func configureItemLogsSection() -> [UITableViewCell] {
+//        guard let routine = viewModel.routine.value else { return [] }
+//        var section = [UITableViewCell]()
+//        if !routine.itemLogs.isEmpty {
+//            routine.itemLogs.forEach { item in
+//                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+//                let numberOfSets = item.sets.count
+//                cell.textLabel?.text = WorkoutItem.getWorkoutItemName(of: item.itemID)
+//                cell.detailTextLabel?.text = numberOfSets > 1 ? "\(String(numberOfSets)) sets" : "1 set"
+//                section.append(cell)
+//            }
+//        }
+//        return section
+//    }
     private func configureAddExerciseSection() -> [UITableViewCell] {
         let addExerciseCell = ButtonCell()
         addExerciseCell.title = AppText.Workout.addExercise
@@ -155,15 +155,15 @@ extension WorkoutRoutineViewController: UITableViewDataSource {
 // MARK: - Delegate
 extension WorkoutRoutineViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defer {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        
-        // if user clicks on valid itemLog
-        if let itemLog = viewModel.getItemLog(at: indexPath) {
-            coordinator.showItemLogDetails(for: itemLog)
-        }
+//        defer {
+//            tableView.deselectRow(at: indexPath, animated: true)
+//        }
+//        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+//
+//        // if user clicks on valid itemLog
+//        if let itemLog = viewModel.getItemLog(at: indexPath) {
+//            coordinator.showCircuitDetails(for: itemLog)
+//        }
     }
 }
 

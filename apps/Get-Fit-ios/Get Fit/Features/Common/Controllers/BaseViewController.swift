@@ -13,7 +13,7 @@ class BaseViewController: ViewController {
     weak var appCoordinator: AppCoordinator?
     weak var coordinator: BaseCoordinator?
     
-    private lazy var refreshControl = UIRefreshControl()
+    internal lazy var refreshControl = UIRefreshControl()
     
     init(appCoordinator: AppCoordinator? = nil,
          coordinator: BaseCoordinator? = nil) {

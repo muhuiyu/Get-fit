@@ -38,7 +38,6 @@ extension WorkoutViewController {
     @objc
     private func didTapAdd() {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        // TODO: - Add settings page
         let alertControllerOption = AlertControllerOption(title: AppText.Workout.addExercise,
                                                           message: nil,
                                                           preferredStyle: .actionSheet)
@@ -49,9 +48,7 @@ extension WorkoutViewController {
                     let preferredWorkoutLength = self.appCoordinator?.userManager.preferredWorkoutLength else {
                     return
                 }
-                let session = WorkoutSession(userID: userID,
-                                             preferredWorkoutLength: preferredWorkoutLength)
-                coordinator.showSessionLog(for: session)
+                coordinator.showNewSession(for: userID, preferredWorkoutLength: preferredWorkoutLength)
             },
             AlertActionOption(title: AppText.Workout.workoutRoutine, style: .default) { _ in
                 coordinator.showWorkoutRoutineList()
@@ -61,24 +58,34 @@ extension WorkoutViewController {
 
         coordinator.presentAlert(option: alertControllerOption, actions: alertActions)
     }
+    @objc
+    private func didTapSettings() {
+        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        coordinator.showSettings()
+    }
     private func didSelectSession(at indexPath: IndexPath, _ item: WorkoutSession) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         coordinator.showSessionLog(for: item)
-        self.tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    @objc
+    private func didPullToRefresh(_ sender: UIRefreshControl) {
+        viewModel.reloadSessions()
+    }
 }
 // MARK: - View Config
 extension WorkoutViewController {
     private func configureViews() {
-        title = viewModel.displayTitle
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: Icons.plus),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(didTapAdd))
+        configureNavigationBar()
         
+        // table view
         tableView.register(WorkoutSessionPreviewCell.self, forCellReuseIdentifier: WorkoutSessionPreviewCell.reuseID)
         tableView.delegate = self
+        refreshControl.attributedTitle = NSAttributedString(string: AppText.General.pullToRefresh)
+        refreshControl.addTarget(self,
+                                 action: #selector(didPullToRefresh(_:)),
+                                 for: .valueChanged)
+        tableView.refreshControl = refreshControl
         view.addSubview(tableView)
     }
     private func configureConstraints() {
@@ -101,6 +108,19 @@ extension WorkoutViewController {
                 self.didSelectSession(at: indexPath, item)
             }
             .disposed(by: disposeBag)
+    }
+    private func configureNavigationBar() {
+        title = viewModel.displayTitle
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: Icons.plus),
+                            style: .plain,
+                            target: self,
+                            action: #selector(didTapAdd)),
+            UIBarButtonItem(image: UIImage(systemName: Icons.gearshape),
+                            style: .plain,
+                            target: self,
+                            action: #selector(didTapSettings)),
+        ]
     }
 }
 
