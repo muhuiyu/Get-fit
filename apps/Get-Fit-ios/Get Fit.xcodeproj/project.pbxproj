@@ -87,8 +87,8 @@
 		E4C25EE429CAE115006734A5 /* WorkoutSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25EE329CAE115006734A5 /* WorkoutSettingsViewModel.swift */; };
 		E4C25EE629CC3704006734A5 /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25EE529CC3704006734A5 /* TimerController.swift */; };
 		E4C25EE829CC372C006734A5 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25EE729CC372C006734A5 /* TimerViewModel.swift */; };
-		E4C25EEA29CC3D7A006734A5 /* WorkoutSetHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25EE929CC3D7A006734A5 /* WorkoutSetHeaderCell.swift */; };
 		E4C25EED29CC3FAD006734A5 /* WorkoutItemInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25EEC29CC3FAD006734A5 /* WorkoutItemInfoViewController.swift */; };
+		E4C25EEF29CD87EF006734A5 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C25EEE29CD87EF006734A5 /* ChipView.swift */; };
 		E4C78BE528B12124005AE5C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C78BE428B12124005AE5C4 /* AppDelegate.swift */; };
 		E4C78BEE28B12126005AE5C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4C78BED28B12126005AE5C4 /* Assets.xcassets */; };
 		E4C78BF128B12126005AE5C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4C78BEF28B12126005AE5C4 /* LaunchScreen.storyboard */; };
@@ -231,8 +231,8 @@
 		E4C25EE329CAE115006734A5 /* WorkoutSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSettingsViewModel.swift; sourceTree = "<group>"; };
 		E4C25EE529CC3704006734A5 /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
 		E4C25EE729CC372C006734A5 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
-		E4C25EE929CC3D7A006734A5 /* WorkoutSetHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetHeaderCell.swift; sourceTree = "<group>"; };
 		E4C25EEC29CC3FAD006734A5 /* WorkoutItemInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutItemInfoViewController.swift; sourceTree = "<group>"; };
+		E4C25EEE29CD87EF006734A5 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		E4C78BE128B12124005AE5C4 /* Get Fit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Get Fit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C78BE428B12124005AE5C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4C78BED28B12126005AE5C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -494,7 +494,6 @@
 			children = (
 				E4C78D6B28B274A0005AE5C4 /* WorkoutSessionPreviewCell.swift */,
 				E44B6B9E28B47D9900CCB19C /* WorkoutSetCell.swift */,
-				E4C25EE929CC3D7A006734A5 /* WorkoutSetHeaderCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -597,6 +596,7 @@
 				E4C78C6328B12174005AE5C4 /* RoundButton.swift */,
 				E4C78C6428B12174005AE5C4 /* CircleView.swift */,
 				E4C78C6528B12174005AE5C4 /* TextButton.swift */,
+				E4C25EEE29CD87EF006734A5 /* ChipView.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -995,7 +995,6 @@
 				E4F73B9828BA25BF0056E1DD /* VoidResult.swift in Sources */,
 				E416BC9528BE4F15008CBEE4 /* Food+Collection.swift in Sources */,
 				E44C590028BF0C1A007DA562 /* WorkoutSession+Collection.swift in Sources */,
-				E4C25EEA29CC3D7A006734A5 /* WorkoutSetHeaderCell.swift in Sources */,
 				E4C78D3728B125D5005AE5C4 /* PickerViewController.swift in Sources */,
 				E4C78D0928B12174005AE5C4 /* UINavigationController+Extensions.swift in Sources */,
 				E4C78CFC28B12174005AE5C4 /* UIFont+Theme.swift in Sources */,
@@ -1020,6 +1019,7 @@
 				E4C78D4628B1D6D2005AE5C4 /* CaloriesSummaryCell.swift in Sources */,
 				E4C78D1328B12174005AE5C4 /* BaseCoordinator.swift in Sources */,
 				E4C78D0C28B12174005AE5C4 /* UILabel+Extensions.swift in Sources */,
+				E4C25EEF29CD87EF006734A5 /* ChipView.swift in Sources */,
 				E4C78D0828B12174005AE5C4 /* UIStack+RemoveAll.swift in Sources */,
 				E42E45C228B4CF420088A9BF /* WorkoutRoutineViewModel.swift in Sources */,
 				E4C25E4D29C5DACB006734A5 /* Encodable+Extensions.swift in Sources */,

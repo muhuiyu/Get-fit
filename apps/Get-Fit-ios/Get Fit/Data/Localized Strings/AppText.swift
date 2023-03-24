@@ -112,6 +112,7 @@ extension AppText {
         static var SaveAsRoutine: String { "Save as Routine" }
         static var superSet: String { "Super Set" }
         static var circuit: String { "Circuit" }
+        static var history: String { "History" }
     }
 }
 // MARK: - Me

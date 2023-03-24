@@ -43,6 +43,18 @@ class TitleSubtitleDetailCell: UITableViewCell {
         }
     }
     
+    var titleColor: UIColor? {
+        didSet {
+            titleLabel.textColor = titleColor
+        }
+    }
+    
+    var subtitleColor: UIColor? {
+        didSet {
+            subtitleLabel.textColor = subtitleColor
+        }
+    }
+    
     var numberOfLinesOfTitle: Int = 1 {
         didSet {
             titleLabel.numberOfLines = numberOfLinesOfTitle
@@ -78,19 +90,19 @@ extension TitleSubtitleDetailCell {
 extension TitleSubtitleDetailCell {
     private func configureViews() {
         titleLabel.text = "title"
-        titleLabel.font = UIFont.body
+        titleLabel.font = .body
         titleLabel.textColor = .label
         titleLabel.textAlignment = .left
         contentView.addSubview(titleLabel)
         
         subtitleLabel.text = "subtitle"
-        subtitleLabel.font = UIFont.body
+        subtitleLabel.font = .body
         subtitleLabel.textColor = .secondaryLabel
         subtitleLabel.textAlignment = .left
         contentView.addSubview(subtitleLabel)
         
         detailsValueLabel.text = "details"
-        detailsValueLabel.font = UIFont.body
+        detailsValueLabel.font = .body
         detailsValueLabel.textColor = .label
         detailsValueLabel.textAlignment = .right
         contentView.addSubview(detailsValueLabel)

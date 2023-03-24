@@ -42,6 +42,7 @@ extension WorkoutItem {
         cableSquat.id: cableSquat,
         cableSideKick.id: cableSideKick,
         deadlift.id: deadlift,
+        dumbbellGobletSquat.id: dumbbellGobletSquat,
         hipAbduction.id: hipAbduction,
         hipExtension.id: hipExtension,
         kneelingHipThrust.id: kneelingHipThrust,

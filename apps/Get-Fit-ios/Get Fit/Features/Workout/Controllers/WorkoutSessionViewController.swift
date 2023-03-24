@@ -10,8 +10,18 @@ import RxSwift
 
 class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewModel> {
     
+    private let isNewSession: Bool
+    
     private let tableView = UITableView()
     private var cells = [[UITableViewCell]]()
+    
+    init(appCoordinator: AppCoordinator? = nil,
+         coordinator: BaseCoordinator? = nil,
+         viewModel: WorkoutSessionViewModel,
+         isNewSession: Bool = false) {
+        self.isNewSession = isNewSession
+        super.init(appCoordinator: appCoordinator, coordinator: coordinator, viewModel: viewModel)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +78,13 @@ extension WorkoutSessionViewController {
     }
     
     private func didTapReorderCircuits() {
-        // TODO: -
-        guard
-            let coordinator = coordinator as? WorkoutCoordinator,
-            let session = viewModel.session.value
-        else { return }
+        guard let coordinator = coordinator, let session = viewModel.session.value else { return }
         let viewController = WorkoutSessionReorderExercisesViewController(session.circuits)
-        viewController.completion = { [weak self] value in
-            self?.viewModel.didChangeCircuitsOrder(to: value)
+        viewController.completion = { [weak self] (shouldUpdate, value) in
+            coordinator.dismissCurrentModal()
+            if shouldUpdate {
+                self?.viewModel.didChangeCircuitsOrder(to: value)
+            }
         }
         coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
     }
@@ -113,12 +122,12 @@ extension WorkoutSessionViewController {
         case .singleExercise:
             guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
             let viewController = WorkoutItemInfoViewController(workoutItem: workoutItem)
-            coordinator?.navigate(to: viewController, presentModally: true)
+            coordinator?.navigate(to: viewController.embedInNavgationController(), presentModally: true)
         case .superSet, .circuit:
             var actions = circuit.workoutItems.map { item in
                 return AlertActionOption(title: item.name, style: .default) { _ in
                     let viewController = WorkoutItemInfoViewController(workoutItem: item)
-                    self.coordinator?.navigate(to: viewController, presentModally: true)
+                    self.coordinator?.navigate(to: viewController.embedInNavgationController(), presentModally: true)
                 }
             }
             actions.append(AlertActionOption.cancel)
@@ -126,7 +135,20 @@ extension WorkoutSessionViewController {
             coordinator?.presentAlert(option: AlertControllerOption(title: "Choose exercise", message: nil, preferredStyle: .actionSheet), actions: actions)
         }
     }
+    
+    private func didTapMoreButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
+        // TODO: present half modal
+//        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+    }
 
+    
+    // MARK: - For
+    @objc
+    private func didTapSave() {
+        guard let coordinator = coordinator else { return }
+        coordinator.navigationController.popViewController(animated: true)
+        viewModel.saveNewSession()
+    }
 }
 
 // MARK: - View Config
@@ -181,8 +203,14 @@ extension WorkoutSessionViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(didTapTimer))
+     
+        var barItems: [UIBarButtonItem] =  [ viewMoreButton, timerButton ]
         
-        navigationItem.rightBarButtonItems = [ viewMoreButton, timerButton ]
+        if isNewSession {
+            barItems.append(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave)))
+        }
+        
+        navigationItem.rightBarButtonItems = barItems
     }
 
 }
@@ -237,19 +265,36 @@ extension WorkoutSessionViewController {
             
             // Header cell
             let headerCell = TitleSubtitleButtonCell()
-            headerCell.icon = UIImage(systemName: Icons.questionmark)
-            headerCell.buttonTapHandler = { [weak self] in
+            
+            let infoButton = IconButton(name: Icons.questionmarkCircle)
+            infoButton.tapHandler = { [weak self] in
                 self?.didTapInfoButton(at: circuitIndex, circuit)
             }
+            infoButton.contentMode = .scaleAspectFit
+            infoButton.iconColor = .Brand.primary
+            
+            let moreButton = IconButton(name: Icons.ellipsis)
+            moreButton.tapHandler = { [weak self] in
+                self?.didTapMoreButton(at: circuitIndex, circuit)
+            }
+            moreButton.contentMode = .scaleAspectFit
+            moreButton.iconColor = .Brand.primary
+            
+            headerCell.icons = [infoButton, moreButton]
+            
             switch circuit.type {
             case .singleExercise, .circuit:
                 headerCell.title = circuit.title
-                headerCell.titleFont = UIFont.bodyBold
+                headerCell.subtitle = ""
+                headerCell.titleFont = UIFont.bodyMedium
             case .superSet:
                 headerCell.title = AppText.Workout.superSet
+                headerCell.titleColor = UIColor.secondaryLabel
                 headerCell.titleFont = UIFont.small
                 headerCell.subtitle = circuit.title
+                headerCell.subtitleColor = UIColor.label
                 headerCell.subtitleFont = UIFont.body
+                headerCell.numberOfLinesOfSubtitle = circuit.workoutItems.count
             }
             section.append(headerCell)
             
@@ -313,14 +358,6 @@ extension WorkoutSessionViewController: UITableViewDataSource {
         return cells[indexPath.section][indexPath.row]
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section == 0 else { return nil }
-        let view = UIView()
-        view.snp.remakeConstraints { make in
-            make.height.equalTo(Constants.Spacing.small)
-        }
-        return view
-    }
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
         view.snp.remakeConstraints { make in
             make.height.equalTo(Constants.Spacing.small)

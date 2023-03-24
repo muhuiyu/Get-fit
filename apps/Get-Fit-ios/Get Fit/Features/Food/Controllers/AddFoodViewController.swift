@@ -100,12 +100,15 @@ extension AddFoodViewController: UITableViewDataSource {
         if let item = Food.getItem(of: foodLog.foodID) {
             cell.title = item.name
         }
-        cell.icon = UIImage(systemName: Icons.plusCircle)
-        cell.tapHandler = { [weak self] in
-            self?.didTapInCell(foodLog)
-        }
-        cell.buttonTapHandler = { [weak self] in
+        let iconButton = IconButton(name: Icons.plusCircle)
+        iconButton.contentMode = .scaleAspectFit
+        iconButton.iconColor = .Brand.primary
+        iconButton.tapHandler = { [weak self] in
             self?.didTapQuickAdd(foodLog)
+        }
+        cell.icons = [iconButton]
+        cell.viewTapHandler = { [weak self] in
+            self?.didTapInCell(foodLog)
         }
         return cell
     }

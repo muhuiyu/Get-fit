@@ -13,7 +13,7 @@ class TitleSubtitleButtonCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let cellTappingArea = UIView()
-    private let iconButton = IconButton(name: Icons.questionmark)
+    private let iconsView = UIView()
     
     var title: String? {
         didSet {
@@ -25,17 +25,14 @@ class TitleSubtitleButtonCell: UITableViewCell {
             subtitleLabel.text = subtitle
         }
     }
-    var icon: UIImage? {
+    
+    var icons: [IconButton] = [] {
         didSet {
-            iconButton.icon = icon
+            reconfigureIconsView()
         }
     }
-    var tapHandler: (() -> Void)?
-    var buttonTapHandler: (() -> Void)? {
-        didSet {
-            iconButton.tapHandler = buttonTapHandler
-        }
-    }
+    
+    var viewTapHandler: (() -> Void)?
     
     var titleFont: UIFont? {
         didSet {
@@ -46,6 +43,18 @@ class TitleSubtitleButtonCell: UITableViewCell {
     var subtitleFont: UIFont? {
         didSet {
             subtitleLabel.font = subtitleFont
+        }
+    }
+    
+    var titleColor: UIColor? {
+        didSet {
+            titleLabel.textColor = titleColor
+        }
+    }
+    
+    var subtitleColor: UIColor? {
+        didSet {
+            subtitleLabel.textColor = subtitleColor
         }
     }
     
@@ -76,7 +85,7 @@ class TitleSubtitleButtonCell: UITableViewCell {
 extension TitleSubtitleButtonCell {
     @objc
     private func didTapInView(_ sender: UITapGestureRecognizer) {
-        tapHandler?()
+        viewTapHandler?()
     }
 }
 
@@ -90,33 +99,46 @@ extension TitleSubtitleButtonCell {
         contentView.addSubview(titleLabel)
         
         subtitleLabel.text = "subtitle"
-        subtitleLabel.font = UIFont.body
+        subtitleLabel.font = .body
         subtitleLabel.textColor = .secondaryLabel
         subtitleLabel.textAlignment = .left
         contentView.addSubview(subtitleLabel)
         
-        iconButton.contentMode = .scaleAspectFit
-        iconButton.iconColor = UIColor.Brand.primary
-        contentView.addSubview(iconButton)
+        contentView.addSubview(iconsView)
     }
     private func configureConstraints() {
         titleLabel.snp.remakeConstraints { make in
             make.top.leading.equalTo(contentView.layoutMarginsGuide)
-            make.trailing.lessThanOrEqualTo(iconButton.snp.leading)
+            make.trailing.lessThanOrEqualTo(iconsView.snp.leading)
         }
         subtitleLabel.snp.remakeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constants.Spacing.trivial)
-            make.trailing.lessThanOrEqualTo(iconButton.snp.leading)
+            make.trailing.lessThanOrEqualTo(iconsView.snp.leading)
             make.leading.bottom.equalTo(contentView.layoutMarginsGuide)
         }
-        iconButton.snp.remakeConstraints { make in
+        iconsView.snp.remakeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalTo(contentView.layoutMarginsGuide).inset(Constants.Spacing.trivial)
+//            make.width.equalTo(80)
         }
     }
     private func configureGestures() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapInView(_:)))
         addGestureRecognizer(tapRecognizer)
+    }
+    private func reconfigureIconsView() {
+        iconsView.subviews.forEach({ $0.removeFromSuperview() })
+        guard !icons.isEmpty else { return }
+        
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = Constants.Spacing.trivial
+        stackView.alignment = .center
+        icons.forEach { stackView.addArrangedSubview($0) }
+        iconsView.addSubview(stackView)
+        stackView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview().inset(Constants.Spacing.trivial)
+        }
     }
 }
 

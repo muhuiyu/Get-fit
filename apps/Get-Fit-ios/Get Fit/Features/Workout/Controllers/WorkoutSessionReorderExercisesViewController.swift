@@ -17,7 +17,7 @@ class WorkoutSessionReorderExercisesViewController: ViewController {
         super.init()
     }
     
-    var completion: (([WorkoutCircuit]) -> Void)?
+    var completion: ((Bool, [WorkoutCircuit]) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +31,11 @@ class WorkoutSessionReorderExercisesViewController: ViewController {
 extension WorkoutSessionReorderExercisesViewController {
     @objc
     private func didTapCancel() {
-        navigationController?.popViewController(animated: true)
+        completion?(false, items)
     }
     @objc
     private func didTapDone() {
-        completion?(items)
+        completion?(true, items)
     }
 }
 
@@ -73,9 +73,9 @@ extension WorkoutSessionReorderExercisesViewController: UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        guard let name = WorkoutItem.getWorkoutItemName(of: items[indexPath.row].title) else { return UITableViewCell() }
+        cell.textLabel?.numberOfLines = 0
         var content = cell.defaultContentConfiguration()
-        content.text = name
+        content.text = items[indexPath.row].title
         cell.contentConfiguration = content
         cell.showsReorderControl = true
         return cell

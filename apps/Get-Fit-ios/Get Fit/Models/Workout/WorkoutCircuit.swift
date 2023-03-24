@@ -22,10 +22,15 @@ extension WorkoutCircuit {
     var title: String {
         switch type {
         case .superSet:
-            return sets.reduce(into: Set<String>()) { $0.insert($1.itemID) }.compactMap { id in
-                WorkoutItem.getWorkoutItemName(of: id)
+            var title = ""
+            for (i, item) in workoutItems.enumerated() {
+                if i != 0 {
+                    title += "\n"
+                }
+                title += (String(integerToAlphabet(i)) + ". " + item.name)
             }
-            .joined(separator: ", ")
+            return title
+//            return workoutItems.map({ $0.name }).joined(separator: ", ")
         case .circuit:
             return "Circuit"
         case .singleExercise:
@@ -69,13 +74,13 @@ extension WorkoutCircuit {
             case .dropSet: return "D"
             }
         case .superSet:
-            let exercises = superSetWorkoutItems
+            let exercises = workoutItems
             guard !exercises.isEmpty else { return String(setIndex + 1) }
-            return String(setIndex / exercises.count) + "." + String(integerToAlphabet(setIndex % exercises.count))
+            return String((setIndex / exercises.count) + 1) + String(integerToAlphabet(setIndex % exercises.count))
         }
     }
     
-    private func integerToAlphabet(_ integer: Int, isUppercase: Bool = false) -> Character {
+    private func integerToAlphabet(_ integer: Int, isUppercase: Bool = true) -> Character {
         let startingValue = Int(((isUppercase ? "A" : "a") as UnicodeScalar).value)
         return Character(UnicodeScalar(integer + startingValue) ?? UnicodeScalar.init(0))
     }

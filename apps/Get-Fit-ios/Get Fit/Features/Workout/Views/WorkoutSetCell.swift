@@ -128,12 +128,12 @@ extension WorkoutSetCell {
         weightStack.snp.remakeConstraints { make in
             make.top.bottom.equalTo(contentView.layoutMarginsGuide)
             make.leading.equalTo(setIndexLabel.snp.trailing).offset(Constants.Spacing.trivial)
-            make.width.lessThanOrEqualTo(80)
+            make.width.lessThanOrEqualTo(70)
         }
         repsStack.snp.remakeConstraints { make in
             make.top.bottom.equalTo(contentView.layoutMarginsGuide)
             make.leading.equalTo(weightStack.snp.trailing)
-            make.width.lessThanOrEqualTo(80)
+            make.width.lessThanOrEqualTo(65)
         }
         noteStack.snp.remakeConstraints { make in
             make.top.bottom.equalTo(contentView.layoutMarginsGuide)
@@ -201,7 +201,7 @@ extension WorkoutSetCellFieldView {
         addSubview(titleLabel)
         
         textField.addTarget(self, action: #selector(didChangeValue(_:)), for: .valueChanged)
-        textField.font = UIFont.smallBold
+        textField.font = UIFont.smallMedium
         textField.textColor = .label
         textField.textAlignment = .left
         addSubview(textField)

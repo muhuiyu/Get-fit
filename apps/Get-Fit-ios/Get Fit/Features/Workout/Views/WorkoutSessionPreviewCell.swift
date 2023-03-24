@@ -43,7 +43,7 @@ extension WorkoutSessionPreviewCell {
         dateStack.addArrangedSubview(weekdayLabel)
         
         dayLabel.text = "01"
-        dayLabel.font = UIFont.bodyHeavy
+        dayLabel.font = UIFont.bodyBold
         dayLabel.textColor = .label
         dateStack.addArrangedSubview(dayLabel)
         

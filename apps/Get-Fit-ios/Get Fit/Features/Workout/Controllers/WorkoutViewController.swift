@@ -48,9 +48,7 @@ extension WorkoutViewController {
                     let preferredWorkoutLength = self.appCoordinator?.userManager.preferredWorkoutLength else {
                     return
                 }
-                let session = WorkoutSession(userID: userID,
-                                             preferredWorkoutLength: preferredWorkoutLength)
-                coordinator.showSessionLog(for: session)
+                coordinator.showNewSession(for: userID, preferredWorkoutLength: preferredWorkoutLength)
             },
             AlertActionOption(title: AppText.Workout.workoutRoutine, style: .default) { _ in
                 coordinator.showWorkoutRoutineList()

@@ -98,6 +98,11 @@ extension WorkoutSessionViewModel {
             && indexPath.row > 0
             && indexPath.row <= session.circuits[indexPath.section-1].sets.count
     }
+    func deleteCircuit(at index: Int) {
+        guard var updatedSession = session.value else { return }
+        updatedSession.circuits.remove(at: index)
+        session.accept(updatedSession)
+    }
     func deleteSet(at indexPath: IndexPath) {
         guard let (circuitIndex, setIndex) = getIndexOfCircuitAndSet(at: indexPath) else { return }
         
@@ -110,8 +115,8 @@ extension WorkoutSessionViewModel {
             guard !circuit.sets.isEmpty else { return }
             updatedSession.circuits[circuitIndex].sets.remove(at: setIndex)
         case .superSet:
-            guard circuit.sets.count >= circuit.superSetWorkoutItems.count else { return }
-            updatedSession.circuits[circuitIndex].sets.removeLast(circuit.superSetWorkoutItems.count)
+            guard circuit.sets.count >= circuit.workoutItems.count else { return }
+            updatedSession.circuits[circuitIndex].sets.removeLast(circuit.workoutItems.count)
         }
         
         // Remove workout item if there's no set
@@ -119,6 +124,9 @@ extension WorkoutSessionViewModel {
             updatedSession.circuits.remove(at: circuitIndex)
         }
         session.accept(updatedSession)
+        updateSessionToDatabase()
+    }
+    func saveNewSession() {
         updateSessionToDatabase()
     }
     func didChangeCircuitsOrder(to value: [WorkoutCircuit]) {

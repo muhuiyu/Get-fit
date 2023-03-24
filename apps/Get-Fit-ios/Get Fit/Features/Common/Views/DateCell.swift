@@ -51,7 +51,7 @@ extension DateCell {
     private func configureViews() {
         titleLabel.textAlignment = .left
         titleLabel.textColor = .label
-        titleLabel.font = UIFont.body
+        titleLabel.font = .body
         contentView.addSubview(titleLabel)
         
         datePicker.date = date.toDate() ?? Date()

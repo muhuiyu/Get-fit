@@ -10,6 +10,7 @@ import UIKit
 class WorkoutCoordinator: BaseCoordinator {
     enum Destination {
         case session(WorkoutSession)
+        case newSession(WorkoutSession)
         case workoutRoutineList
         case workoutRoutine(WorkoutRoutine)
         case createRoutine
@@ -19,6 +20,7 @@ class WorkoutCoordinator: BaseCoordinator {
         case settingsEditExercise
         case settingsEditCategory
         case settingsEditRoutine
+        case workoutItemHistory(WorkoutItem)
     }
 }
 
@@ -30,6 +32,13 @@ extension WorkoutCoordinator {
             let viewController = WorkoutSessionViewController(appCoordinator: parentCoordinator,
                                                               coordinator: self,
                                                               viewModel: WorkoutSessionViewModel())
+            viewController.viewModel.session.accept(session)
+            return viewController
+        case .newSession(let session):
+            let viewController = WorkoutSessionViewController(appCoordinator: parentCoordinator,
+                                                              coordinator: self,
+                                                              viewModel: WorkoutSessionViewModel(),
+                                                              isNewSession: true)
             viewController.viewModel.session.accept(session)
             return viewController
         case .workoutRoutineList:
@@ -70,6 +79,9 @@ extension WorkoutCoordinator {
         case .settingsEditRoutine:
             // TODO: -
             return BaseViewController()
+        case .workoutItemHistory(let item):
+            // TODO: -
+            return BaseViewController()
         }
     }
 }
@@ -78,6 +90,11 @@ extension WorkoutCoordinator {
 extension WorkoutCoordinator {
     func showSessionLog(for session: WorkoutSession) {
         guard let viewController = makeViewController(to: .session(session)) else { return }
+        self.navigate(to: viewController, presentModally: false)
+    }
+    func showNewSession(for userID: UserID, preferredWorkoutLength: TimeInterval) {
+        let session = WorkoutSession(userID: userID, preferredWorkoutLength: preferredWorkoutLength)
+        guard let viewController = makeViewController(to: .newSession(session)) else { return }
         self.navigate(to: viewController, presentModally: false)
     }
     func showWorkoutRoutineList() {
@@ -95,6 +112,10 @@ extension WorkoutCoordinator {
     func showCircuitDetails(for circuit: WorkoutCircuit) {
         guard let viewController = makeViewController(to: .editCircuit(circuit)) else { return }
         self.navigate(to: viewController, presentModally: false)
+    }
+    func showWorkoutItemHistory(for item: WorkoutItem) {
+        guard let viewController = makeViewController(to: .workoutItemHistory(item)) else { return }
+        self.navigate(to: viewController, presentModally: true)
     }
     func showExerciseList(routineViewModel: WorkoutRoutineViewModel? = nil,
                           sessionViewModel: WorkoutSessionViewModel? = nil,
