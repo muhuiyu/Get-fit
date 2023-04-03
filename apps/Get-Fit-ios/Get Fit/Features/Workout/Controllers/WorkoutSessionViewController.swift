@@ -280,7 +280,9 @@ extension WorkoutSessionViewController {
             moreButton.contentMode = .scaleAspectFit
             moreButton.iconColor = .Brand.primary
             
-            headerCell.icons = [infoButton, moreButton]
+            // TODO: - Add info button
+//            headerCell.icons = [infoButton, moreButton]
+            headerCell.icons = [moreButton]
             
             switch circuit.type {
             case .singleExercise, .circuit:

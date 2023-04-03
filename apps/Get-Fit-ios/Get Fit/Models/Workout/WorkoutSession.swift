@@ -7,11 +7,10 @@
 
 import Foundation
 import UIKit
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 import Collections
+import RealmSwift
 
-typealias WorkoutSessionID = String
+typealias WorkoutSessionID = UUID
 
 struct WorkoutSession: WorkoutSessionInterface, Codable {
     var id: WorkoutSessionID
@@ -45,9 +44,7 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
 extension WorkoutSession {
     init(userID: UserID,
          preferredWorkoutLength: TimeInterval) {
-        
-        // TODO: - set id
-        self.id = "id"
+        self.id = UUID()
         self.userID = userID
         self.title = "New workout session"
         self.startTime = DateAndTime()
@@ -58,9 +55,7 @@ extension WorkoutSession {
     init(createdFrom routine: WorkoutRoutine,
          userID: UserID,
          preferredWorkoutLength: TimeInterval) {
-
-        // TODO: - Set id
-        self.id = "id"
+        self.id = UUID()
         self.userID = userID
         self.title = routine.title
         self.startTime = DateAndTime()
@@ -76,15 +71,31 @@ extension WorkoutSession {
         var circuits: [WorkoutCircuit]
         var note: String
     }
-    init(snapshot: DocumentSnapshot) throws {
-        id = snapshot.documentID
-        let data = try snapshot.data(as: WorkoutSessionData.self)
-        userID = data.userID
-        startTime = data.startTime
-        endTime = data.endTime
-        title = data.title
-        circuits = data.circuits
-        note = data.note
+}
+
+// MARK: - Persistable
+extension WorkoutSession: Persistable {
+    public init(managedObject: WorkoutSessionObject) {
+        id = managedObject.id
+        userID = managedObject.userID
+        if let startTime = managedObject.startTime {
+            self.startTime = DateAndTime(managedObject: startTime)
+        } else {
+            self.startTime = DateAndTime()
+        }
+        if let endTime = managedObject.endTime {
+            self.endTime = DateAndTime(managedObject: endTime)
+        } else {
+            self.endTime = DateAndTime()
+        }
+        title = managedObject.title
+        circuits = managedObject.circuits.map({ WorkoutCircuit(managedObject: $0) })
+        note = managedObject.note
+    }
+    public func managedObject() -> WorkoutSessionObject {
+        let circuitObjects = List<WorkoutCircuitObject>()
+        circuits.map({ $0.managedObject() }).forEach({ circuitObjects.append($0) })
+        return WorkoutSessionObject(id: id, userID: userID, startTime: startTime.managedObject(), endTime: endTime.managedObject(), title: title, circuits: circuitObjects, note: note)
     }
 }
 

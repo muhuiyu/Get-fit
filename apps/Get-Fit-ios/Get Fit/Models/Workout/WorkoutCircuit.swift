@@ -5,6 +5,10 @@
 //  Created by Mu Yu on 8/31/22.
 //
 
+import RealmSwift
+
+typealias WorkoutCircuitTypeString = String
+
 // MARK: - WorkoutCircuitType
 enum WorkoutCircuitType: String, Codable {
     case singleExercise
@@ -16,6 +20,19 @@ enum WorkoutCircuitType: String, Codable {
 struct WorkoutCircuit: Codable {
     let type: WorkoutCircuitType
     var sets: [WorkoutSet]
+}
+
+// MARK: - Persistable
+extension WorkoutCircuit: Persistable {
+    public init(managedObject: WorkoutCircuitObject) {
+        type = WorkoutCircuitType(rawValue: managedObject.type) ?? .singleExercise
+        sets = managedObject.sets.map({ WorkoutSet(managedObject: $0) })
+    }
+    public func managedObject() -> WorkoutCircuitObject {
+        let setObjects = List<WorkoutSetObject>()
+        sets.map({ $0.managedObject() }).forEach({ setObjects.append($0) })
+        return WorkoutCircuitObject(type: type.rawValue, sets: setObjects)
+    }
 }
 
 extension WorkoutCircuit {

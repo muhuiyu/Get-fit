@@ -118,8 +118,7 @@ extension TitleSubtitleButtonCell {
         }
         iconsView.snp.remakeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(contentView.layoutMarginsGuide).inset(Constants.Spacing.trivial)
-//            make.width.equalTo(80)
+            make.trailing.equalTo(contentView.layoutMarginsGuide).inset(Constants.Spacing.slight)
         }
     }
     private func configureGestures() {

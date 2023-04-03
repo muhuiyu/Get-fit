@@ -37,18 +37,16 @@ extension HomeViewModel {
 extension HomeViewModel {
     func reloadDailyLog(shouldPull: Bool = true) {
         guard let userID = appCoordinator?.userManager.id else { return }
-        Task {
-            if let entry = await appCoordinator?.dataProvider.fetchDailyMealLog(for: userID, on: currentDate.value) {
-                self.dailyMealLog.accept(entry)
+        if let entry = appCoordinator?.dataProvider.getDailyMealLog(for: userID, on: currentDate.value) {
+            self.dailyMealLog.accept(entry)
+        } else {
+            if let preferredNumberOfMeals = appCoordinator?.userManager.preferredNumberOfMeals {
+                self.dailyMealLog.accept(DailyMealLog(userID: userID,
+                                                      date: currentDate.value,
+                                                      preferredNumberOfMeals: preferredNumberOfMeals))
             } else {
-                if let preferredNumberOfMeals = appCoordinator?.userManager.preferredNumberOfMeals {
-                    self.dailyMealLog.accept(DailyMealLog(userID: userID,
-                                                          date: currentDate.value,
-                                                          preferredNumberOfMeals: preferredNumberOfMeals))
-                } else {
-                    self.dailyMealLog.accept(DailyMealLog(userID: userID,
-                                                          date: currentDate.value))
-                }
+                self.dailyMealLog.accept(DailyMealLog(userID: userID,
+                                                      date: currentDate.value))
             }
         }
     }

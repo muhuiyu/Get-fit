@@ -8,7 +8,7 @@
 import Foundation
 
 protocol WorkoutSessionInterface {
-    var id: String { get set }
+    var id: UUID { get set }
     var title: String { get set }
     var circuits: [WorkoutCircuit]  { get set }
     var note: String { get set }

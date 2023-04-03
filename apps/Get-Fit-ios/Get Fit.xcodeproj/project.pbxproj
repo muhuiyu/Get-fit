@@ -61,6 +61,19 @@
 		E48912B428CEA857009AFB09 /* MealSummaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48912B328CEA857009AFB09 /* MealSummaryHeaderView.swift */; };
 		E48912B628CEA8D9009AFB09 /* TitleTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48912B528CEA8D9009AFB09 /* TitleTableHeaderView.swift */; };
 		E490D13228BCA1EB0074E28F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E490D13128BCA1EB0074E28F /* HealthKit.framework */; };
+		E4AF074B29CF1D88007EBD9B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E4AF074A29CF1D88007EBD9B /* Realm */; };
+		E4AF074D29CF1D88007EBD9B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E4AF074C29CF1D88007EBD9B /* RealmSwift */; };
+		E4AF075129CF22AE007EBD9B /* WorkoutSessionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075029CF22AE007EBD9B /* WorkoutSessionObject.swift */; };
+		E4AF075329CF2349007EBD9B /* DateAndTimeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075229CF2349007EBD9B /* DateAndTimeObject.swift */; };
+		E4AF075529CF24F5007EBD9B /* WorkoutCircuitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075429CF24F5007EBD9B /* WorkoutCircuitObject.swift */; };
+		E4AF075729CF2570007EBD9B /* WorkoutSetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075629CF2570007EBD9B /* WorkoutSetObject.swift */; };
+		E4AF075929CF26E9007EBD9B /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075829CF26E9007EBD9B /* RealmDatabase.swift */; };
+		E4AF075B29D3E3E4007EBD9B /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075A29D3E3E4007EBD9B /* UserObject.swift */; };
+		E4AF075D29D3E53C007EBD9B /* UserPreferenceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075C29D3E53C007EBD9B /* UserPreferenceObject.swift */; };
+		E4AF075F29D3E5C2007EBD9B /* UserGoalObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF075E29D3E5C2007EBD9B /* UserGoalObject.swift */; };
+		E4AF076129D3E5E8007EBD9B /* MacroRatioObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF076029D3E5E8007EBD9B /* MacroRatioObject.swift */; };
+		E4AF076329D3ECC5007EBD9B /* PersistableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF076229D3ECC5007EBD9B /* PersistableProtocol.swift */; };
+		E4AF076529D3F312007EBD9B /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF076429D3F312007EBD9B /* DataProvider.swift */; };
 		E4C25E2529C4094C006734A5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2429C4094C006734A5 /* FirebaseAuth */; };
 		E4C25E2729C4094C006734A5 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2629C4094C006734A5 /* FirebaseAuthCombine-Community */; };
 		E4C25E2929C4094C006734A5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2829C4094C006734A5 /* FirebaseFirestore */; };
@@ -158,7 +171,7 @@
 		E4F73B8B28BA0F960056E1DD /* WorkoutMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B8A28BA0F960056E1DD /* WorkoutMachine.swift */; };
 		E4F73B8D28BA0FC60056E1DD /* FoodUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B8C28BA0FC60056E1DD /* FoodUnit.swift */; };
 		E4F73B8F28BA0FD90056E1DD /* FoodLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B8E28BA0FD90056E1DD /* FoodLog.swift */; };
-		E4F73B9128BA1B680056E1DD /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9028BA1B680056E1DD /* DataProvider.swift */; };
+		E4F73B9128BA1B680056E1DD /* FireBaseDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9028BA1B680056E1DD /* FireBaseDataProvider.swift */; };
 		E4F73B9428BA1BDA0056E1DD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9328BA1BDA0056E1DD /* User.swift */; };
 		E4F73B9628BA1D120056E1DD /* CustomizedMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9528BA1D120056E1DD /* CustomizedMeal.swift */; };
 		E4F73B9828BA25BF0056E1DD /* VoidResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9728BA25BF0056E1DD /* VoidResult.swift */; };
@@ -222,6 +235,17 @@
 		E48912B528CEA8D9009AFB09 /* TitleTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTableHeaderView.swift; sourceTree = "<group>"; };
 		E490D12F28BCA1EA0074E28F /* Get Fit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Get Fit.entitlements"; sourceTree = "<group>"; };
 		E490D13128BCA1EB0074E28F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		E4AF075029CF22AE007EBD9B /* WorkoutSessionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionObject.swift; sourceTree = "<group>"; };
+		E4AF075229CF2349007EBD9B /* DateAndTimeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimeObject.swift; sourceTree = "<group>"; };
+		E4AF075429CF24F5007EBD9B /* WorkoutCircuitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCircuitObject.swift; sourceTree = "<group>"; };
+		E4AF075629CF2570007EBD9B /* WorkoutSetObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetObject.swift; sourceTree = "<group>"; };
+		E4AF075829CF26E9007EBD9B /* RealmDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
+		E4AF075A29D3E3E4007EBD9B /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
+		E4AF075C29D3E53C007EBD9B /* UserPreferenceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferenceObject.swift; sourceTree = "<group>"; };
+		E4AF075E29D3E5C2007EBD9B /* UserGoalObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGoalObject.swift; sourceTree = "<group>"; };
+		E4AF076029D3E5E8007EBD9B /* MacroRatioObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroRatioObject.swift; sourceTree = "<group>"; };
+		E4AF076229D3ECC5007EBD9B /* PersistableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistableProtocol.swift; sourceTree = "<group>"; };
+		E4AF076429D3F312007EBD9B /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		E4C25E4C29C5DACB006734A5 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
 		E4C25E5529C7031C006734A5 /* BaseMVVMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMVVMViewController.swift; sourceTree = "<group>"; };
 		E4C25ED729C89CF1006734A5 /* WorkoutSessionReorderExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionReorderExercisesViewController.swift; sourceTree = "<group>"; };
@@ -304,7 +328,7 @@
 		E4F73B8A28BA0F960056E1DD /* WorkoutMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMachine.swift; sourceTree = "<group>"; };
 		E4F73B8C28BA0FC60056E1DD /* FoodUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodUnit.swift; sourceTree = "<group>"; };
 		E4F73B8E28BA0FD90056E1DD /* FoodLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLog.swift; sourceTree = "<group>"; };
-		E4F73B9028BA1B680056E1DD /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		E4F73B9028BA1B680056E1DD /* FireBaseDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseDataProvider.swift; sourceTree = "<group>"; };
 		E4F73B9328BA1BDA0056E1DD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E4F73B9528BA1D120056E1DD /* CustomizedMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedMeal.swift; sourceTree = "<group>"; };
 		E4F73B9728BA25BF0056E1DD /* VoidResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResult.swift; sourceTree = "<group>"; };
@@ -318,12 +342,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4C25E4329C40A7A006734A5 /* GoogleSignInSwift in Frameworks */,
+				E4AF074B29CF1D88007EBD9B /* Realm in Frameworks */,
 				E490D13228BCA1EB0074E28F /* HealthKit.framework in Frameworks */,
 				E4C25E3E29C40A25006734A5 /* RxDataSources in Frameworks */,
 				E4C25E2929C4094C006734A5 /* FirebaseFirestore in Frameworks */,
 				E4C25E3729C409E1006734A5 /* RxCocoa in Frameworks */,
 				E4C25E3129C4094C006734A5 /* FirebaseStorageCombine-Community in Frameworks */,
 				E4C25E2729C4094C006734A5 /* FirebaseAuthCombine-Community in Frameworks */,
+				E4AF074D29CF1D88007EBD9B /* RealmSwift in Frameworks */,
 				E4C25E4629C43DAC006734A5 /* Lottie in Frameworks */,
 				E4C25E2B29C4094C006734A5 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				E4C25E3B29C409E1006734A5 /* RxSwift in Frameworks */,
@@ -413,6 +439,31 @@
 				E490D13128BCA1EB0074E28F /* HealthKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E4AF074E29CF2271007EBD9B /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				E4AF076229D3ECC5007EBD9B /* PersistableProtocol.swift */,
+				E4AF075829CF26E9007EBD9B /* RealmDatabase.swift */,
+				E4AF074F29CF2284007EBD9B /* Models */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		E4AF074F29CF2284007EBD9B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E4AF075229CF2349007EBD9B /* DateAndTimeObject.swift */,
+				E4AF075029CF22AE007EBD9B /* WorkoutSessionObject.swift */,
+				E4AF075429CF24F5007EBD9B /* WorkoutCircuitObject.swift */,
+				E4AF075629CF2570007EBD9B /* WorkoutSetObject.swift */,
+				E4AF075A29D3E3E4007EBD9B /* UserObject.swift */,
+				E4AF075C29D3E53C007EBD9B /* UserPreferenceObject.swift */,
+				E4AF075E29D3E5C2007EBD9B /* UserGoalObject.swift */,
+				E4AF076029D3E5E8007EBD9B /* MacroRatioObject.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E4C25E4E29C70097006734A5 /* View Models */ = {
@@ -564,6 +615,7 @@
 				E416BC9328BE4F0B008CBEE4 /* Collections */,
 				E4F73BA628BB9EDD0056E1DD /* Data Provider */,
 				E4C78D2728B122F0005AE5C4 /* Localized Strings */,
+				E4AF074E29CF2271007EBD9B /* Realm */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -837,7 +889,8 @@
 			isa = PBXGroup;
 			children = (
 				E4C78C1B28B12173005AE5C4 /* Database.swift */,
-				E4F73B9028BA1B680056E1DD /* DataProvider.swift */,
+				E4F73B9028BA1B680056E1DD /* FireBaseDataProvider.swift */,
+				E4AF076429D3F312007EBD9B /* DataProvider.swift */,
 			);
 			path = "Data Provider";
 			sourceTree = "<group>";
@@ -876,6 +929,8 @@
 				E4C25E4529C43DAC006734A5 /* Lottie */,
 				E4C25E4829C43E07006734A5 /* Collections */,
 				E4C25E4A29C43E07006734A5 /* OrderedCollections */,
+				E4AF074A29CF1D88007EBD9B /* Realm */,
+				E4AF074C29CF1D88007EBD9B /* RealmSwift */,
 			);
 			productName = "Get Fit";
 			productReference = E4C78BE128B12124005AE5C4 /* Get Fit.app */;
@@ -913,6 +968,7 @@
 				E4C25E3F29C40A7A006734A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				E4C25E4429C43DAC006734A5 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E4C25E4729C43E06006734A5 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				E4AF074929CF1D88007EBD9B /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = E4C78BE228B12124005AE5C4 /* Products */;
 			projectDirPath = "";
@@ -1001,6 +1057,7 @@
 				E4C78D2C28B12432005AE5C4 /* Food.swift in Sources */,
 				E4C78CEC28B12174005AE5C4 /* IconButton.swift in Sources */,
 				E4C78D0D28B12174005AE5C4 /* Date+Extensions.swift in Sources */,
+				E4AF076129D3E5E8007EBD9B /* MacroRatioObject.swift in Sources */,
 				E42E45C028B4CF290088A9BF /* WorkoutRoutineViewController.swift in Sources */,
 				E416BCA728BEFF42008CBEE4 /* ProgressViewModel.swift in Sources */,
 				E4C78D3028B1259C005AE5C4 /* HomeViewController.swift in Sources */,
@@ -1010,21 +1067,26 @@
 				E4C78D3828B125D5005AE5C4 /* LoadingScreenViewController.swift in Sources */,
 				E4C78CF128B12174005AE5C4 /* ProgressBarView.swift in Sources */,
 				E4F73B8F28BA0FD90056E1DD /* FoodLog.swift in Sources */,
+				E4AF075D29D3E53C007EBD9B /* UserPreferenceObject.swift in Sources */,
+				E4AF075729CF2570007EBD9B /* WorkoutSetObject.swift in Sources */,
 				E4C78CF228B12174005AE5C4 /* SpinnerView.swift in Sources */,
 				E44B6B9B28B468C000CCB19C /* DateCell.swift in Sources */,
 				E4C78D1228B12174005AE5C4 /* HomeCoordinator.swift in Sources */,
-				E4F73B9128BA1B680056E1DD /* DataProvider.swift in Sources */,
+				E4F73B9128BA1B680056E1DD /* FireBaseDataProvider.swift in Sources */,
 				E416BC7828BCE36C008CBEE4 /* MealLogList.swift in Sources */,
 				E48912B028CC828E009AFB09 /* TitleSubtitleButtonCell.swift in Sources */,
 				E4C78D4628B1D6D2005AE5C4 /* CaloriesSummaryCell.swift in Sources */,
 				E4C78D1328B12174005AE5C4 /* BaseCoordinator.swift in Sources */,
+				E4AF075529CF24F5007EBD9B /* WorkoutCircuitObject.swift in Sources */,
 				E4C78D0C28B12174005AE5C4 /* UILabel+Extensions.swift in Sources */,
 				E4C25EEF29CD87EF006734A5 /* ChipView.swift in Sources */,
+				E4AF075F29D3E5C2007EBD9B /* UserGoalObject.swift in Sources */,
 				E4C78D0828B12174005AE5C4 /* UIStack+RemoveAll.swift in Sources */,
 				E42E45C228B4CF420088A9BF /* WorkoutRoutineViewModel.swift in Sources */,
 				E4C25E4D29C5DACB006734A5 /* Encodable+Extensions.swift in Sources */,
 				E4C78CFF28B12174005AE5C4 /* ViewController.swift in Sources */,
 				E4C78CF428B12174005AE5C4 /* UserManager.swift in Sources */,
+				E4AF076529D3F312007EBD9B /* DataProvider.swift in Sources */,
 				E4C78CF528B12174005AE5C4 /* CacheManager.swift in Sources */,
 				E4F73B9E28BA34E40056E1DD /* UnitNutrition.swift in Sources */,
 				E4C78CEE28B12174005AE5C4 /* CircleView.swift in Sources */,
@@ -1039,8 +1101,10 @@
 				E4C25E5629C7031C006734A5 /* BaseMVVMViewController.swift in Sources */,
 				E416BC9F28BEF29A008CBEE4 /* DiaryDateControllCell.swift in Sources */,
 				E44C590428BF46ED007DA562 /* WorkoutCircuit.swift in Sources */,
+				E4AF076329D3ECC5007EBD9B /* PersistableProtocol.swift in Sources */,
 				E416BC8C28BD9019008CBEE4 /* FoodLogViewModel.swift in Sources */,
 				E416BC8628BCED05008CBEE4 /* AddFoodViewModel.swift in Sources */,
+				E4AF075329CF2349007EBD9B /* DateAndTimeObject.swift in Sources */,
 				E4C78D5628B209A3005AE5C4 /* DateAndTime.swift in Sources */,
 				E416BC8E28BD91E8008CBEE4 /* DoubleUnitsCell.swift in Sources */,
 				E416BC9928BE5426008CBEE4 /* IconTitleSubtitleView.swift in Sources */,
@@ -1051,13 +1115,16 @@
 				E4C78D0628B12174005AE5C4 /* UIColor+Extensions.swift in Sources */,
 				E416BC7F28BCEC69008CBEE4 /* NutritionAnalysisViewController.swift in Sources */,
 				E4C78CF628B12174005AE5C4 /* ErrorHandler.swift in Sources */,
+				E4AF075129CF22AE007EBD9B /* WorkoutSessionObject.swift in Sources */,
 				E4C78D0728B12174005AE5C4 /* Decimal+formatter.swift in Sources */,
 				E4F73BA028BA35AB0056E1DD /* AmountAndUnit.swift in Sources */,
 				E4C78D1428B12174005AE5C4 /* Coordinator.swift in Sources */,
 				E4C78D0128B12174005AE5C4 /* UIImageView+loadImageUsingURL.swift in Sources */,
 				E4F73B8528BA0EF70056E1DD /* WorkoutBodyPart.swift in Sources */,
 				E44B6B9528B451D900CCB19C /* IconTitleSubtitleNumberUnitView.swift in Sources */,
+				E4AF075B29D3E3E4007EBD9B /* UserObject.swift in Sources */,
 				E48912B628CEA8D9009AFB09 /* TitleTableHeaderView.swift in Sources */,
+				E4AF075929CF26E9007EBD9B /* RealmDatabase.swift in Sources */,
 				E4C78CED28B12174005AE5C4 /* RoundButton.swift in Sources */,
 				E4C78D0E28B12174005AE5C4 /* Double+Extensions.swift in Sources */,
 				E4C25ED829C89CF1006734A5 /* WorkoutSessionReorderExercisesViewController.swift in Sources */,
@@ -1292,6 +1359,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E4AF074929CF1D88007EBD9B /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.37.0;
+			};
+		};
 		E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1351,6 +1426,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E4AF074A29CF1D88007EBD9B /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4AF074929CF1D88007EBD9B /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		E4AF074C29CF1D88007EBD9B /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4AF074929CF1D88007EBD9B /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		E4C25E2429C4094C006734A5 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

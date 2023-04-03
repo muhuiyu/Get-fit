@@ -35,6 +35,26 @@ struct UserGoal: Codable {
     }
 }
 
+// MARK: - Persistable
+extension UserGoal: Persistable {
+    public init(managedObject: UserGoalObject) {
+        dailyDietaryCalories = managedObject.dailyDietaryCalories
+        if let macroRatio = managedObject.macroRatio {
+            self.macroRatio = MacroRatio(managedObject: macroRatio)
+        } else {
+            self.macroRatio = MacroRatio()
+        }
+        exerciseMinute = managedObject.exerciseMinute
+        activeCalories = managedObject.activeCalories
+        stepCountGoal = managedObject.stepCountGoal
+        sleepHoursGoal = managedObject.sleepHoursGoal
+        waterIntakeGoal = managedObject.waterIntakeGoal
+    }
+    public func managedObject() -> UserGoalObject {
+        return UserGoalObject(dailyDietaryCalories: dailyDietaryCalories, macroRatio: macroRatio.managedObject(), exerciseMinute: exerciseMinute, activeCalories: activeCalories, stepCountGoal: stepCountGoal, sleepHoursGoal: sleepHoursGoal, waterIntakeGoal: waterIntakeGoal)
+    }
+}
+
 extension UserGoal {
     var carbsGramGoal: Double {
         return Double(dailyDietaryCalories) * macroRatio.carbs / 4

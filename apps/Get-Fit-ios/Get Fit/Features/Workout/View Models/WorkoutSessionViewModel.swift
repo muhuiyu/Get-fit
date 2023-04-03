@@ -166,9 +166,7 @@ extension WorkoutSessionViewModel {
             let dataProvider = appCoordinator?.dataProvider
         else { return }
         
-        Task {
-            await dataProvider.removeWorkoutSession(for: userID, at: sessionID)
-        }
+        dataProvider.removeWorkoutSession(for: userID, at: sessionID)
     }
     func saveSession() {
         
@@ -183,9 +181,7 @@ extension WorkoutSessionViewModel {
             let dataProvider = appCoordinator?.dataProvider
         else { return }
         
-        Task {
-            await dataProvider.updateWorkoutSession(for: userID, session)
-        }
+        dataProvider.updateWorkoutSession(for: userID, session)
     }
     private func configureSignals() {
         

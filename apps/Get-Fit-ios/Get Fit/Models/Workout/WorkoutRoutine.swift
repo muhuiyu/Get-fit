@@ -5,7 +5,9 @@
 //  Created by Mu Yu on 8/23/22.
 //
 
-typealias WorkoutRoutineID = String
+import Foundation
+
+typealias WorkoutRoutineID = UUID
 
 struct WorkoutRoutine: WorkoutSessionInterface {
     var id: WorkoutRoutineID
@@ -25,7 +27,7 @@ struct WorkoutRoutine: WorkoutSessionInterface {
 }
 extension WorkoutRoutine {
     init() {
-        id = ""
+        id = UUID()
         title = "New Routine"
         circuits = []
         note = ""
