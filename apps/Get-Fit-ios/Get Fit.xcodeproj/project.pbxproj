@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E416219729DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416219629DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift */; };
 		E416BC7828BCE36C008CBEE4 /* MealLogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC7728BCE36C008CBEE4 /* MealLogList.swift */; };
 		E416BC7A28BCE5E6008CBEE4 /* UserGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC7928BCE5E6008CBEE4 /* UserGoal.swift */; };
 		E416BC7C28BCE67C008CBEE4 /* MacroItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416BC7B28BCE67C008CBEE4 /* MacroItem.swift */; };
@@ -180,6 +181,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E416219629DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCircuitHistoryViewController.swift; sourceTree = "<group>"; };
 		E416BC7728BCE36C008CBEE4 /* MealLogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLogList.swift; sourceTree = "<group>"; };
 		E416BC7928BCE5E6008CBEE4 /* UserGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGoal.swift; sourceTree = "<group>"; };
 		E416BC7B28BCE67C008CBEE4 /* MacroItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroItem.swift; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 				E4C25ED729C89CF1006734A5 /* WorkoutSessionReorderExercisesViewController.swift */,
 				E4C25EEC29CC3FAD006734A5 /* WorkoutItemInfoViewController.swift */,
 				E4C25EE529CC3704006734A5 /* TimerController.swift */,
+				E416219629DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1098,6 +1101,7 @@
 				E4C78CA228B12174005AE5C4 /* HomeViewModel.swift in Sources */,
 				E4C25EDC29C9C330006734A5 /* Array+Extensions.swift in Sources */,
 				E416BCA928BEFF97008CBEE4 /* ProgressCoordinator.swift in Sources */,
+				E416219729DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift in Sources */,
 				E4C25E5629C7031C006734A5 /* BaseMVVMViewController.swift in Sources */,
 				E416BC9F28BEF29A008CBEE4 /* DiaryDateControllCell.swift in Sources */,
 				E44C590428BF46ED007DA562 /* WorkoutCircuit.swift in Sources */,

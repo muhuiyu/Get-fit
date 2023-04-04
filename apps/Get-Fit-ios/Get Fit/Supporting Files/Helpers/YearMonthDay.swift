@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+typealias DateFormatString = String
+
 struct YearMonthDay: Comparable, Hashable, Codable {
     var year: Int
     var month: Int
@@ -46,7 +48,7 @@ extension YearMonthDay {
         return Calendar.current.date(from: dateComponents)
     }
     
-    func toString(in format: String) -> String {
+    func toString(in format: DateFormatString) -> String {
         guard let date = self.toDate else { return "" }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format

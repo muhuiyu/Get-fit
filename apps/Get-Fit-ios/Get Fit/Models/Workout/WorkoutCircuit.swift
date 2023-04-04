@@ -47,11 +47,19 @@ extension WorkoutCircuit {
                 title += (String(integerToAlphabet(i)) + ". " + item.name)
             }
             return title
-//            return workoutItems.map({ $0.name }).joined(separator: ", ")
+            //            return workoutItems.map({ $0.name }).joined(separator: ", ")
         case .circuit:
             return "Circuit"
         case .singleExercise:
             return WorkoutItem.getWorkoutItemName(of: sets.first?.itemID ?? "") ?? "Workout"
+        }
+    }
+    
+    var singleLineTitle: String {
+        switch type {
+        case .singleExercise: return title
+        case .circuit: return AppText.Workout.circuit
+        case .superSet: return AppText.Workout.superSet
         }
     }
     
@@ -102,4 +110,10 @@ extension WorkoutCircuit {
         return Character(UnicodeScalar(integer + startingValue) ?? UnicodeScalar.init(0))
     }
 
+}
+
+// MARK: - WorkoutCircuit with Date
+struct WorkoutCircuitWithDate {
+    let circuit: WorkoutCircuit
+    let date: YearMonthDay
 }

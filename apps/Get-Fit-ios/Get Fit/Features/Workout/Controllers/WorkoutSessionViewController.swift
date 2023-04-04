@@ -88,6 +88,13 @@ extension WorkoutSessionViewController {
         }
         coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
     }
+    
+    private func didTapHistory(for circuit: WorkoutCircuit) {
+        guard let coordinator = coordinator else { return }
+        let items = viewModel.fetchHistory(for: circuit)
+        let viewController = WorkoutCircuitHistoryViewController(title: circuit.singleLineTitle, items)
+        coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
+    }
 
     private func didTapSaveAsRoutine() {
         // TODO: -
@@ -137,8 +144,22 @@ extension WorkoutSessionViewController {
     }
     
     private func didTapMoreButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
-        // TODO: present half modal
-//        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        // TODO: present alert
+        // move, replace, delete
+        // edit note
+        // history, charts, personal records
+        // settings (edit exercise)
+        guard let coordinator = coordinator else { return }
+        var actions = [
+            AlertActionOption(title: AppText.Workout.history, style: .default) { _ in
+                self.didTapHistory(for: circuit)
+            },
+            AlertActionOption(title: AppText.General.delete, style: .destructive) { _ in
+                self.viewModel.deleteCircuit(at: circuitIndex)
+            },
+        ]
+        actions.append(AlertActionOption.cancel)
+        coordinator.presentAlert(option: AlertControllerOption(title: circuit.title, message: nil, preferredStyle: .actionSheet), actions: actions)
     }
 
     

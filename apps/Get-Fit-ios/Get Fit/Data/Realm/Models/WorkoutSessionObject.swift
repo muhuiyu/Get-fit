@@ -22,7 +22,6 @@ final class WorkoutSessionObject: Object {
     
     convenience init(id: UUID = UUID(), userID: UserID, startTime: DateAndTimeObject, endTime: DateAndTimeObject, title: String, circuits: List<WorkoutCircuitObject>, note: String) {
         self.init()
-        self.id = id
         self.userID = userID
         self.startTime = startTime
         self.endTime = endTime

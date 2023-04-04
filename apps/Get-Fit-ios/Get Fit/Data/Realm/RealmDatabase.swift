@@ -178,6 +178,13 @@ extension RealmDatabase {
         }
     }
     
+    func fetchHistory(for circuit: WorkoutCircuit) -> [WorkoutCircuitWithDate] {
+        let sessions = realm.objects(WorkoutSessionObject.self)
+            .where({ $0.userID == userID })
+            .map({ WorkoutSession(managedObject: $0) })
+        return Array(sessions)
+    }
+    
     func getJournal(for userID: UserID, on date: Date) -> [Journal] {
         // TODO: -
         return []

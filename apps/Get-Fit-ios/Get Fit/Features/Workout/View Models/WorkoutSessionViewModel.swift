@@ -88,9 +88,9 @@ extension WorkoutSessionViewModel {
         case .singleExercise, .circuit:
             guard let lastSet = updatedSession.circuits[circuitIndex].sets.last else { return }
             updatedSession.circuits[circuitIndex].sets.append(lastSet)
-            session.accept(updatedSession)
-            updateSessionToDatabase()
         }
+        session.accept(updatedSession)
+        updateSessionToDatabase()
     }
     func isSetCell(at indexPath: IndexPath) -> Bool {
         guard let session = session.value, !session.circuits.isEmpty else { return false }
@@ -169,6 +169,9 @@ extension WorkoutSessionViewModel {
         dataProvider.removeWorkoutSession(for: userID, at: sessionID)
     }
     func saveSession() {
+        
+    }
+    func fetchHistory(for circuit: WorkoutCircuit) -> [WorkoutCircuitWithDate] {
         
     }
 }
