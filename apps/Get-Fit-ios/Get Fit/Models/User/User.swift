@@ -7,8 +7,6 @@
 
 import Foundation
 import HealthKit
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 typealias UserID = String
 
@@ -44,9 +42,19 @@ extension User {
         self.email = nil
         self.photoURL = nil
     }
-//    init(snapshot: DocumentSnapshot) throws {
-//        self = try snapshot.data(as: User.self)
-//    }
+}
+// MARK: - Persistable
+extension User: Persistable {
+    public init(managedObject: UserObject) {
+        id = managedObject.id
+        displayName = managedObject.displayName
+        email = managedObject.email
+        photoURL = URL(string: managedObject.photoURLString ?? "")
+    }
+    
+    public func managedObject() -> UserObject {
+        return UserObject(id: id, displayName: displayName, email: email, photoURLString: photoURL?.absoluteString)
+    }
 }
 extension User {
     enum Attribute {
@@ -72,9 +80,4 @@ extension User {
         self.loggedFoods.removeAll()
         self.workoutSessions.removeAll()
     }
-}
-extension User {
-    static let testUser: User = User(id: "mikan123",
-                                     displayName: "Mikan",
-                                     email: "mikan@kankan.com")
 }

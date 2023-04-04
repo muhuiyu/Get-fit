@@ -27,10 +27,8 @@ extension WorkoutViewModel {
 extension WorkoutViewModel {
     func reloadSessions() {
         guard let userID = appCoordinator?.userManager.id else { return }
-        Task {
-            if let sessionsData = await appCoordinator?.dataProvider.getAllWorkoutSessions(for: userID) {
-                self.sessions.accept(sessionsData)
-            }
+        if let sessionsData = appCoordinator?.dataProvider.getAllWorkoutSessions(for: userID) {
+            self.sessions.accept(sessionsData)
         }
     }
     func deleteWorkoutSession(at indexPath: IndexPath) {
@@ -38,9 +36,7 @@ extension WorkoutViewModel {
             let userID = appCoordinator?.userManager.id,
             sessions.value.count > indexPath.row
         else { return }
-        Task {
-            await appCoordinator?.dataProvider.removeWorkoutSession(for: userID, at: sessions.value[indexPath.row].id)
-        }
+        appCoordinator?.dataProvider.removeWorkoutSession(for: userID, at: sessions.value[indexPath.row].id)
     }
 }
 // MARK: - Private methods

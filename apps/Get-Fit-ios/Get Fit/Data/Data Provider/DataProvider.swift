@@ -2,39 +2,38 @@
 //  DataProvider.swift
 //  Get Fit
 //
-//  Created by Mu Yu on 8/27/22.
+//  Created by Mu Yu on 3/29/23.
 //
 
 import Foundation
 
 protocol DataProvider {
     // Set up
-    func setup() async
+    func setup()
     
     // User
-    func fetchUserPreference(for userID: UserID) async -> UserPreference?
-    func fetchUserProfile(for userID: UserID) async -> User?
+    func getUserPreference(for userID: UserID) -> UserPreference?
+    func getUserProfile(for userID: UserID) -> User?
     
     // Food, Database
-    func fetchCustomizedMeals(for userID: UserID) async -> [CustomizedMeal]
-    func fetchDailyMealLog(for userID: UserID, on date: Date) async -> DailyMealLog?
-    func updateMealLog(for userID: UserID, to value: MealLog) async -> VoidResult
-    func removeMealLog(for userID: UserID) async -> VoidResult
-    func fetchPreviousFoodLogs(for userID: UserID) async -> [FoodID: FoodLog]
+    func getCustomizedMeals(for userID: UserID) -> [CustomizedMeal]
+    func getDailyMealLog(for userID: UserID, on date: Date) -> DailyMealLog?
+    func updateMealLog(for userID: UserID, to value: MealLog) -> VoidResult
+    func removeMealLog(for userID: UserID) -> VoidResult
+    func getPreviousFoodLogs(for userID: UserID) -> [FoodID: FoodLog]
     
     // Search
     func searchFoods(contain keyword: String) -> [FoodID]
     
     // Workout
-    func fetchWorkoutRoutines(for userID: UserID) async
-    func removeWorkoutRoutine(for userID: UserID, at workoutRoutine: WorkoutRoutineID) async -> VoidResult
-    func fetchAllWorkoutSessions(for userID: UserID) async
-    func fetchWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) async
-    func getWorkoutSessions(for userID: UserID, on date: YearMonthDay) async -> [WorkoutSession]
-    func getAllWorkoutSessions(for userID: UserID) async -> [WorkoutSession]
-    func removeWorkoutSession(for userID: UserID, at sessionID: WorkoutSessionID) async -> VoidResult
-    func updateWorkoutSession(for userID: UserID, _ session: WorkoutSession) async -> VoidResult
+    func getWorkoutRoutines(for userID: UserID) -> [WorkoutRoutine]
+    func removeWorkoutRoutine(for userID: UserID, at workoutRoutine: WorkoutRoutineID) -> VoidResult
+    func getAllWorkoutSessions(for userID: UserID) -> [WorkoutSession]
+    func getWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) -> [WorkoutSession]
+    func getWorkoutSessions(for userID: UserID, on date: YearMonthDay) -> [WorkoutSession]
+    func removeWorkoutSession(for userID: UserID, at sessionID: WorkoutSessionID) -> VoidResult
+    func updateWorkoutSession(for userID: UserID, _ session: WorkoutSession) -> VoidResult
     
     // Journal
-    func fetchJournal(for userID: UserID, on date: Date) async -> [Journal]
+    func getJournal(for userID: UserID, on date: Date) -> [Journal]
 }

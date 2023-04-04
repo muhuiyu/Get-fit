@@ -43,6 +43,20 @@ extension DateAndTime {
         self.second = 0
     }
 }
+// MARK: - Persistable
+extension DateAndTime: Persistable {
+    public init(managedObject: DateAndTimeObject) {
+        year = managedObject.year
+        month = managedObject.month
+        day = managedObject.day
+        hour = managedObject.hour
+        minute = managedObject.minute
+        second = managedObject.second
+    }
+    public func managedObject() -> DateAndTimeObject {
+        return DateAndTimeObject(year: year, month: month, day: day, hour: hour, minute: minute, second: second)
+    }
+}
 extension DateAndTime {
     func toDate(timeZone: String = "SGT") -> Date? {
         var dateComponents = DateComponents()

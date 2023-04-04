@@ -16,7 +16,7 @@ class AppCoordinator {
     var childCoordinators = [BaseCoordinator]()
     private(set) var mainTabBarController: MainTabBarController?
     
-    let dataProvider: DataProvider = Database()
+    let dataProvider: RealmDatabase
     private(set) var userManager = UserManager()
     private(set) var cacheManager = CacheManager()
     
@@ -27,28 +27,25 @@ class AppCoordinator {
     private var progressCoordinator: ProgressCoordinator?
     private var meCoordinator: MeCoordinator?
 
-    init?(window: UIWindow?) {
-        guard let window = window else { return nil }
+    init?(window: UIWindow?, dataProvider: RealmDatabase?) {
+        guard let window = window, let dataProvider = dataProvider else { return nil }
         self.window = window
+        self.dataProvider = dataProvider
     }
 
     func start() {
         configureAuthViewModel()
-        DispatchQueue.main.async {
-            self.configureCoordinators()
-            self.setupMainTabBar()
-        }
-        Task {
-            await configureDatabase()
-            await window.makeKeyAndVisible()
-            authViewModel.signIn()
-        }
+        configureCoordinators()
+        setupMainTabBar()
+        configureDatabase()
+        window.makeKeyAndVisible()
+        authViewModel.signIn()
     }
 }
 // MARK: - Services and managers
 extension AppCoordinator {
-    private func configureDatabase() async {
-        await dataProvider.setup()
+    private func configureDatabase() {
+        dataProvider.setup()
     }
     private func configureAuthViewModel() {
         authViewModel.appCoordinator = self

@@ -93,6 +93,8 @@ extension AppText {
         static var startTime: String { "Start Time" }
         static var endTime: String { "End Time" }
         static var note: String { "Note" }
+        static var editNote: String { "Edit Note" }
+        static var move: String { "Move" }
         static var editExercise: String { "Edit Exercise" }
         static var editCategory: String { "Edit Category" }
         static var editRoutine: String { "Edit Routine" }

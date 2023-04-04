@@ -45,7 +45,7 @@ extension AddFoodViewModel {
     private func fetchLoggedFood() async {
         guard
             let userID = appCoordinator?.userManager.id,
-            let data = await appCoordinator?.dataProvider.fetchPreviousFoodLogs(for: userID) else {
+            let data = appCoordinator?.dataProvider.getPreviousFoodLogs(for: userID) else {
             return
         }
         previousFoodLogs = Array(data.values)

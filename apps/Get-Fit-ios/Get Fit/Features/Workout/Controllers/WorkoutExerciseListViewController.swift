@@ -20,7 +20,7 @@ class WorkoutExerciseListViewController: BaseViewController {
     private var selectedIndex: Int?
     private let circuitType: WorkoutCircuitType
     
-    private var selectedItemIDs = [String]()
+    private var selectedItemIDs = Set<String>()
     
     private var allowsMultipleSelection: Bool {
         circuitType != .singleExercise
@@ -64,7 +64,12 @@ extension WorkoutExerciseListViewController {
     private func didTapSave() {
         // Only available for multiple selection
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        // TODO: -
+        if let routineViewModel = routineViewModel {
+            // TODO: -
+//            routineViewModel.addExercise(for: itemID)
+        } else if let sessionViewModel = sessionViewModel {
+            sessionViewModel.addCircuit(for: Array(selectedItemIDs), as: circuitType)
+        }
         coordinator.dismissCurrentModal()
     }
 }
@@ -147,14 +152,18 @@ extension WorkoutExerciseListViewController: UITableViewDelegate {
             // TODO: -
 //            routineViewModel.addExercise(for: itemID)
         } else if let sessionViewModel = sessionViewModel {
-            sessionViewModel.addCircuit(for: selectedItemIDs, as: .singleExercise)
+            sessionViewModel.addCircuit(for: Array(selectedItemIDs), as: .singleExercise)
         }
         coordinator.dismissCurrentModal()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedWorkoutItemID = isFiltering ? filteredOptions[indexPath.row] : options[indexPath.row]
-        selectedItemIDs.append(selectedWorkoutItemID)
+        if selectedItemIDs.contains(selectedWorkoutItemID) {
+            selectedItemIDs.remove(selectedWorkoutItemID)
+        } else {
+            selectedItemIDs.insert(selectedWorkoutItemID)
+        }
         
         if allowsMultipleSelection {
             guard let cell = tableView.cellForRow(at: indexPath) else { return }

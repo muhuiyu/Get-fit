@@ -5,6 +5,10 @@
 //  Created by Mu Yu on 8/31/22.
 //
 
+import RealmSwift
+
+typealias WorkoutCircuitTypeString = String
+
 // MARK: - WorkoutCircuitType
 enum WorkoutCircuitType: String, Codable {
     case singleExercise
@@ -16,6 +20,19 @@ enum WorkoutCircuitType: String, Codable {
 struct WorkoutCircuit: Codable {
     let type: WorkoutCircuitType
     var sets: [WorkoutSet]
+}
+
+// MARK: - Persistable
+extension WorkoutCircuit: Persistable {
+    public init(managedObject: WorkoutCircuitObject) {
+        type = WorkoutCircuitType(rawValue: managedObject.type) ?? .singleExercise
+        sets = managedObject.sets.map({ WorkoutSet(managedObject: $0) })
+    }
+    public func managedObject() -> WorkoutCircuitObject {
+        let setObjects = List<WorkoutSetObject>()
+        sets.map({ $0.managedObject() }).forEach({ setObjects.append($0) })
+        return WorkoutCircuitObject(type: type.rawValue, sets: setObjects)
+    }
 }
 
 extension WorkoutCircuit {
@@ -30,11 +47,19 @@ extension WorkoutCircuit {
                 title += (String(integerToAlphabet(i)) + ". " + item.name)
             }
             return title
-//            return workoutItems.map({ $0.name }).joined(separator: ", ")
+            //            return workoutItems.map({ $0.name }).joined(separator: ", ")
         case .circuit:
             return "Circuit"
         case .singleExercise:
             return WorkoutItem.getWorkoutItemName(of: sets.first?.itemID ?? "") ?? "Workout"
+        }
+    }
+    
+    var singleLineTitle: String {
+        switch type {
+        case .singleExercise: return title
+        case .circuit: return AppText.Workout.circuit
+        case .superSet: return AppText.Workout.superSet
         }
     }
     
@@ -85,4 +110,10 @@ extension WorkoutCircuit {
         return Character(UnicodeScalar(integer + startingValue) ?? UnicodeScalar.init(0))
     }
 
+}
+
+// MARK: - WorkoutCircuit with Date
+struct WorkoutCircuitWithDate {
+    let circuit: WorkoutCircuit
+    let date: YearMonthDay
 }
