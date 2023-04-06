@@ -11,6 +11,8 @@ struct WorkoutItem: Hashable, Codable {
     let id: WorkoutItemID
     let name: String
     let bodyPart: [WorkoutBodyPart]
+    let mechanics: WorkoutItemMechanics
+    let force: WorkoutItemForce
     let machine: WorkoutMachine?
     let isSideDifference: Bool
     let videoURLString: String?
@@ -18,12 +20,16 @@ struct WorkoutItem: Hashable, Codable {
     init(id: WorkoutItemID,
          name: String,
          bodyPart: [WorkoutBodyPart],
+         mechanics: WorkoutItemMechanics,
+         force: WorkoutItemForce,
          machine: WorkoutMachine? = nil,
          isSideDifference: Bool = false,
          videoURLString: String? = nil) {
         self.id = id
         self.name = name
         self.bodyPart = bodyPart
+        self.mechanics = mechanics
+        self.force = force
         self.machine = machine
         self.isSideDifference = isSideDifference
         self.videoURLString = videoURLString
@@ -31,6 +37,9 @@ struct WorkoutItem: Hashable, Codable {
 }
 
 extension WorkoutItem {
+    var isCompoundMovement: Bool {
+        return mechanics == .compound
+    }
     var isMachineRequired: Bool {
         return machine != nil
     }
@@ -63,4 +72,14 @@ extension WorkoutItem {
             return false
         }.keys)
     }
+}
+
+enum WorkoutItemMechanics: String, Codable {
+    case compound
+    case isolated
+}
+
+enum WorkoutItemForce: String, Codable {
+    case pull
+    case push
 }

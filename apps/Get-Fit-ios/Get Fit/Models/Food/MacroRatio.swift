@@ -5,7 +5,10 @@
 //  Created by Mu Yu on 9/11/22.
 //
 
+import Foundation
+
 struct MacroRatio: Codable {
+    var id: UUID = UUID()
     var carbs: Double
     var protein: Double
     var fat: Double
@@ -26,11 +29,12 @@ extension MacroRatio {
 // MARK: - Persistable
 extension MacroRatio: Persistable {
     public init(managedObject: MacroRatioObject) {
+        id = managedObject.id
         carbs = managedObject.carbs
         protein = managedObject.protein
         fat = managedObject.fat
     }
     public func managedObject() -> MacroRatioObject {
-        return MacroRatioObject(carbs: carbs, protein: protein, fat: fat)
+        return MacroRatioObject(id: id, carbs: carbs, protein: protein, fat: fat)
     }
 }

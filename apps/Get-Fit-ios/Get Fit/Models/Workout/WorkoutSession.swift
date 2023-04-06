@@ -75,7 +75,7 @@ extension WorkoutSession {
 
 // MARK: - Persistable
 extension WorkoutSession: Persistable {
-    public init(managedObject: WorkoutSessionObject) {
+    public init(managedObject: WorkoutSessionObject, circuits: [WorkoutCircuit] = []) {
         id = managedObject.id
         userID = managedObject.userID
         if let startTime = managedObject.startTime {
@@ -89,17 +89,30 @@ extension WorkoutSession: Persistable {
             self.endTime = DateAndTime()
         }
         title = managedObject.title
-        circuits = managedObject.circuits.map({ WorkoutCircuit(managedObject: $0) })
+        self.circuits = circuits
         note = managedObject.note
     }
+    public init(managedObject: WorkoutSessionObject) {
+        self.init(userID: managedObject.userID, preferredWorkoutLength: TimeInterval(1200))
+    }
     public func managedObject() -> WorkoutSessionObject {
-        let circuitObjects = List<WorkoutCircuitObject>()
-        circuits.map({ $0.managedObject() }).forEach({ circuitObjects.append($0) })
-        return WorkoutSessionObject(id: id, userID: userID, startTime: startTime.managedObject(), endTime: endTime.managedObject(), title: title, circuits: circuitObjects, note: note)
+        let circuitIDs = List<WorkoutCircuitID>()
+        circuits.map({ $0.id }).forEach({ circuitIDs.append($0) })
+        
+        return WorkoutSessionObject(id: id,
+                                    userID: userID,
+                                    startTime: startTime.managedObject(),
+                                    endTime: endTime.managedObject(),
+                                    title: title,
+                                    circuits: circuitIDs,
+                                    note: note)
     }
 }
 
 extension WorkoutSession {
+    var date: YearMonthDay {
+        return startTime.toYearMonthDay
+    }
     var durationInHourMinuteString: String {
         return DateAndTime.difference(from: startTime, to: endTime).toHourMinuteString(unitsStyle: .full)
     }

@@ -11,6 +11,7 @@ import UIKit
 typealias DateFormatString = String
 
 struct YearMonthDay: Comparable, Hashable, Codable {
+    var id: UUID = UUID()
     var year: Int
     var month: Int
     var day: Int
@@ -58,3 +59,16 @@ extension YearMonthDay {
         return dateFormatter.string(from: date)
     }
 }
+// MARK: - Persistable
+extension YearMonthDay: Persistable {
+    public init(managedObject: YearMonthDayObject) {
+        id = managedObject.id
+        year = managedObject.year
+        month = managedObject.month
+        day = managedObject.day
+    }
+    public func managedObject() -> YearMonthDayObject {
+        return YearMonthDayObject(id: id, year: year, month: month, day: day)
+    }
+}
+

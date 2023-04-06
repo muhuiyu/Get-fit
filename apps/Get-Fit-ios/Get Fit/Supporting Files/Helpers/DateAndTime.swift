@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 struct DateAndTime: Codable, Comparable, Equatable {
+    var id: UUID = UUID()
     var year: Int
     var month: Int
     var day: Int
@@ -46,6 +47,7 @@ extension DateAndTime {
 // MARK: - Persistable
 extension DateAndTime: Persistable {
     public init(managedObject: DateAndTimeObject) {
+        id = managedObject.id
         year = managedObject.year
         month = managedObject.month
         day = managedObject.day
@@ -54,7 +56,7 @@ extension DateAndTime: Persistable {
         second = managedObject.second
     }
     public func managedObject() -> DateAndTimeObject {
-        return DateAndTimeObject(year: year, month: month, day: day, hour: hour, minute: minute, second: second)
+        return DateAndTimeObject(id: id, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
     }
 }
 extension DateAndTime {

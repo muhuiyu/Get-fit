@@ -26,7 +26,6 @@ class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewMod
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.appCoordinator = appCoordinator
-        
         configureViews()
         configureConstraints()
         configureGestures()
@@ -92,7 +91,10 @@ extension WorkoutSessionViewController {
     private func didTapHistory(for circuit: WorkoutCircuit) {
         guard let coordinator = coordinator else { return }
         let items = viewModel.fetchHistory(for: circuit)
-        let viewController = WorkoutCircuitHistoryViewController(title: circuit.singleLineTitle, items)
+        let viewController = WorkoutCircuitHistoryViewController(appCoordinator: self.appCoordinator,
+                                                                 coordinator: self.coordinator,
+                                                                 title: circuit.singleLineTitle,
+                                                                 items)
         coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
     }
 
@@ -128,12 +130,16 @@ extension WorkoutSessionViewController {
         switch circuit.type {
         case .singleExercise:
             guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
-            let viewController = WorkoutItemInfoViewController(workoutItem: workoutItem)
+            let viewController = WorkoutItemInfoViewController(appCoordinator: self.appCoordinator,
+                                                               coordinator: self.coordinator,
+                                                               workoutItem: workoutItem)
             coordinator?.navigate(to: viewController.embedInNavgationController(), presentModally: true)
         case .superSet, .circuit:
             var actions = circuit.workoutItems.map { item in
                 return AlertActionOption(title: item.name, style: .default) { _ in
-                    let viewController = WorkoutItemInfoViewController(workoutItem: item)
+                    let viewController = WorkoutItemInfoViewController(appCoordinator: self.appCoordinator,
+                                                                       coordinator: self.coordinator,
+                                                                       workoutItem: item)
                     self.coordinator?.navigate(to: viewController.embedInNavgationController(), presentModally: true)
                 }
             }
@@ -160,15 +166,6 @@ extension WorkoutSessionViewController {
         ]
         actions.append(AlertActionOption.cancel)
         coordinator.presentAlert(option: AlertControllerOption(title: circuit.title, message: nil, preferredStyle: .actionSheet), actions: actions)
-    }
-
-    
-    // MARK: - For
-    @objc
-    private func didTapSave() {
-        guard let coordinator = coordinator else { return }
-        coordinator.navigationController.popViewController(animated: true)
-        viewModel.saveNewSession()
     }
 }
 
@@ -226,11 +223,6 @@ extension WorkoutSessionViewController {
                                           action: #selector(didTapTimer))
      
         var barItems: [UIBarButtonItem] =  [ viewMoreButton, timerButton ]
-        
-        if isNewSession {
-            barItems.append(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapSave)))
-        }
-        
         navigationItem.rightBarButtonItems = barItems
     }
 
@@ -301,9 +293,7 @@ extension WorkoutSessionViewController {
             moreButton.contentMode = .scaleAspectFit
             moreButton.iconColor = .Brand.primary
             
-            // TODO: - Add info button
-//            headerCell.icons = [infoButton, moreButton]
-            headerCell.icons = [moreButton]
+            headerCell.icons = [infoButton, moreButton]
             
             switch circuit.type {
             case .singleExercise, .circuit:
@@ -394,6 +384,7 @@ extension WorkoutSessionViewController: UITableViewDelegate {
         defer {
             tableView.deselectRow(at: indexPath, animated: true)
         }
+        // TODO: - 
         print(indexPath)
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

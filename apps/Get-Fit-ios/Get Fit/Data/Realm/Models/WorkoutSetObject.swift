@@ -20,8 +20,9 @@ final class WorkoutSetObject: Object {
     @objc dynamic var restTime: TimeInterval = TimeInterval(60)
     @objc dynamic var note: String = ""
     
-    convenience init(itemID: WorkoutItemID, type: WorkoutSetTypeString, weight: Double, reps: Int, restTime: TimeInterval, note: String) {
+    convenience init(id: UUID, itemID: WorkoutItemID, type: WorkoutSetTypeString, weight: Double, reps: Int, restTime: TimeInterval, note: String) {
         self.init()
+        self.id = id
         self.itemID = itemID
         self.type = type
         self.weight = weight

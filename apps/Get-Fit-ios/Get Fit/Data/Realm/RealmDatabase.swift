@@ -49,15 +49,19 @@ class RealmDatabase: DataProvider {
 extension RealmDatabase {
     func setup() {
         // TODO: -
-//        try? realm.write {
-//            realm.deleteAll()
-//        }
-//        try? realm.write {
-//            workoutData.forEach { workoutSession in
-//                let object = workoutSession.managedObject()
-//                var session = realm.create(WorkoutSessionObject.self, value: object)
-//            }
-//        }
+        try? realm.write {
+            realm.deleteAll()
+        }
+        try? realm.write {
+            workoutSessionData.forEach { item in
+                let object = item.managedObject()
+                let _ = realm.create(WorkoutSessionObject.self, value: object)
+            }
+            workoutCircuitData.forEach { item in
+                let object = item.managedObject()
+                let _ = realm.create(WorkoutCircuitObject.self, value: object)
+            }
+        }
     }
 }
 
@@ -130,26 +134,51 @@ extension RealmDatabase {
         return .success
     }
     
+    func getWorkoutCircuits(_ ids: [WorkoutCircuitID]) -> [WorkoutCircuit] {
+        let items = realm.objects(WorkoutCircuitObject.self)
+            .filter({ ids.contains($0.id) })
+            .map({ WorkoutCircuit(managedObject: $0) })
+        return Array(items)
+    }
+    
     func getAllWorkoutSessions(for userID: UserID) -> [WorkoutSession] {
         let sessions = realm.objects(WorkoutSessionObject.self)
-            .where({ $0.userID == userID })
-            .map({ WorkoutSession(managedObject: $0) })
+            .filter({ $0.userID == userID })
+            .map({ session in
+                let circuits = self.getWorkoutCircuits(Array(session.circuits))
+                return WorkoutSession(managedObject: session, circuits: circuits)
+            })
         return Array(sessions)
     }
     
     func getWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) -> [WorkoutSession] {
         let sessions = realm.objects(WorkoutSessionObject.self)
-            .where({ $0.userID == userID })
-            .map({ WorkoutSession(managedObject: $0) })
-            .filter({ $0.startTime >= startDate.toDateAndTime && $0.startTime <= endDate.toDateAndTime })
+            .filter({ $0.userID == userID })
+            .filter({ session in
+                guard let startTimeObject = session.startTime else { return false }
+                let startTime = DateAndTime(managedObject: startTimeObject)
+                return startTime >= startDate.toDateAndTime && startTime <= endDate.toDateAndTime
+            })
+            .map({ session in
+                let circuits = self.getWorkoutCircuits(Array(session.circuits))
+                return WorkoutSession(managedObject: session, circuits: circuits)
+            })
         return Array(sessions)
     }
     
     func getWorkoutSessions(for userID: UserID, on date: YearMonthDay) -> [WorkoutSession] {
         let sessions = realm.objects(WorkoutSessionObject.self)
-            .where({ $0.userID == userID })
-            .map({ WorkoutSession(managedObject: $0) })
-            .filter({ $0.startTime.toYearMonthDay == date || $0.endTime.toYearMonthDay == date })
+            .filter({ $0.userID == userID })
+            .filter({ session in
+                guard let startTimeObject = session.startTime, let endTimeObject = session.endTime else { return false }
+                let startTime = DateAndTime(managedObject: startTimeObject)
+                let endTime = DateAndTime(managedObject: endTimeObject)
+                return startTime.toYearMonthDay == date || endTime.toYearMonthDay == date
+            })
+            .map({ session in
+                let circuits = self.getWorkoutCircuits(Array(session.circuits))
+                return WorkoutSession(managedObject: session, circuits: circuits)
+            })
         return Array(sessions)
     }
     
@@ -171,6 +200,7 @@ extension RealmDatabase {
         do {
             try realm.write({
                 realm.add(session.managedObject(), update: .modified)
+                session.circuits.forEach({ realm.add($0.managedObject(), update: .modified) })
             })
             return .success
         } catch {
@@ -178,11 +208,13 @@ extension RealmDatabase {
         }
     }
     
-    func fetchHistory(for circuit: WorkoutCircuit) -> [WorkoutCircuitWithDate] {
-        let sessions = realm.objects(WorkoutSessionObject.self)
-            .where({ $0.userID == userID })
-            .map({ WorkoutSession(managedObject: $0) })
-        return Array(sessions)
+    func fetchHistory(for userID: UserID, for circuit: WorkoutCircuit) -> [WorkoutCircuit] {
+        let items = realm.objects(WorkoutCircuitObject.self)
+            .map({ WorkoutCircuit(managedObject: $0) })
+            .filter { item in
+                return item.type == circuit.type && item.workoutItems == circuit.workoutItems
+            }
+        return Array(items)
     }
     
     func getJournal(for userID: UserID, on date: Date) -> [Journal] {

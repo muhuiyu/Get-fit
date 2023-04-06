@@ -13,13 +13,14 @@ final class UserPreferenceObject: Object {
         return "id"
     }
     @objc dynamic var id: UUID = UUID()
-    @objc dynamic var userID: UserID = ""
+    @objc dynamic var userID: UserID = UserID()
     @objc dynamic var goal: UserGoalObject?
     @objc dynamic var preferredWorkoutLength: TimeInterval = TimeInterval(60)
     @objc dynamic var preferredNumberOfMeals: Int = 3
 
-    convenience init(userID: UserID, goal: UserGoalObject, preferredWorkoutLength: TimeInterval, preferredNumberOfMeals: Int) {
+    convenience init(id: UUID, userID: UserID, goal: UserGoalObject, preferredWorkoutLength: TimeInterval, preferredNumberOfMeals: Int) {
         self.init()
+        self.id = id
         self.userID = userID
         self.goal = goal
         self.preferredWorkoutLength = preferredWorkoutLength

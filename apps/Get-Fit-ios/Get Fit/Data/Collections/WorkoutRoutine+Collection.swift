@@ -52,7 +52,7 @@ extension WorkoutRoutine {
 //                            restTime: TimeInterval(60)
 //                        ),
 //                        WorkoutItemLog(
-//                            itemID: WorkoutItem.dumbbellSideRaises.id,
+//                            itemID: WorkoutItem.dumbbellLateralRaises.id,
 //                            sets: [
 //                                WorkoutSetLog(weight: 8, reps: 15),
 //                                WorkoutSetLog(weight: 8, reps: 15),

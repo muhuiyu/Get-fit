@@ -17,8 +17,9 @@ final class MacroRatioObject: Object {
     @objc dynamic var protein: Double = 0
     @objc dynamic var fat: Double = 0
     
-    convenience init(carbs: Double, protein: Double, fat: Double) {
+    convenience init(id: UUID, carbs: Double, protein: Double, fat: Double) {
         self.init()
+        self.id = id
         self.carbs = carbs
         self.protein = protein
         self.fat = fat

@@ -8,7 +8,7 @@
 import Foundation
 import HealthKit
 
-typealias UserID = String
+typealias UserID = UUID
 
 struct User {
     var id: UserID
@@ -37,7 +37,7 @@ struct User {
 }
 extension User {
     init() {
-        self.id = ""
+        self.id = UUID()
         self.displayName = nil
         self.email = nil
         self.photoURL = nil
@@ -69,7 +69,7 @@ extension User {
 }
 extension User {
     mutating func clearData() {
-        self.id = ""
+        self.id = UUID()
         self.displayName = nil
         self.email = nil
         self.photoURL = nil

@@ -57,13 +57,18 @@ extension WorkoutSessionViewModel {
         case .singleExercise:
             guard let itemID = itemIDs.first else { return }
             updatedSession.circuits.append(
-                WorkoutCircuit(type: .singleExercise,
-                               sets: [
-                                WorkoutSet(itemID: itemID, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "")
-                               ])
+                WorkoutCircuit(
+                    id: UUID(),
+                    date: updatedSession.startTime.toYearMonthDay,
+                    type: .singleExercise,
+                    sets: [
+                        WorkoutSet(itemID: itemID, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "")
+                    ])
             )
         case .superSet, .circuit:
-            updatedSession.circuits.append(WorkoutCircuit(type: .superSet,
+            updatedSession.circuits.append(WorkoutCircuit(id: UUID(),
+                                                          date: updatedSession.startTime.toYearMonthDay,
+                                                          type: .superSet,
                                                           sets: itemIDs.compactMap({ WorkoutSet(itemID: $0, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "") })))
         }
         
@@ -126,9 +131,6 @@ extension WorkoutSessionViewModel {
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
-    func saveNewSession() {
-        updateSessionToDatabase()
-    }
     func didChangeCircuitsOrder(to value: [WorkoutCircuit]) {
         guard var updatedSession = session.value else { return }
         updatedSession.circuits = value
@@ -168,11 +170,12 @@ extension WorkoutSessionViewModel {
         
         dataProvider.removeWorkoutSession(for: userID, at: sessionID)
     }
-    func saveSession() {
-        
-    }
-    func fetchHistory(for circuit: WorkoutCircuit) -> [WorkoutCircuitWithDate] {
-        
+    func fetchHistory(for circuit: WorkoutCircuit) -> [WorkoutCircuit] {
+        guard
+            let userID = appCoordinator?.userManager.id,
+            let dataProvider = appCoordinator?.dataProvider
+        else { return [] }
+        return dataProvider.fetchHistory(for: userID, for: circuit)
     }
 }
 // MARK: - Private functions

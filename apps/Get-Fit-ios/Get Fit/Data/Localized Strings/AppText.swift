@@ -115,6 +115,7 @@ extension AppText {
         static var superSet: String { "Super Set" }
         static var circuit: String { "Circuit" }
         static var history: String { "History" }
+        static var info: String { "Info" }
     }
 }
 // MARK: - Me

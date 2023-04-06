@@ -131,7 +131,7 @@ extension TitleSubtitleButtonCell {
         
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = Constants.Spacing.trivial
+        stackView.spacing = Constants.Spacing.small
         stackView.alignment = .center
         icons.forEach { stackView.addArrangedSubview($0) }
         iconsView.addSubview(stackView)

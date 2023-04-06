@@ -13,11 +13,14 @@ final class WorkoutCircuitObject: Object {
         return "id"
     }
     @objc dynamic var id: UUID = UUID()
+    @objc dynamic var date: YearMonthDayObject?
     @objc dynamic var type: WorkoutCircuitTypeString = WorkoutCircuitType.singleExercise.rawValue
     var sets = List<WorkoutSetObject>()
     
-    convenience init(type: WorkoutCircuitTypeString, sets: List<WorkoutSetObject>) {
+    convenience init(id: UUID, date: YearMonthDayObject, type: WorkoutCircuitTypeString, sets: List<WorkoutSetObject>) {
         self.init()
+        self.id = id
+        self.date = date
         self.type = type
         self.sets = sets
     }
