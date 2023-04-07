@@ -17,6 +17,7 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
     var userID: UserID
     var startTime: DateAndTime
     var endTime: DateAndTime
+    var bodyWeight: Double
     var title: String
     var circuits: [WorkoutCircuit]
     var note: String
@@ -28,12 +29,14 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
          userID: UserID,
          startTime: DateAndTime,
          endTime: DateAndTime,
+         bodyWeight: Double = 0,
          title: String,
          circuits: [WorkoutCircuit],
          note: String = "") {
         self.id = id
         self.userID = userID
         self.title = title
+        self.bodyWeight = bodyWeight
         self.startTime = startTime
         self.endTime = endTime
         self.circuits = circuits
@@ -46,9 +49,10 @@ extension WorkoutSession {
          preferredWorkoutLength: TimeInterval) {
         self.id = UUID()
         self.userID = userID
-        self.title = "New workout session"
+        self.title = "New session"
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
+        self.bodyWeight = 0
         self.circuits = []
         self.note = ""
     }
@@ -58,18 +62,11 @@ extension WorkoutSession {
         self.id = UUID()
         self.userID = userID
         self.title = routine.title
+        self.bodyWeight = 0
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
         self.circuits = routine.circuits
         self.note = routine.note
-    }
-    private struct WorkoutSessionData: Codable {
-        var userID: UserID
-        var startTime: DateAndTime
-        var endTime: DateAndTime
-        var title: String
-        var circuits: [WorkoutCircuit]
-        var note: String
     }
 }
 
@@ -88,6 +85,7 @@ extension WorkoutSession: Persistable {
         } else {
             self.endTime = DateAndTime()
         }
+        bodyWeight = managedObject.bodyWeight
         title = managedObject.title
         self.circuits = circuits
         note = managedObject.note
@@ -103,6 +101,7 @@ extension WorkoutSession: Persistable {
                                     userID: userID,
                                     startTime: startTime.managedObject(),
                                     endTime: endTime.managedObject(),
+                                    bodyWeight: bodyWeight,
                                     title: title,
                                     circuits: circuitIDs,
                                     note: note)

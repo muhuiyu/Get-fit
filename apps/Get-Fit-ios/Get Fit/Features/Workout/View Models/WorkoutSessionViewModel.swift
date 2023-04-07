@@ -89,10 +89,12 @@ extension WorkoutSessionViewModel {
         case .superSet:
             let lastGroupOfSet = circuit.lastGroupOfSetsOfSuperSet
             guard !lastGroupOfSet.isEmpty else { return }
-            updatedSession.circuits[circuitIndex].sets.addAll(lastGroupOfSet)
-        case .singleExercise, .circuit:
+            updatedSession.circuits[circuitIndex].sets.addAll(lastGroupOfSet.map({ WorkoutSet(from: $0) }))
+        case .singleExercise:
             guard let lastSet = updatedSession.circuits[circuitIndex].sets.last else { return }
-            updatedSession.circuits[circuitIndex].sets.append(lastSet)
+            updatedSession.circuits[circuitIndex].sets.append(WorkoutSet(from: lastSet))
+        case .circuit:
+            return
         }
         session.accept(updatedSession)
         updateSessionToDatabase()
@@ -107,6 +109,9 @@ extension WorkoutSessionViewModel {
         guard var updatedSession = session.value else { return }
         updatedSession.circuits.remove(at: index)
         session.accept(updatedSession)
+        
+        let circuitID = updatedSession.circuits[index].id
+        removeCircuitInDatabase(at: circuitID)
     }
     func deleteSet(at indexPath: IndexPath) {
         guard let (circuitIndex, setIndex) = getIndexOfCircuitAndSet(at: indexPath) else { return }
@@ -127,7 +132,9 @@ extension WorkoutSessionViewModel {
         // Remove workout item if there's no set
         if updatedSession.circuits[circuitIndex].sets.isEmpty {
             updatedSession.circuits.remove(at: circuitIndex)
+            removeCircuitInDatabase(at: circuit.id)
         }
+        
         session.accept(updatedSession)
         updateSessionToDatabase()
     }
@@ -177,9 +184,19 @@ extension WorkoutSessionViewModel {
         else { return [] }
         return dataProvider.fetchHistory(for: userID, for: circuit)
     }
+    func getIndexPath(atCircuit circuitIndex: Int, atSet setIndex: Int) -> IndexPath {
+        return IndexPath(row: setIndex+1, section: circuitIndex+1)
+    }
 }
 // MARK: - Private functions
 extension WorkoutSessionViewModel {
+    private func removeCircuitInDatabase(at circuitID: WorkoutCircuitID) {
+        guard
+            let dataProvider = appCoordinator?.dataProvider
+        else { return }
+        
+        try? dataProvider.removeCircuit(at: circuitID)
+    }
     private func updateSessionToDatabase() {
         guard
             let session = session.value,

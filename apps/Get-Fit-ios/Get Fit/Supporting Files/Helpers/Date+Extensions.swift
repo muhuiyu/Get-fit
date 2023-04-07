@@ -206,10 +206,8 @@ extension Date: Strideable {
         let weekDay = Calendar.current.component(.weekday, from: self)
         return dateFormatterPrint.weekdaySymbols[weekDay - 1] + ", " + dateFormatterPrint.string(from: self)
     }
-    func toWeekDayString() -> String {
-        let dateFormatterPrint = DateFormatter()
-        let weekDay = Calendar.current.component(.weekday, from: self)
-        return dateFormatterPrint.weekdaySymbols[weekDay - 1]
+    func toWeekDayString(formatStyle: Date.FormatStyle.Symbol.Weekday = .abbreviated) -> String {
+        return self.formatted(Date.FormatStyle().weekday(formatStyle))
     }
     func toWeekDayAndDayWithoutYearString() -> String {
         let dateFormatterPrint = DateFormatter()

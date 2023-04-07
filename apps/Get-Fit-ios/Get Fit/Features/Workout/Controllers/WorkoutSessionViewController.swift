@@ -11,9 +11,10 @@ import RxSwift
 class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewModel> {
     
     private let isNewSession: Bool
-    
-    private let tableView = UITableView()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private var cells = [[UITableViewCell]]()
+    private var footerBottomConstraint: NSLayoutConstraint?
+    private var keyboardTrigger: IndexPath?
     
     init(appCoordinator: AppCoordinator? = nil,
          coordinator: BaseCoordinator? = nil,
@@ -21,6 +22,7 @@ class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewMod
          isNewSession: Bool = false) {
         self.isNewSession = isNewSession
         super.init(appCoordinator: appCoordinator, coordinator: coordinator, viewModel: viewModel)
+        hidesBottomBarWhenPushed = true
     }
     
     override func viewDidLoad() {
@@ -30,6 +32,12 @@ class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewMod
         configureConstraints()
         configureGestures()
         configureSignals()
+        configureKeyboard()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        hidesBottomBarWhenPushed = false
     }
 }
 // MARK: - Handlers
@@ -88,16 +96,6 @@ extension WorkoutSessionViewController {
         coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
     }
     
-    private func didTapHistory(for circuit: WorkoutCircuit) {
-        guard let coordinator = coordinator else { return }
-        let items = viewModel.fetchHistory(for: circuit)
-        let viewController = WorkoutCircuitHistoryViewController(appCoordinator: self.appCoordinator,
-                                                                 coordinator: self.coordinator,
-                                                                 title: circuit.singleLineTitle,
-                                                                 items)
-        coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
-    }
-
     private func didTapSaveAsRoutine() {
         // TODO: -
     }
@@ -126,7 +124,17 @@ extension WorkoutSessionViewController {
                                  ])
     }
 
-    private func didTapInfoButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
+    private func didTapHistoryButton(_ circuit: WorkoutCircuit) {
+        guard let coordinator = coordinator else { return }
+        let items = viewModel.fetchHistory(for: circuit)
+        let viewController = WorkoutCircuitHistoryViewController(appCoordinator: self.appCoordinator,
+                                                                 coordinator: self.coordinator,
+                                                                 title: circuit.singleLineTitle,
+                                                                 items)
+        coordinator.navigate(to: viewController.embedInNavgationController(), presentModally: true)
+    }
+    
+    private func didTapInfo(_ circuit: WorkoutCircuit) {
         switch circuit.type {
         case .singleExercise:
             guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
@@ -148,7 +156,7 @@ extension WorkoutSessionViewController {
             coordinator?.presentAlert(option: AlertControllerOption(title: "Choose exercise", message: nil, preferredStyle: .actionSheet), actions: actions)
         }
     }
-    
+
     private func didTapMoreButton(at circuitIndex: Int, _ circuit: WorkoutCircuit) {
         // TODO: present alert
         // move, replace, delete
@@ -157,8 +165,8 @@ extension WorkoutSessionViewController {
         // settings (edit exercise)
         guard let coordinator = coordinator else { return }
         var actions = [
-            AlertActionOption(title: AppText.Workout.history, style: .default) { _ in
-                self.didTapHistory(for: circuit)
+            AlertActionOption(title: AppText.Workout.info, style: .default) { _ in
+                self.didTapInfo(circuit)
             },
             AlertActionOption(title: AppText.General.delete, style: .destructive) { _ in
                 self.viewModel.deleteCircuit(at: circuitIndex)
@@ -166,6 +174,10 @@ extension WorkoutSessionViewController {
         ]
         actions.append(AlertActionOption.cancel)
         coordinator.presentAlert(option: AlertControllerOption(title: circuit.title, message: nil, preferredStyle: .actionSheet), actions: actions)
+    }
+    @objc
+    private func didTapInView() {
+        dismissKeyboard()
     }
 }
 
@@ -175,16 +187,20 @@ extension WorkoutSessionViewController {
         configureNavigationItems()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .secondarySystemBackground
         view.addSubview(tableView)
     }
     private func configureConstraints() {
         tableView.snp.remakeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            footerBottomConstraint = make.bottom
+                .equalTo(view.safeAreaLayoutGuide)
+                .inset(Constants.Spacing.medium)
+                .constraint.layoutConstraints.first
         }
     }
     private func configureGestures() {
-        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapInView))
+        view.addGestureRecognizer(tapRecognizer)
     }
     private func configureSignals() {
         viewModel.session
@@ -221,11 +237,63 @@ extension WorkoutSessionViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(didTapTimer))
-     
-        var barItems: [UIBarButtonItem] =  [ viewMoreButton, timerButton ]
+        
+        let barItems: [UIBarButtonItem] =  [ viewMoreButton, timerButton ]
         navigationItem.rightBarButtonItems = barItems
     }
-
+}
+// MARK: - Keyboard
+extension WorkoutSessionViewController {
+    private func configureKeyboard() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardHeightWillChange(note:)),
+                                               name: UIView.keyboardWillChangeFrameNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(note:)),
+                                               name: UIView.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    @objc
+    private func keyboardHeightWillChange(note: Notification) {
+        guard let keyboardFrame = note.userInfo?[UIView.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        animateKeyboard(to: keyboardFrame.height, userInfo: note.userInfo)
+    }
+    @objc
+    private func keyboardWillHide(note: Notification) {
+        animateKeyboard(to: 0, userInfo: note.userInfo)
+        keyboardTrigger = nil
+    }
+    private func animateKeyboard(to height: CGFloat, userInfo: [AnyHashable : Any]?) {
+        let duration = userInfo?[UIView.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.15
+        let animationCurveRawValue = userInfo?[UIView.keyboardAnimationCurveUserInfoKey] as? UIView.AnimationCurve.RawValue
+        let animationOptions: UIView.AnimationOptions
+        switch animationCurveRawValue {
+        case UIView.AnimationCurve.linear.rawValue:
+            animationOptions = .curveLinear
+        case UIView.AnimationCurve.easeIn.rawValue:
+            animationOptions = .curveEaseIn
+        case UIView.AnimationCurve.easeOut.rawValue:
+            animationOptions = .curveEaseOut
+        case UIView.AnimationCurve.easeInOut.rawValue:
+            animationOptions = .curveEaseInOut
+        default:
+            animationOptions = .curveEaseInOut
+        }
+        footerBottomConstraint?.constant = -height
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       options: [animationOptions, .beginFromCurrentState]) {
+            self.view.layoutIfNeeded()
+        } completion: { isSuccess in
+            if isSuccess, let indexPath = self.keyboardTrigger {
+                DispatchQueue.main.async {
+                    print(indexPath)
+                    self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                }
+            }
+        }
+    }
 }
 // MARK: - Configure Cells
 extension WorkoutSessionViewController {
@@ -279,12 +347,12 @@ extension WorkoutSessionViewController {
             // Header cell
             let headerCell = TitleSubtitleButtonCell()
             
-            let infoButton = IconButton(name: Icons.questionmarkCircle)
-            infoButton.tapHandler = { [weak self] in
-                self?.didTapInfoButton(at: circuitIndex, circuit)
+            let historyButton = IconButton(name: Icons.clockArrowCirclepath)
+            historyButton.tapHandler = { [weak self] in
+                self?.didTapHistoryButton(circuit)
             }
-            infoButton.contentMode = .scaleAspectFit
-            infoButton.iconColor = .Brand.primary
+            historyButton.contentMode = .scaleAspectFit
+            historyButton.iconColor = .Brand.primary
             
             let moreButton = IconButton(name: Icons.ellipsis)
             moreButton.tapHandler = { [weak self] in
@@ -293,7 +361,7 @@ extension WorkoutSessionViewController {
             moreButton.contentMode = .scaleAspectFit
             moreButton.iconColor = .Brand.primary
             
-            headerCell.icons = [infoButton, moreButton]
+            headerCell.icons = [historyButton, moreButton]
             
             switch circuit.type {
             case .singleExercise, .circuit:
@@ -314,6 +382,9 @@ extension WorkoutSessionViewController {
             // Set cells
             for (setIndex, set) in circuit.sets.enumerated() {
                 let cell = WorkoutSetCell()
+                cell.tapHandler = { [weak self] in
+                    self?.keyboardTrigger = self?.viewModel.getIndexPath(atCircuit: circuitIndex, atSet: setIndex)
+                }
                 cell.weightValueChangedHandler = { [weak self] in
                     self?.viewModel.didChangeWeightValue(circuitAt: circuitIndex, setAt: setIndex, to: cell.weight)
                 }
@@ -332,12 +403,15 @@ extension WorkoutSessionViewController {
             }
             
             // Add set cell
-            let addSetCell = ButtonCell()
-            addSetCell.title = AppText.Workout.addSet
-            addSetCell.tapHandler = { [weak self] in
-                self?.didTapAddSet(for: circuitIndex)
+            if circuit.type != .circuit {
+                let addSetCell = ButtonCell()
+                addSetCell.title = AppText.Workout.addSet
+                addSetCell.tapHandler = { [weak self] in
+                    self?.didTapAddSet(for: circuitIndex)
+                }
+                section.append(addSetCell)
             }
-            section.append(addSetCell)
+            
             sections.append(section)
         }
         return sections

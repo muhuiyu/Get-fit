@@ -49,27 +49,20 @@ class RealmDatabase: DataProvider {
 extension RealmDatabase {
     func setup() {
         // TODO: -
-        try? realm.write {
-            realm.deleteAll()
-        }
-        try? realm.write {
-            workoutSessionData.forEach { item in
-                let object = item.managedObject()
-                let _ = realm.create(WorkoutSessionObject.self, value: object)
-            }
-            workoutCircuitData.forEach { item in
-                let object = item.managedObject()
-                let _ = realm.create(WorkoutCircuitObject.self, value: object)
-            }
-        }
+//        try? realm.write {
+//            realm.deleteAll()
+//        }
+//        try? realm.write {
+//            workoutSessionData.forEach { item in
+//                let object = item.managedObject()
+//                let _ = realm.create(WorkoutSessionObject.self, value: object)
+//            }
+//            workoutCircuitData.forEach { item in
+//                let object = item.managedObject()
+//                let _ = realm.create(WorkoutCircuitObject.self, value: object)
+//            }
+//        }
     }
-}
-
-// MARK: - Generic
-extension RealmDatabase {
-//    public func add<T: Persistable>(_ value: T, update: UpdatePolicy) {
-//        realm.add(value.managedObject(), update: update)
-//    }
 }
 
 // MARK: - Users
@@ -182,12 +175,27 @@ extension RealmDatabase {
         return Array(sessions)
     }
     
+    func removeCircuit(at id: WorkoutCircuitID) -> VoidResult {
+        do {
+            try realm.write({
+                try? deleteCircuitFromRealm(at: id)
+            })
+            return .success
+        } catch {
+            return .failure(error)
+        }
+    }
+        
     func removeWorkoutSession(for userID: UserID, at sessionID: WorkoutSessionID) -> VoidResult {
         guard let object = realm.objects(WorkoutSessionObject.self).where({ $0.id == sessionID }).first else {
             return .failure(RealmError.missingObject)
         }
+        
         do {
             try realm.write({
+                object.circuits.forEach { circuitID in
+                    try? deleteCircuitFromRealm(at: circuitID)
+                }
                 realm.delete(object)
             })
             return .success
@@ -200,7 +208,9 @@ extension RealmDatabase {
         do {
             try realm.write({
                 realm.add(session.managedObject(), update: .modified)
-                session.circuits.forEach({ realm.add($0.managedObject(), update: .modified) })
+                session.circuits.forEach({
+                    realm.add($0.managedObject(), update: .modified)
+                })
             })
             return .success
         } catch {
@@ -220,5 +230,15 @@ extension RealmDatabase {
     func getJournal(for userID: UserID, on date: Date) -> [Journal] {
         // TODO: -
         return []
+    }
+}
+
+// MARK: - Private methods
+extension RealmDatabase {
+    internal func deleteCircuitFromRealm(at id: WorkoutCircuitID) throws {
+        guard let object = realm.objects(WorkoutCircuitObject.self).where({ $0.id == id }).first else {
+            return
+        }
+        realm.delete(object)
     }
 }

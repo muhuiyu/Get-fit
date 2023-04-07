@@ -36,7 +36,19 @@ extension WorkoutViewModel {
             let userID = appCoordinator?.userManager.id,
             sessions.value.count > indexPath.row
         else { return }
-        appCoordinator?.dataProvider.removeWorkoutSession(for: userID, at: sessions.value[indexPath.row].id)
+        let sessionID = displaySessions.value[indexPath.section].items[indexPath.row].id
+        let result = appCoordinator?.dataProvider.removeWorkoutSession(for: userID, at: sessionID)
+        switch result {
+        case .success:
+            var updatedSessions = sessions.value
+            updatedSessions.removeAll(where: { $0.id == sessionID })
+            self.sessions.accept(updatedSessions)
+        case .failure(let error):
+            ErrorHandler.shared.handle(error)
+            return
+        case .none:
+            return
+        }
     }
 }
 // MARK: - Private methods

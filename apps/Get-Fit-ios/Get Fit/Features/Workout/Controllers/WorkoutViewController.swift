@@ -10,7 +10,7 @@ import RxSwift
 import RxDataSources
 
 class WorkoutViewController: BaseMVVMViewController<WorkoutViewModel> {
-    private let tableView = UITableView()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +26,6 @@ class WorkoutViewController: BaseMVVMViewController<WorkoutViewModel> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.reloadSessions()
-//        self.hidesBottomBarWhenPushed = true
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        self.hidesBottomBarWhenPushed = false
     }
 }
 // MARK: - Handlers
@@ -68,10 +63,6 @@ extension WorkoutViewController {
         coordinator.showSessionLog(for: item)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    @objc
-    private func didPullToRefresh(_ sender: UIRefreshControl) {
-        viewModel.reloadSessions()
-    }
 }
 // MARK: - View Config
 extension WorkoutViewController {
@@ -81,11 +72,6 @@ extension WorkoutViewController {
         // table view
         tableView.register(WorkoutSessionPreviewCell.self, forCellReuseIdentifier: WorkoutSessionPreviewCell.reuseID)
         tableView.delegate = self
-        refreshControl.attributedTitle = NSAttributedString(string: AppText.General.pullToRefresh)
-        refreshControl.addTarget(self,
-                                 action: #selector(didPullToRefresh(_:)),
-                                 for: .valueChanged)
-        tableView.refreshControl = refreshControl
         view.addSubview(tableView)
     }
     private func configureConstraints() {

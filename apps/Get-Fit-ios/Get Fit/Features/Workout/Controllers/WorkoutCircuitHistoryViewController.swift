@@ -38,7 +38,27 @@ extension WorkoutCircuitHistoryViewController {
     }
     @objc
     private func didTapInfo() {
-        
+        guard let circuit = items.first else { return }
+        switch circuit.type {
+        case .singleExercise:
+            guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
+            let viewController = WorkoutItemInfoViewController(appCoordinator: self.appCoordinator,
+                                                               coordinator: self.coordinator,
+                                                               workoutItem: workoutItem)
+            coordinator?.navigate(to: viewController, presentModally: true)
+        case .superSet, .circuit:
+            var actions = circuit.workoutItems.map { item in
+                return AlertActionOption(title: item.name, style: .default) { _ in
+                    let viewController = WorkoutItemInfoViewController(appCoordinator: self.appCoordinator,
+                                                                       coordinator: self.coordinator,
+                                                                       workoutItem: item)
+                    self.coordinator?.navigate(to: viewController, presentModally: true)
+                }
+            }
+            actions.append(AlertActionOption.cancel)
+            
+            coordinator?.presentAlert(option: AlertControllerOption(title: "Choose exercise", message: nil, preferredStyle: .actionSheet), actions: actions)
+        }
     }
 }
 

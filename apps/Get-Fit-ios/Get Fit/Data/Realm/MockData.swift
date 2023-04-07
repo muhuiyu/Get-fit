@@ -221,14 +221,116 @@ let workoutCircuitData: [WorkoutCircuit] = [
             WorkoutSet(itemID: WorkoutItem.machineChestFly.id, type: .normal, weight: 17.5, reps: 10, restTime: TimeInterval(30), note: ""),
             WorkoutSet(itemID: WorkoutItem.machineChestFly.id, type: .normal, weight: 17.5, reps: 10, restTime: TimeInterval(30), note: ""),
         ]),
+     WorkoutCircuit(
+         id: UUID(uuidString: "23a04970-3526-4d31-9919-a42252173506") ?? UUID(),
+         date: YearMonthDay(year: 2023, month: 4, day: 6),
+         type: .singleExercise,
+         sets: [
+             WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .warmUp, weight: 20, reps: 10, restTime: TimeInterval(60), note: ""),
+             WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+             WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+             WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+             WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+         ]),
+     WorkoutCircuit(
+         id: UUID(uuidString: "529a7308-2d3c-42af-8817-81ca6cc84e48") ?? UUID(),
+         date: YearMonthDay(year: 2023, month: 4, day: 6),
+         type: .singleExercise,
+         sets: [
+             WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(30), note: "1 lap"),
+             WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(30), note: "1 lap"),
+             WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(30), note: "1 lap"),
+             WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(60), note: "1 lap"),
+         ]),
+     WorkoutCircuit(
+         id: UUID(uuidString: "fd1f940f-c8ac-46b9-885a-9f128596a974") ?? UUID(),
+         date: YearMonthDay(year: 2023, month: 4, day: 6),
+         type: .singleExercise,
+         sets: [
+             WorkoutSet(itemID: WorkoutItem.farmersWalk.id, type: .normal, weight: 12, reps: 3, restTime: TimeInterval(30), note: "3 laps"),
+             WorkoutSet(itemID: WorkoutItem.farmersWalk.id, type: .normal, weight: 12, reps: 3, restTime: TimeInterval(30), note: "3 laps"),
+         ]),
+     WorkoutCircuit(
+         id: UUID(uuidString: "6c7b8efd-eb42-47f8-912d-d69d4cfa9832") ?? UUID(),
+         date: YearMonthDay(year: 2023, month: 4, day: 6),
+         type: .singleExercise,
+         sets: [
+             WorkoutSet(itemID: WorkoutItem.boxJump.id, type: .normal, weight: 0, reps: 20, restTime: TimeInterval(30), note: "18' box"),
+             WorkoutSet(itemID: WorkoutItem.boxJump.id, type: .normal, weight: 0, reps: 20, restTime: TimeInterval(30), note: "18' box"),
+             WorkoutSet(itemID: WorkoutItem.boxJump.id, type: .normal, weight: 0, reps: 20, restTime: TimeInterval(30), note: "18' box"),
+         ]),
+     WorkoutCircuit(
+         id: UUID(uuidString: "2d883ee2-a1af-442f-ada5-b27010a874a4") ?? UUID(),
+         date: YearMonthDay(year: 2023, month: 4, day: 6),
+        type: .singleExercise,
+         sets: [
+             WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 0, reps: 12, restTime: TimeInterval(30), note: ""),
+             WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 0, reps: 12, restTime: TimeInterval(30), note: ""),
+             WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 0, reps: 12, restTime: TimeInterval(30), note: ""),
+         ]),
 ]
 
 let workoutSessionData: [WorkoutSession] = [
         WorkoutSession(id: UUID(),
                        userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
+                       startTime: DateAndTime(year: 2023, month: 4, day: 6, hour: 11, minute: 30, second: 0),
+                       endTime: DateAndTime(year: 2023, month: 4, day: 6, hour: 12, minute: 30, second: 0),
+                       title: "Endurance",
+                       circuits: [
+                        WorkoutCircuit(
+                            id: UUID(uuidString: "23a04970-3526-4d31-9919-a42252173506") ?? UUID(),
+                            date: YearMonthDay(year: 2023, month: 4, day: 6),
+                            type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .warmUp, weight: 20, reps: 10, restTime: TimeInterval(60), note: ""),
+                                WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                                WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                                WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                                WorkoutSet(itemID: WorkoutItem.seatedLegPress.id, type: .normal, weight: 35, reps: 12, restTime: TimeInterval(60), note: ""),
+                            ]),
+                        WorkoutCircuit(
+                            id: UUID(uuidString: "529a7308-2d3c-42af-8817-81ca6cc84e48") ?? UUID(),
+                            date: YearMonthDay(year: 2023, month: 4, day: 6),
+                            type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(30), note: "1 lap"),
+                                WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(30), note: "1 lap"),
+                                WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(30), note: "1 lap"),
+                                WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1, restTime: TimeInterval(60), note: "1 lap"),
+                            ]),
+                        WorkoutCircuit(
+                            id: UUID(uuidString: "fd1f940f-c8ac-46b9-885a-9f128596a974") ?? UUID(),
+                            date: YearMonthDay(year: 2023, month: 4, day: 6),
+                            type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.farmersWalk.id, type: .normal, weight: 12, reps: 3, restTime: TimeInterval(30), note: "3 laps"),
+                                WorkoutSet(itemID: WorkoutItem.farmersWalk.id, type: .normal, weight: 12, reps: 3, restTime: TimeInterval(30), note: "3 laps"),
+                            ]),
+                        WorkoutCircuit(
+                            id: UUID(uuidString: "6c7b8efd-eb42-47f8-912d-d69d4cfa9832") ?? UUID(),
+                            date: YearMonthDay(year: 2023, month: 4, day: 6),
+                            type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.boxJump.id, type: .normal, weight: 0, reps: 20, restTime: TimeInterval(30), note: "18' box"),
+                                WorkoutSet(itemID: WorkoutItem.boxJump.id, type: .normal, weight: 0, reps: 20, restTime: TimeInterval(30), note: "18' box"),
+                                WorkoutSet(itemID: WorkoutItem.boxJump.id, type: .normal, weight: 0, reps: 20, restTime: TimeInterval(30), note: "18' box"),
+                            ]),
+                        WorkoutCircuit(
+                            id: UUID(uuidString: "2d883ee2-a1af-442f-ada5-b27010a874a4") ?? UUID(),
+                            date: YearMonthDay(year: 2023, month: 4, day: 6),
+                           type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 0, reps: 12, restTime: TimeInterval(30), note: ""),
+                                WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 0, reps: 12, restTime: TimeInterval(30), note: ""),
+                                WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 0, reps: 12, restTime: TimeInterval(30), note: ""),
+                            ]),
+                       ],
+                       note: ""),
+        WorkoutSession(id: UUID(),
+                       userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
                        startTime: DateAndTime(year: 2023, month: 3, day: 30, hour: 11, minute: 0, second: 0),
                        endTime: DateAndTime(year: 2023, month: 3, day: 30, hour: 12, minute: 0, second: 0),
-                       title: "Push",
+                       title: "Full body",
                        circuits: [
                         WorkoutCircuit(
                             id: UUID(uuidString: "5e8d719b-52bd-4f14-af32-b3aa3188ede1") ?? UUID(),
@@ -285,7 +387,7 @@ let workoutSessionData: [WorkoutSession] = [
                        userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
                        startTime: DateAndTime(year: 2023, month: 3, day: 27, hour: 11, minute: 0, second: 0),
                        endTime: DateAndTime(year: 2023, month: 3, day: 27, hour: 12, minute: 0, second: 0),
-                       title: "Push",
+                       title: "Pull",
                        circuits: [
                         WorkoutCircuit(
                             id: UUID(uuidString: "f8e663b7-07d0-423e-b40a-2a3e6258fff6") ?? UUID(),
@@ -402,7 +504,7 @@ let workoutSessionData: [WorkoutSession] = [
                        userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
                        startTime: DateAndTime(year: 2023, month: 3, day: 20, hour: 11, minute: 0, second: 0),
                        endTime: DateAndTime(year: 2023, month: 3, day: 20, hour: 12, minute: 0, second: 0),
-                       title: "Lower body",
+                       title: "Leg day",
                        circuits: [
                         WorkoutCircuit(id: UUID(uuidString: "9a6a3f08-8e29-4fe7-84e2-f2901d05cb0d") ?? UUID(),
                                        date: YearMonthDay(year: 2023, month: 3, day: 20),

@@ -25,6 +25,18 @@ struct WorkoutSet: Codable {
     var note: String
 }
 
+extension WorkoutSet {
+    init(from lastSet: WorkoutSet) {
+        self.id = UUID()
+        self.itemID = lastSet.itemID
+        self.type = lastSet.type
+        self.weight = lastSet.weight
+        self.reps = lastSet.reps
+        self.restTime = lastSet.restTime
+        self.note = lastSet.note
+    }
+}
+
 // MARK: - Persistable
 extension WorkoutSet: Persistable {
     public init(managedObject: WorkoutSetObject) {

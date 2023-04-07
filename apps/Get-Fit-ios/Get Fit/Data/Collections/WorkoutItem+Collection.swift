@@ -18,6 +18,8 @@ extension WorkoutItem {
         dumbbellShoulderPress.id: dumbbellShoulderPress,
         flatDumbbellChestFly.id: flatDumbbellChestFly,
         hammerCurls.id: hammerCurls,
+        hammerStrengthLatPulldown.id: hammerStrengthLatPulldown,
+        hammerStrengthRow.id: hammerStrengthRow,
         latPullDown.id: latPullDown,
         machineChestFly.id: machineChestFly,
         machineChestPress.id: machineChestPress,
@@ -28,13 +30,14 @@ extension WorkoutItem {
         skullCrusher.id: skullCrusher,
         smithMachineBenchPress.id: smithMachineBenchPress,
         seatedCableRow.id: seatedCableRow,
-        hammerStrengthRow.id: hammerStrengthRow,
         threePartCurls.id: threePartCurls,
         machineTricepsDip.id: machineTricepsDip,
         tricepPushdown.id: tricepPushdown,
 
         // lower body
+        alternatingHipExtensionsWithBosuBall.id: alternatingHipExtensionsWithBosuBall,
         barbellSquat.id: barbellSquat,
+        boxJump.id: boxJump,
         cableGobletSquat.id: cableGobletSquat,
         cableKickback.id: cableKickback,
         cablePullThrough.id: cablePullThrough,
@@ -46,6 +49,7 @@ extension WorkoutItem {
         cableSideKick.id: cableSideKick,
         deadlift.id: deadlift,
         dumbbellGobletSquat.id: dumbbellGobletSquat,
+        farmersWalk.id: farmersWalk,
         hipAbduction.id: hipAbduction,
         hipExtension.id: hipExtension,
         kneelingHipThrust.id: kneelingHipThrust,
@@ -56,6 +60,7 @@ extension WorkoutItem {
         seatedLegPress.id: seatedLegPress,
         standingCableChestPress.id: standingCableChestPress,
         standingCableRow.id: standingCableRow,
+        travellingSideSquats.id: travellingSideSquats,
         
         // core
     ]
@@ -369,4 +374,24 @@ extension WorkoutItem {
                                                  bodyPart: [.quads],
                                                  mechanics: .compound,
                                                  force: .push)
+    static let travellingSideSquats = WorkoutItem(id: "travellingSideSquats",
+                                                  name: "Travelling side squats",
+                                                  bodyPart: [.quads, .glutes],
+                                                  mechanics: .compound,
+                                                  force: .push)
+    static let farmersWalk = WorkoutItem(id: "farmersWalk",
+                                         name: "Farmer's walk",
+                                         bodyPart: [.quads, .glutes],
+                                         mechanics: .compound,
+                                         force: .push)
+    static let boxJump = WorkoutItem(id: "boxJump",
+                                     name: "Box jump",
+                                     bodyPart: [.quads, .glutes, .back, .core],
+                                     mechanics: .compound,
+                                     force: .push)
+    static let alternatingHipExtensionsWithBosuBall = WorkoutItem(id: "alternatingHipExtensionsWithBosuBall",
+                                                                  name: "Alternating hip extensions with Bosu ball",
+                                                                  bodyPart: [.glutes],
+                                                                  mechanics: .isolated,
+                                                                  force: .push)
 }

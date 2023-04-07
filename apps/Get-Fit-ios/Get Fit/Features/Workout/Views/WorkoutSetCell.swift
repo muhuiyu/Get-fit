@@ -47,6 +47,7 @@ class WorkoutSetCell: UITableViewCell {
             }
         }
     }
+    var tapHandler: (() -> Void)?
     var weightValueChangedHandler: (() -> Void)? {
         didSet {
             weightStack.valueChangedHandler = weightValueChangedHandler
@@ -105,7 +106,7 @@ extension WorkoutSetCell {
         setIndexView.addSubview(setIndexLabel)
         contentView.addSubview(setIndexView)
         weightStack.title = AppText.Workout.weight
-        weightStack.keyboardType = .numbersAndPunctuation
+        weightStack.keyboardType = .decimalPad
         contentView.addSubview(weightStack)
         repsStack.title = AppText.Workout.reps
         repsStack.keyboardType = .numberPad
@@ -150,8 +151,13 @@ extension WorkoutSetCell {
             make.trailing.equalTo(contentView.layoutMarginsGuide)
         }
     }
+    @objc
+    private func didTapInView() {
+        tapHandler?()
+    }
     private func configureGestures() {
-        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapInView))
+        contentView.addGestureRecognizer(tapRecognizer)
     }
     private func configureSignals() {
         
@@ -212,7 +218,11 @@ extension WorkoutSetCellFieldView: UITextFieldDelegate {
             make.leading.trailing.bottom.equalTo(layoutMarginsGuide)
         }
     }
-    func textFieldDidEndEditing(_ textField: UITextField) {
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        valueChangedHandler?()
+//    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         valueChangedHandler?()
+        return true
     }
 }
