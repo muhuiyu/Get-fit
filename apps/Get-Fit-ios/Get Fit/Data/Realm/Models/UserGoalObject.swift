@@ -21,8 +21,9 @@ final class UserGoalObject: Object {
     @objc dynamic var sleepHoursGoal: Double = 0
     @objc dynamic var waterIntakeGoal: Double = 0
     
-    convenience init(dailyDietaryCalories: Int, macroRatio: MacroRatioObject, exerciseMinute: Int, activeCalories: Int, stepCountGoal: Int, sleepHoursGoal: Double, waterIntakeGoal: Double) {
+    convenience init(id: UUID, dailyDietaryCalories: Int, macroRatio: MacroRatioObject, exerciseMinute: Int, activeCalories: Int, stepCountGoal: Int, sleepHoursGoal: Double, waterIntakeGoal: Double) {
         self.init()
+        self.id = id
         self.dailyDietaryCalories = dailyDietaryCalories
         self.macroRatio = macroRatio
         self.exerciseMinute = exerciseMinute

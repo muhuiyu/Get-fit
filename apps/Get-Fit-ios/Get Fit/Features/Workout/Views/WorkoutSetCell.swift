@@ -19,6 +19,17 @@ class WorkoutSetCell: UITableViewCell {
     private let noteStack = WorkoutSetCellFieldView()
     private let moreButton = IconButton(name: Icons.ellipsis)
     
+    // MARK: - Properties
+    private let isEditable: Bool
+    init(isEditable: Bool = true) {
+        self.isEditable = isEditable
+        super.init(style: .default, reuseIdentifier: nil)
+        configureViews()
+        configureConstraints()
+        configureGestures()
+        configureSignals()
+    }
+    
     var setIndexString: String? {
         didSet {
             setIndexLabel.text = setIndexString
@@ -36,6 +47,7 @@ class WorkoutSetCell: UITableViewCell {
             }
         }
     }
+    var tapHandler: (() -> Void)?
     var weightValueChangedHandler: (() -> Void)? {
         didSet {
             weightStack.valueChangedHandler = weightValueChangedHandler
@@ -57,13 +69,6 @@ class WorkoutSetCell: UITableViewCell {
         }
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureViews()
-        configureConstraints()
-        configureGestures()
-        configureSignals()
-    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -101,7 +106,7 @@ extension WorkoutSetCell {
         setIndexView.addSubview(setIndexLabel)
         contentView.addSubview(setIndexView)
         weightStack.title = AppText.Workout.weight
-        weightStack.keyboardType = .numbersAndPunctuation
+        weightStack.keyboardType = .decimalPad
         contentView.addSubview(weightStack)
         repsStack.title = AppText.Workout.reps
         repsStack.keyboardType = .numberPad
@@ -146,8 +151,13 @@ extension WorkoutSetCell {
             make.trailing.equalTo(contentView.layoutMarginsGuide)
         }
     }
+    @objc
+    private func didTapInView() {
+        tapHandler?()
+    }
     private func configureGestures() {
-        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapInView))
+        contentView.addGestureRecognizer(tapRecognizer)
     }
     private func configureSignals() {
         
@@ -185,22 +195,15 @@ class WorkoutSetCellFieldView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-// MARK: - Handlers
-extension WorkoutSetCellFieldView {
-    @objc
-    private func didChangeValue(_ : UITextViewDelegate) {
-        valueChangedHandler?()
-    }
-}
 // MARK: - View Config
-extension WorkoutSetCellFieldView {
+extension WorkoutSetCellFieldView: UITextFieldDelegate {
     private func configureViews() {
         titleLabel.font = UIFont.desc
         titleLabel.textColor = .secondaryLabel
         titleLabel.textAlignment = .left
         addSubview(titleLabel)
         
-        textField.addTarget(self, action: #selector(didChangeValue(_:)), for: .valueChanged)
+        textField.delegate = self
         textField.font = UIFont.smallMedium
         textField.textColor = .label
         textField.textAlignment = .left
@@ -214,5 +217,12 @@ extension WorkoutSetCellFieldView {
             make.top.equalTo(titleLabel.snp.bottom).offset(Constants.Spacing.slight)
             make.leading.trailing.bottom.equalTo(layoutMarginsGuide)
         }
+    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        valueChangedHandler?()
+//    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        valueChangedHandler?()
+        return true
     }
 }

@@ -13,18 +13,28 @@ final class WorkoutSessionObject: Object {
         return "id"
     }
     @objc dynamic var id: UUID = UUID()
-    @objc dynamic var userID: UserID = ""
+    @objc dynamic var userID: UserID = UUID()
     @objc dynamic var startTime: DateAndTimeObject?
     @objc dynamic var endTime: DateAndTimeObject?
+    @objc dynamic var bodyWeight: Double = 0
     @objc dynamic var title: String = ""
-    var circuits = List<WorkoutCircuitObject>()
+    var circuits = List<WorkoutCircuitID>()
     @objc dynamic var note: String = ""
     
-    convenience init(id: UUID = UUID(), userID: UserID, startTime: DateAndTimeObject, endTime: DateAndTimeObject, title: String, circuits: List<WorkoutCircuitObject>, note: String) {
+    convenience init(id: UUID,
+                     userID: UserID,
+                     startTime: DateAndTimeObject,
+                     endTime: DateAndTimeObject,
+                     bodyWeight: Double,
+                     title: String,
+                     circuits: List<WorkoutCircuitID>,
+                     note: String) {
         self.init()
+        self.id = id
         self.userID = userID
         self.startTime = startTime
         self.endTime = endTime
+        self.bodyWeight = bodyWeight
         self.title = title
         self.circuits = circuits
         self.note = note

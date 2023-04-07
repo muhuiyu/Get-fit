@@ -12,7 +12,7 @@ final class UserObject: Object {
     override class func primaryKey() -> String? {
         return "id"
     }
-    @objc dynamic var id: UserID = ""
+    @objc dynamic var id: UserID = UUID()
     @objc dynamic var displayName: String?
     @objc dynamic var email: String?
     @objc dynamic var photoURLString: String?

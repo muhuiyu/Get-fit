@@ -16,6 +16,7 @@ enum WorkoutSetType: String, Codable {
 }
 
 struct WorkoutSet: Codable {
+    var id: UUID = UUID()
     var itemID: WorkoutItemID
     var type: WorkoutSetType
     var weight: Double
@@ -24,9 +25,22 @@ struct WorkoutSet: Codable {
     var note: String
 }
 
+extension WorkoutSet {
+    init(from lastSet: WorkoutSet) {
+        self.id = UUID()
+        self.itemID = lastSet.itemID
+        self.type = lastSet.type
+        self.weight = lastSet.weight
+        self.reps = lastSet.reps
+        self.restTime = lastSet.restTime
+        self.note = lastSet.note
+    }
+}
+
 // MARK: - Persistable
 extension WorkoutSet: Persistable {
     public init(managedObject: WorkoutSetObject) {
+        self.id = managedObject.id
         self.itemID = managedObject.itemID
         self.type = WorkoutSetType(rawValue: managedObject.type) ?? .normal
         self.weight = managedObject.weight
@@ -35,6 +49,6 @@ extension WorkoutSet: Persistable {
         self.note = managedObject.note
     }
     public func managedObject() -> WorkoutSetObject {
-        return WorkoutSetObject(itemID: itemID, type: type.rawValue, weight: weight, reps: reps, restTime: restTime, note: note)
+        return WorkoutSetObject(id: id, itemID: itemID, type: type.rawValue, weight: weight, reps: reps, restTime: restTime, note: note)
     }
 }

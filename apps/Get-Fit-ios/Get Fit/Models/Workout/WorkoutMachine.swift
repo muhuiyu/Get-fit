@@ -20,5 +20,6 @@ enum WorkoutMachine: String, Codable {
     case seatedPecDeckMachine
     case smithMachine
     case bicepCurlMachine
-    case tricepPressMachine
+    case tricepDipMachine
+    case hammerStrength
 }

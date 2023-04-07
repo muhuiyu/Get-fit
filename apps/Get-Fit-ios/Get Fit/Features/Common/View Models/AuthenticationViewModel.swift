@@ -7,6 +7,7 @@
 
 import RxRelay
 import RxSwift
+import Foundation
 
 class AuthenticationViewModel: BaseViewModel {
     var state: BehaviorRelay<SignInState> = BehaviorRelay(value: .loading)
@@ -103,7 +104,7 @@ extension AuthenticationViewModel {
         // TODO: - 
         appCoordinator?.userManager.clearData()
 //        guard let user = Auth.auth().currentUser else { return }
-        let newUser = User(id: "TGOsAShY0ihwBXuxzoayOgK06kD3",
+        let newUser = User(id: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
                            displayName: "Grace",
                            email: "muyuhello@gmail.com",
                            photoURL: nil)

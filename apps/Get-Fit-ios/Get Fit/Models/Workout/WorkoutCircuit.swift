@@ -5,9 +5,11 @@
 //  Created by Mu Yu on 8/31/22.
 //
 
+import Foundation
 import RealmSwift
 
 typealias WorkoutCircuitTypeString = String
+typealias WorkoutCircuitID = UUID
 
 // MARK: - WorkoutCircuitType
 enum WorkoutCircuitType: String, Codable {
@@ -18,6 +20,8 @@ enum WorkoutCircuitType: String, Codable {
 
 // MARK: - WorkoutCircuit
 struct WorkoutCircuit: Codable {
+    let id: WorkoutCircuitID
+    let date: YearMonthDay
     let type: WorkoutCircuitType
     var sets: [WorkoutSet]
 }
@@ -25,13 +29,19 @@ struct WorkoutCircuit: Codable {
 // MARK: - Persistable
 extension WorkoutCircuit: Persistable {
     public init(managedObject: WorkoutCircuitObject) {
+        id = managedObject.id
+        if let date = managedObject.date {
+            self.date = YearMonthDay(managedObject: date)
+        } else {
+            self.date = YearMonthDay.today
+        }
         type = WorkoutCircuitType(rawValue: managedObject.type) ?? .singleExercise
         sets = managedObject.sets.map({ WorkoutSet(managedObject: $0) })
     }
     public func managedObject() -> WorkoutCircuitObject {
         let setObjects = List<WorkoutSetObject>()
         sets.map({ $0.managedObject() }).forEach({ setObjects.append($0) })
-        return WorkoutCircuitObject(type: type.rawValue, sets: setObjects)
+        return WorkoutCircuitObject(id: id, date: date.managedObject(), type: type.rawValue, sets: setObjects)
     }
 }
 
@@ -110,10 +120,4 @@ extension WorkoutCircuit {
         return Character(UnicodeScalar(integer + startingValue) ?? UnicodeScalar.init(0))
     }
 
-}
-
-// MARK: - WorkoutCircuit with Date
-struct WorkoutCircuitWithDate {
-    let circuit: WorkoutCircuit
-    let date: YearMonthDay
 }

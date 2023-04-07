@@ -9,12 +9,15 @@ import UIKit
 
 class WorkoutCircuitHistoryViewController: BaseViewController {
     private let tableView = UITableView()
-    private var items: [WorkoutCircuitWithDate]
+    private var items: [WorkoutCircuit]
     private var cells = [[UITableViewCell]] ()
     
-    init(title: String, _ items: [WorkoutCircuitWithDate]) {
+    init(appCoordinator: AppCoordinator?,
+         coordinator: BaseCoordinator?,
+         title: String,
+         _ items: [WorkoutCircuit]) {
         self.items = items
-        super.init()
+        super.init(appCoordinator: appCoordinator, coordinator: coordinator)
         self.title = title
     }
     
@@ -35,19 +38,39 @@ extension WorkoutCircuitHistoryViewController {
     }
     @objc
     private func didTapInfo() {
-        
+        guard let circuit = items.first else { return }
+        switch circuit.type {
+        case .singleExercise:
+            guard let workoutItem = WorkoutItem.getWorkoutItem(of: circuit.sets.first?.itemID ?? "") else { return }
+            let viewController = WorkoutItemInfoViewController(appCoordinator: self.appCoordinator,
+                                                               coordinator: self.coordinator,
+                                                               workoutItem: workoutItem)
+            coordinator?.navigate(to: viewController, presentModally: true)
+        case .superSet, .circuit:
+            var actions = circuit.workoutItems.map { item in
+                return AlertActionOption(title: item.name, style: .default) { _ in
+                    let viewController = WorkoutItemInfoViewController(appCoordinator: self.appCoordinator,
+                                                                       coordinator: self.coordinator,
+                                                                       workoutItem: item)
+                    self.coordinator?.navigate(to: viewController, presentModally: true)
+                }
+            }
+            actions.append(AlertActionOption.cancel)
+            
+            coordinator?.presentAlert(option: AlertControllerOption(title: "Choose exercise", message: nil, preferredStyle: .actionSheet), actions: actions)
+        }
     }
 }
 
 // MARK: - View Config
 extension WorkoutCircuitHistoryViewController {
     private func configureViews() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didTapClose))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(didTapClose))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: Icons.questionmarkCircle), style: .plain, target: self, action: #selector(didTapInfo))
         
         cells = configureCircuitSections()
         tableView.dataSource = self
-        tableView.delegate = self
+        tableView.allowsSelection = false
         view.addSubview(tableView)
     }
     private func configureCircuitSections() -> [[UITableViewCell]] {
@@ -64,9 +87,9 @@ extension WorkoutCircuitHistoryViewController {
             section.append(headerCell)
             
             // Set cells
-            for (setIndex, set) in item.circuit.sets.enumerated() {
-                let cell = WorkoutSetCell()
-                cell.setIndexString = item.circuit.setIndexString(forSetAt: setIndex)
+            for (setIndex, set) in item.sets.enumerated() {
+                let cell = WorkoutSetCell(isEditable: false)
+                cell.setIndexString = item.setIndexString(forSetAt: setIndex)
                 cell.set = set
                 section.append(cell)
             }
@@ -88,41 +111,22 @@ extension WorkoutCircuitHistoryViewController {
 }
 
 // MARK: - Delegate
-extension WorkoutCircuitHistoryViewController: UITableViewDataSource, UITableViewDelegate {
+extension WorkoutCircuitHistoryViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return cells.count
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return cells[section].count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.numberOfLines = 0
-        var content = cell.defaultContentConfiguration()
-        content.text = items[indexPath.row].title
-        cell.contentConfiguration = content
-        cell.showsReorderControl = true
-        return cell
+        return cells[indexPath.section][indexPath.row]
     }
-    
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let dragItem = UIDragItem(itemProvider: NSItemProvider())
-            dragItem.localObject = items[indexPath.row]
-            return [ dragItem ]
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let mover = items.remove(at: sourceIndexPath.row)
-        items.insert(mover, at: destinationIndexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            items.remove(at: indexPath.row)
-            tableView.reloadData()
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.snp.remakeConstraints { make in
+            make.height.equalTo(Constants.Spacing.small)
         }
+        return view
     }
 }
 

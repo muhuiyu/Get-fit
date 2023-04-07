@@ -17,6 +17,7 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
     var userID: UserID
     var startTime: DateAndTime
     var endTime: DateAndTime
+    var bodyWeight: Double
     var title: String
     var circuits: [WorkoutCircuit]
     var note: String
@@ -28,12 +29,14 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
          userID: UserID,
          startTime: DateAndTime,
          endTime: DateAndTime,
+         bodyWeight: Double = 0,
          title: String,
          circuits: [WorkoutCircuit],
          note: String = "") {
         self.id = id
         self.userID = userID
         self.title = title
+        self.bodyWeight = bodyWeight
         self.startTime = startTime
         self.endTime = endTime
         self.circuits = circuits
@@ -46,9 +49,10 @@ extension WorkoutSession {
          preferredWorkoutLength: TimeInterval) {
         self.id = UUID()
         self.userID = userID
-        self.title = "New workout session"
+        self.title = "New session"
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
+        self.bodyWeight = 0
         self.circuits = []
         self.note = ""
     }
@@ -58,24 +62,17 @@ extension WorkoutSession {
         self.id = UUID()
         self.userID = userID
         self.title = routine.title
+        self.bodyWeight = 0
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
         self.circuits = routine.circuits
         self.note = routine.note
     }
-    private struct WorkoutSessionData: Codable {
-        var userID: UserID
-        var startTime: DateAndTime
-        var endTime: DateAndTime
-        var title: String
-        var circuits: [WorkoutCircuit]
-        var note: String
-    }
 }
 
 // MARK: - Persistable
 extension WorkoutSession: Persistable {
-    public init(managedObject: WorkoutSessionObject) {
+    public init(managedObject: WorkoutSessionObject, circuits: [WorkoutCircuit] = []) {
         id = managedObject.id
         userID = managedObject.userID
         if let startTime = managedObject.startTime {
@@ -88,18 +85,33 @@ extension WorkoutSession: Persistable {
         } else {
             self.endTime = DateAndTime()
         }
+        bodyWeight = managedObject.bodyWeight
         title = managedObject.title
-        circuits = managedObject.circuits.map({ WorkoutCircuit(managedObject: $0) })
+        self.circuits = circuits
         note = managedObject.note
     }
+    public init(managedObject: WorkoutSessionObject) {
+        self.init(userID: managedObject.userID, preferredWorkoutLength: TimeInterval(1200))
+    }
     public func managedObject() -> WorkoutSessionObject {
-        let circuitObjects = List<WorkoutCircuitObject>()
-        circuits.map({ $0.managedObject() }).forEach({ circuitObjects.append($0) })
-        return WorkoutSessionObject(id: id, userID: userID, startTime: startTime.managedObject(), endTime: endTime.managedObject(), title: title, circuits: circuitObjects, note: note)
+        let circuitIDs = List<WorkoutCircuitID>()
+        circuits.map({ $0.id }).forEach({ circuitIDs.append($0) })
+        
+        return WorkoutSessionObject(id: id,
+                                    userID: userID,
+                                    startTime: startTime.managedObject(),
+                                    endTime: endTime.managedObject(),
+                                    bodyWeight: bodyWeight,
+                                    title: title,
+                                    circuits: circuitIDs,
+                                    note: note)
     }
 }
 
 extension WorkoutSession {
+    var date: YearMonthDay {
+        return startTime.toYearMonthDay
+    }
     var durationInHourMinuteString: String {
         return DateAndTime.difference(from: startTime, to: endTime).toHourMinuteString(unitsStyle: .full)
     }

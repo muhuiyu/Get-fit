@@ -98,6 +98,7 @@ class Icons {
     static var mouthFill: String { "mouth.fill" }
     static var filmFill: String { "film.fill" }
     static var ticketFill: String { "ticket.fill" }
+    static var clockArrowCirclepath: String { "clock.arrow.circlepath" }
     static var playTvFill: String { "play.tv.fill" }
     static var play: String { "play" }
     static var playFill: String { "play.fill" }

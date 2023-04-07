@@ -58,7 +58,7 @@ extension WorkoutSessionPreviewCell {
         contentView.addSubview(titleLabel)
 
         contentLabel.text = "default"
-        contentLabel.font = UIFont.small
+        contentLabel.font = UIFont.desc
         contentLabel.textColor = .label
         contentLabel.numberOfLines = 0
         contentView.addSubview(contentLabel)
@@ -73,7 +73,7 @@ extension WorkoutSessionPreviewCell {
         dateStack.snp.remakeConstraints { make in
             make.leading.equalTo(contentView.layoutMarginsGuide)
             make.centerY.equalTo(contentView)
-            make.width.lessThanOrEqualTo(50)
+            make.width.lessThanOrEqualTo(40)
         }
         titleLabel.snp.remakeConstraints { make in
             make.top.equalTo(contentView.layoutMarginsGuide)
