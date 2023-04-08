@@ -7,9 +7,9 @@
 
 import UIKit
 
-class MeViewController: BaseViewController {
+class MeViewController: BaseMVVMViewController<MeViewModel> {
     
-    private let tableView = UITableView()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     private var cells: [[UITableViewCell]] = [] {
         didSet {
@@ -18,7 +18,6 @@ class MeViewController: BaseViewController {
             }
         }
     }
-    var viewModel = MeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +25,6 @@ class MeViewController: BaseViewController {
         configureViews()
         configureConstraints()
         configureSignals()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        self.hidesBottomBarWhenPushed = true
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        self.hidesBottomBarWhenPushed = false
     }
 }
 // MARK: - Handlers
@@ -54,7 +45,6 @@ extension MeViewController {
                                                             action: #selector(didTapSettings))
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .secondarySystemBackground
         view.addSubview(tableView)
     }
     private func configureConstraints() {
@@ -81,9 +71,15 @@ extension MeViewController {
     }
     private func configureAccountSection() -> [UITableViewCell] {
         let emailCell = UITableViewCell()   // indexPath (0, 0)
+        var content = emailCell.defaultContentConfiguration()
+        content.text = appCoordinator?.userManager.email
+        emailCell.contentConfiguration = content
         emailCell.accessoryType = .disclosureIndicator
-        emailCell.textLabel?.text = viewModel.userEmail
+        
         // username, email, logout in the viewController
+        
+        let syncCell = ButtonCell()
+        syncCell.title = "Sync Data"
         return [emailCell]
     }
     private func configureGeneralFunctionsSection() -> [UITableViewCell] {
@@ -93,10 +89,10 @@ extension MeViewController {
         let remindersCell = UITableViewCell()
         remindersCell.textLabel?.text = AppText.Me.reminders
         remindersCell.accessoryType = .disclosureIndicator
-        let appAndServicesCell = UITableViewCell()
-        appAndServicesCell.textLabel?.text = AppText.Me.appAndServices
-        appAndServicesCell.accessoryType = .disclosureIndicator
-        return [ goalsCell, remindersCell, appAndServicesCell ]
+        let appAndDevicesCell = UITableViewCell()
+        appAndDevicesCell.textLabel?.text = AppText.Me.appAndDevices
+        appAndDevicesCell.accessoryType = .disclosureIndicator
+        return [ goalsCell, remindersCell, appAndDevicesCell ]
     }
     private func configureCustomizedDataSection() -> [UITableViewCell] {
         let editExercisesCell = UITableViewCell()
@@ -135,6 +131,12 @@ extension MeViewController: UITableViewDataSource {
         }
         return view
     }
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch section {
+        case Section.account: return AppText.Me.syncFooterTitle
+        default: return nil
+        }
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cells[indexPath.section][indexPath.row]
     }
@@ -169,38 +171,41 @@ extension MeViewController: UITableViewDelegate {
         }
     }
     private func determineDestinationOfGenernalSection(at row: Int) {
+        guard let coordinator = coordinator as? MeCoordinator else { return }
         // goals, reminders, appAndServices
         switch row {
         case 0:
-            return
+            coordinator.showGoals()
         case 1:
-            return
+            coordinator.showReminders()
         case 2:
-            return
+            coordinator.showAppAndDevices()
         default:
             return
         }
     }
     private func determineDestinationOfCustomizedDataSection(at row: Int) {
+        guard let coordinator = coordinator as? MeCoordinator else { return }
         // edit exercises, edit meals, edit recipes
         switch row {
         case 0:
-            return
+            coordinator.showEditExercises()
         case 1:
-            return
+            coordinator.showEditMeals()
         case 2:
-            return
+            coordinator.showEditRecipes()
         default:
             return
         }
     }
     private func determineDestinationOfFeedbackSection(at row: Int) {
+        guard let coordinator = coordinator as? MeCoordinator else { return }
         // send feedback, help and support
         switch row {
         case 0:
-            return
+            coordinator.showSendFeedback()
         case 1:
-            return
+            coordinator.showHelpAndSupport()
         default:
             return
         }

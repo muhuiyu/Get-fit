@@ -5,11 +5,11 @@
 //  Created by Mu Yu on 8/29/22.
 //
 
-import FirebaseFirestore
-import FirebaseFirestoreSwift
+import Foundation
 
 struct UserGoal: Codable {
     var id: UUID = UUID()
+    var weightGoal: UserWeightGoal?
     var dailyDietaryCalories: Int
     var macroRatio: MacroRatio
     var exerciseMinute: Int

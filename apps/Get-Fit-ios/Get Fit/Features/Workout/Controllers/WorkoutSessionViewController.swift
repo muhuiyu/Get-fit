@@ -37,7 +37,7 @@ class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewMod
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        hidesBottomBarWhenPushed = false
+        viewModel.syncBackup()
     }
 }
 // MARK: - Handlers

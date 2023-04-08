@@ -187,6 +187,9 @@ extension WorkoutSessionViewModel {
     func getIndexPath(atCircuit circuitIndex: Int, atSet setIndex: Int) -> IndexPath {
         return IndexPath(row: setIndex+1, section: circuitIndex+1)
     }
+    func syncBackup() {
+        appCoordinator?.dataProvider.syncBackup()
+    }
 }
 // MARK: - Private functions
 extension WorkoutSessionViewModel {

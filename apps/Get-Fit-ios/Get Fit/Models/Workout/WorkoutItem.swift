@@ -7,9 +7,11 @@
 
 typealias WorkoutItemID = String
 
-struct WorkoutItem: Hashable, Codable {
+// MARK: - WorkoutItem
+struct WorkoutItem: Codable {
     let id: WorkoutItemID
     let name: String
+    let type: WorkoutItemType
     let bodyPart: [WorkoutBodyPart]
     let mechanics: WorkoutItemMechanics
     let force: WorkoutItemForce
@@ -19,6 +21,7 @@ struct WorkoutItem: Hashable, Codable {
     
     init(id: WorkoutItemID,
          name: String,
+         type: WorkoutItemType,
          bodyPart: [WorkoutBodyPart],
          mechanics: WorkoutItemMechanics,
          force: WorkoutItemForce,
@@ -27,6 +30,7 @@ struct WorkoutItem: Hashable, Codable {
          videoURLString: String? = nil) {
         self.id = id
         self.name = name
+        self.type = type
         self.bodyPart = bodyPart
         self.mechanics = mechanics
         self.force = force
@@ -74,12 +78,78 @@ extension WorkoutItem {
     }
 }
 
+// MARK: - WorkoutItemMechanics
 enum WorkoutItemMechanics: String, Codable {
     case compound
     case isolated
 }
 
+// MARK: - WorkoutItemForce
 enum WorkoutItemForce: String, Codable {
     case pull
     case push
+}
+
+// MARK: - WorkoutItemType
+struct WorkoutItemType: Codable {
+    let main: WorkoutItemMainType
+    let secondary: WorkoutItemSecondaryType
+    
+    static var strengthWeightAndReps: WorkoutItemType {
+        return WorkoutItemType(main: .strength, secondary: .weightAndReps)
+    }
+    static var strengthWeightAndTime: WorkoutItemType {
+        return WorkoutItemType(main: .strength, secondary: .weightAndTime)
+    }
+    static var bodyWeightTrainingWeightAndReps: WorkoutItemType {
+        return WorkoutItemType(main: .bodyweightStrengthTraining, secondary: .weightAndReps)
+    }
+    static var bodyWeightTrainingAssistedBodyWeightAndReps: WorkoutItemType {
+        return WorkoutItemType(main: .bodyweightStrengthTraining, secondary: .AssistedBodyWeightAndReps)
+    }
+    static var bodyWeightTrainingReps: WorkoutItemType {
+        return WorkoutItemType(main: .bodyweightStrengthTraining, secondary: .reps)
+    }
+    static var bodyWeightTrainingTime: WorkoutItemType {
+        return WorkoutItemType(main: .bodyweightStrengthTraining, secondary: .time)
+    }
+    
+    static var weightTypes: [WorkoutItemType] {
+        return [ strengthWeightAndReps, strengthWeightAndTime ]
+    }
+    static var bodyweightTypes: [WorkoutItemType] {
+        return [
+            bodyWeightTrainingWeightAndReps,
+            bodyWeightTrainingAssistedBodyWeightAndReps,
+            bodyWeightTrainingReps,
+            bodyWeightTrainingTime,
+        ] }
+    static var cardioTimeAndDistanceAndCalories: WorkoutItemType {
+        return WorkoutItemType(main: .cardio, secondary: .timeAndDistanceAndCalories)
+    }
+    static var cardioTypes: [WorkoutItemType] {
+        return [ WorkoutItemType.cardioTimeAndDistanceAndCalories ]
+    }
+    static var otherTypes: [WorkoutItemType] {
+        return [ WorkoutItemType(main: .other, secondary: .notes)]
+    }
+}
+
+// MARK: - WorkoutItemMainType
+enum WorkoutItemMainType: String, Codable {
+    case strength
+    case bodyweightStrengthTraining
+    case cardio
+    case other
+}
+
+// MARK: - WorkoutItemSecondaryType
+enum WorkoutItemSecondaryType: String, Codable {
+    case weightAndReps
+    case weightAndTime
+    case AssistedBodyWeightAndReps
+    case reps
+    case time
+    case timeAndDistanceAndCalories
+    case notes
 }

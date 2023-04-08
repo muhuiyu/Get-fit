@@ -8,8 +8,12 @@
 import Foundation
 import Realm
 import RealmSwift
+import CloudKit
 
 class RealmDatabase: DataProvider {
+    internal let ckContainer = CKContainer(identifier: "GetFitRealmDatabase")
+    private (set) var lastSyncTime: Date = Date()
+    
     internal let realm: Realm
     
     public convenience init() throws {
@@ -48,20 +52,22 @@ class RealmDatabase: DataProvider {
 // MARK: - Setup
 extension RealmDatabase {
     func setup() {
+        syncBackup()
+        
         // TODO: -
-//        try? realm.write {
-//            realm.deleteAll()
-//        }
-//        try? realm.write {
-//            workoutSessionData.forEach { item in
-//                let object = item.managedObject()
-//                let _ = realm.create(WorkoutSessionObject.self, value: object)
-//            }
-//            workoutCircuitData.forEach { item in
-//                let object = item.managedObject()
-//                let _ = realm.create(WorkoutCircuitObject.self, value: object)
-//            }
-//        }
+        try? realm.write {
+            realm.deleteAll()
+        }
+        try? realm.write {
+            workoutSessionData.forEach { item in
+                let object = item.managedObject()
+                let _ = realm.create(WorkoutSessionObject.self, value: object)
+                item.circuits.forEach { circuit in
+                    let object = item.managedObject()
+                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
+                }
+            }
+        }
     }
 }
 
@@ -230,6 +236,66 @@ extension RealmDatabase {
     func getJournal(for userID: UserID, on date: Date) -> [Journal] {
         // TODO: -
         return []
+    }
+}
+
+// MARK: - Backup Methods
+extension RealmDatabase {
+    internal var backupRecordID: CKRecord.ID { return CKRecord.ID(recordName: "backup") }
+    
+    internal var backupURL: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("backup.realm") }
+    
+    func syncBackup() {
+        createBackupToCloud()
+        lastSyncTime = Date()
+    }
+    
+    internal func createBackupToCloud() {
+        guard let _ = Realm.Configuration.defaultConfiguration.fileURL else { return }
+        do {
+            try realm.writeCopy(toFile: backupURL)
+            let record = CKRecord(recordType: "Backup", recordID: backupRecordID)
+            let asset = CKAsset(fileURL: backupURL)
+            record["backup"] = asset
+            ckContainer.publicCloudDatabase.save(record) { _, error in
+                if let error = error {
+                    print("Error uploading backup: \(error.localizedDescription)")
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+    internal func readBackup() -> Data? {
+        var backupData: Data?
+        ckContainer.publicCloudDatabase.fetch(withRecordID: backupRecordID) { record, error in
+            if let error = error {
+                print("Error uploading backup: \(error.localizedDescription)")
+            } else if let backupRecord = record, let asset = backupRecord["backup"] as? CKAsset, let url = asset.fileURL {
+                do {
+                    backupData = try Data(contentsOf: url)
+                } catch {
+                    print("Error reading backup file: \(error.localizedDescription)")
+                }
+            }
+        }
+        return backupData
+    }
+    internal func createRealmDatabase(from file: Data) {
+        guard let fileURL = Realm.Configuration.defaultConfiguration.fileURL else { return }
+        let config = Realm.Configuration(fileURL: fileURL)
+        do {
+            let realm = try Realm(configuration: config)
+            try realm.write { realm.deleteAll() }
+            realm.beginWrite()
+            realm.deleteAll()
+            let backupRealm = try Realm(configuration: Realm.Configuration(encryptionKey: nil))
+            try backupRealm.writeCopy(toFile: fileURL, encryptionKey: nil)
+            try realm.commitWrite()
+            print("Backup restored successfully!")
+        } catch {
+            print("Error reading backup file: \(error.localizedDescription)")
+        }
     }
 }
 

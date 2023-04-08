@@ -21,6 +21,9 @@ struct WorkoutSet: Codable {
     var type: WorkoutSetType
     var weight: Double
     var reps: Int
+    var time: TimeInterval
+    var distanceInMeter: Double
+    var calories: Int
     var restTime: TimeInterval
     var note: String
 }
@@ -32,6 +35,9 @@ extension WorkoutSet {
         self.type = lastSet.type
         self.weight = lastSet.weight
         self.reps = lastSet.reps
+        self.time = lastSet.time
+        self.distanceInMeter = lastSet.distanceInMeter
+        self.calories = lastSet.calories
         self.restTime = lastSet.restTime
         self.note = lastSet.note
     }
@@ -45,10 +51,13 @@ extension WorkoutSet: Persistable {
         self.type = WorkoutSetType(rawValue: managedObject.type) ?? .normal
         self.weight = managedObject.weight
         self.reps = managedObject.reps
+        self.time = managedObject.time
+        self.distanceInMeter = managedObject.distanceInMeter
+        self.calories = managedObject.calories
         self.restTime = managedObject.restTime
         self.note = managedObject.note
     }
     public func managedObject() -> WorkoutSetObject {
-        return WorkoutSetObject(id: id, itemID: itemID, type: type.rawValue, weight: weight, reps: reps, restTime: restTime, note: note)
+        return WorkoutSetObject(id: id, itemID: itemID, type: type.rawValue, weight: weight, reps: reps, time: time, distanceInMeter: distanceInMeter, calories: calories, restTime: restTime, note: note)
     }
 }
