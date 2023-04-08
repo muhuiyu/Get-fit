@@ -22,4 +22,5 @@ enum WorkoutMachine: String, Codable {
     case bicepCurlMachine
     case tricepDipMachine
     case hammerStrength
+    case calfRaiseMachine 
 }

@@ -17,16 +17,22 @@ final class WorkoutSetObject: Object {
     @objc dynamic var type: WorkoutSetTypeString = WorkoutSetType.normal.rawValue
     @objc dynamic var weight: Double = 0
     @objc dynamic var reps: Int = 0
+    @objc dynamic var time: TimeInterval = TimeInterval(0)
+    @objc dynamic var distanceInMeter: Double = 0
+    @objc dynamic var calories: Int = 0
     @objc dynamic var restTime: TimeInterval = TimeInterval(60)
     @objc dynamic var note: String = ""
     
-    convenience init(id: UUID, itemID: WorkoutItemID, type: WorkoutSetTypeString, weight: Double, reps: Int, restTime: TimeInterval, note: String) {
+    convenience init(id: UUID, itemID: WorkoutItemID, type: WorkoutSetTypeString, weight: Double, reps: Int, time: TimeInterval, distanceInMeter: Double, calories: Int, restTime: TimeInterval, note: String) {
         self.init()
         self.id = id
         self.itemID = itemID
         self.type = type
         self.weight = weight
         self.reps = reps
+        self.time = time
+        self.distanceInMeter = distanceInMeter
+        self.calories = calories
         self.restTime = restTime
         self.note = note
     }

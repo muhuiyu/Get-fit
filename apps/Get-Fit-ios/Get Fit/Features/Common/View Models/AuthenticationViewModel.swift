@@ -101,7 +101,7 @@ extension AuthenticationViewModel {
 //        }
 //    }
     private func fetchUserProfile() {
-        // TODO: - 
+        // TODO: - add read data
         appCoordinator?.userManager.clearData()
 //        guard let user = Auth.auth().currentUser else { return }
         let newUser = User(id: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),

@@ -125,7 +125,7 @@ extension AppText {
         static var generalSettings: String { "General Settings" }
         static var goals: String { "Goals" }
         static var reminders: String { "Reminders" }
-        static var appAndServices: String { "App and Services" }
+        static var appAndDevices: String { "App and Devices" }
         static var customization: String { "Customization" }
         static var editExercises: String { "Edit Exercises" }
         static var editMeals: String { "Edit Meals" }
@@ -133,5 +133,20 @@ extension AppText {
         static var feedback: String { "Feedback" }
         static var sendFeedback: String { "Send Feedback" }
         static var helpAndSupport: String { "Help and Support" }
+        static var sync: String { "Sync" }
+        static var signedInAs: String { "SignedInAs" }
+        static var syncFooterTitle: String { "Data is synced automatically when finishing a workout." }
+        static var signOut: String { "Sign Out" }
+        static var deleteMyAccount: String { "Delete My Account" }
+        static var startingWeight: String { "Starting Weight" }
+        static var currentWeight: String { "Current Weight" }
+        static var goalWeight: String { "Goal Weight" }
+        static var weeklyGoal: String { "Weekly Goal" }
+        static var activityLevel: String { "Activity Level" }
+        static var nutritionGoals: String { "Nutrition Goals" }
+        static var caloriesAndMacroGoalsTitle: String { "Calories and Macro Goals" }
+        static var caloriesAndMacroGoalsSubtitle: String { "Customize your default or daily goals." }
+        static var additionalNutrientGoals: String { "Addtional Nutrient Goals" }
+        static var fitnessGoals: String { "Fitness Goals" }
     }
 }

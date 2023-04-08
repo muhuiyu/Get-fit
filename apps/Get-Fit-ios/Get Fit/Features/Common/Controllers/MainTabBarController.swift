@@ -107,7 +107,7 @@ enum TabBarCategory: Int, CaseIterable {
         case .home: return HomeViewController(viewModel: HomeViewModel())
         case .workout: return WorkoutViewController(viewModel: WorkoutViewModel())
         case .progress: return ProgressViewController()
-        case .me: return MeViewController()
+        case .me: return MeViewController(viewModel: MeViewModel())
         }
     }
     var tabBarItem: UITabBarItem {

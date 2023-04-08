@@ -29,3 +29,8 @@ extension MeViewModel {
         
     }
 }
+
+// MARK: - TableView constants
+extension MeViewModel {
+    
+}
