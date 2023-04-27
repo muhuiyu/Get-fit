@@ -96,12 +96,14 @@ extension TitleSubtitleButtonCell {
         titleLabel.font = UIFont.body
         titleLabel.textColor = .label
         titleLabel.textAlignment = .left
+        titleLabel.numberOfLines = 0
         contentView.addSubview(titleLabel)
         
         subtitleLabel.text = "subtitle"
         subtitleLabel.font = .body
         subtitleLabel.textColor = .secondaryLabel
         subtitleLabel.textAlignment = .left
+        subtitleLabel.numberOfLines = 0
         contentView.addSubview(subtitleLabel)
         
         contentView.addSubview(iconsView)

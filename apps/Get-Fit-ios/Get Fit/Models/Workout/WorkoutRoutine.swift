@@ -33,3 +33,7 @@ extension WorkoutRoutine {
         note = ""
     }
 }
+
+
+// MARK: - WorkoutRoutineCircuit
+struct
