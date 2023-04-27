@@ -18,6 +18,7 @@ struct WorkoutItem: Codable {
     let machine: WorkoutMachine?
     let isSideDifference: Bool
     let videoURLString: String?
+    let alsoKnownAsList: [String]
     
     init(id: WorkoutItemID,
          name: String,
@@ -27,7 +28,8 @@ struct WorkoutItem: Codable {
          force: WorkoutItemForce,
          machine: WorkoutMachine? = nil,
          isSideDifference: Bool = false,
-         videoURLString: String? = nil) {
+         videoURLString: String? = nil,
+         alsoKnownAsList: [String] = []) {
         self.id = id
         self.name = name
         self.type = type
@@ -37,10 +39,11 @@ struct WorkoutItem: Codable {
         self.machine = machine
         self.isSideDifference = isSideDifference
         self.videoURLString = videoURLString
+        self.alsoKnownAsList = alsoKnownAsList
     }
 }
 
-extension WorkoutItem {
+extension WorkoutItem: Equatable {
     var isCompoundMovement: Bool {
         return mechanics == .compound
     }
@@ -49,6 +52,21 @@ extension WorkoutItem {
     }
     var getBodyPartString: String {
         return bodyPart.map { $0.rawValue }.joined(separator: ", ")
+    }
+    static func == (lhs: WorkoutItem, rhs: WorkoutItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+    func shouldReturnAsSearchResult(for keyword: String) -> Bool {
+        guard !keyword.isEmpty else { return false }
+        if name.lowercased().contains(keyword.lowercased()) { return true }
+        for word in alsoKnownAsList {
+            if word.lowercased().contains(keyword.lowercased()) { return true }
+        }
+        // TODO: - Add body part
+//        for part in bodyPart {
+//            if part.rawValue.lowercased().contains(part) { return true }
+//        }
+        return false
     }
 }
 

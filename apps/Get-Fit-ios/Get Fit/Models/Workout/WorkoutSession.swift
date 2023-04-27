@@ -25,7 +25,7 @@ struct WorkoutSession: WorkoutSessionInterface, Codable {
     // Firebase
     static var collectionName: String { "workoutSessions" }
 
-    init(id: WorkoutSessionID,
+    init(id: WorkoutSessionID = UUID(),
          userID: UserID,
          startTime: DateAndTime,
          endTime: DateAndTime,

@@ -55,19 +55,19 @@ extension RealmDatabase {
         syncBackup()
         
         // TODO: -
-        try? realm.write {
-            realm.deleteAll()
-        }
-        try? realm.write {
-            workoutSessionData.forEach { item in
-                let object = item.managedObject()
-                let _ = realm.create(WorkoutSessionObject.self, value: object)
-                item.circuits.forEach { circuit in
-                    let object = item.managedObject()
-                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
-                }
-            }
-        }
+//        try? realm.write {
+//            realm.deleteAll()
+//        }
+//        try? realm.write {
+//            workoutSessionData.forEach { item in
+//                let sessionObject = item.managedObject()
+//                let _ = realm.create(WorkoutSessionObject.self, value: sessionObject)
+//                item.circuits.forEach { circuit in
+//                    let object = circuit.managedObject()
+//                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
+//                }
+//            }
+//        }
     }
 }
 
@@ -251,19 +251,14 @@ extension RealmDatabase {
     }
     
     internal func createBackupToCloud() {
-        guard let _ = Realm.Configuration.defaultConfiguration.fileURL else { return }
-        do {
-            try realm.writeCopy(toFile: backupURL)
-            let record = CKRecord(recordType: "Backup", recordID: backupRecordID)
-            let asset = CKAsset(fileURL: backupURL)
-            record["backup"] = asset
-            ckContainer.publicCloudDatabase.save(record) { _, error in
-                if let error = error {
-                    print("Error uploading backup: \(error.localizedDescription)")
-                }
+        guard let fileURL = Realm.Configuration.defaultConfiguration.fileURL else { return }
+        let record = CKRecord(recordType: "Backup", recordID: backupRecordID)
+        let asset = CKAsset(fileURL: fileURL)
+        record["backup"] = asset
+        ckContainer.publicCloudDatabase.save(record) { _, error in
+            if let error = error {
+                print("Error uploading backup: \(error.localizedDescription)")
             }
-        } catch {
-            print(error)
         }
     }
     internal func readBackup() -> Data? {

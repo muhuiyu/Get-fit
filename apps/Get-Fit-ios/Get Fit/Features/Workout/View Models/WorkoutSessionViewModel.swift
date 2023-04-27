@@ -62,14 +62,14 @@ extension WorkoutSessionViewModel {
                     date: updatedSession.startTime.toYearMonthDay,
                     type: .singleExercise,
                     sets: [
-                        WorkoutSet(itemID: itemID, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "")
+                        WorkoutSet(itemID: itemID)
                     ])
             )
         case .superSet, .circuit:
             updatedSession.circuits.append(WorkoutCircuit(id: UUID(),
                                                           date: updatedSession.startTime.toYearMonthDay,
                                                           type: .superSet,
-                                                          sets: itemIDs.compactMap({ WorkoutSet(itemID: $0, type: .normal, weight: 0, reps: 0, restTime: TimeInterval(30), note: "") })))
+                                                          sets: itemIDs.compactMap({ WorkoutSet(itemID: $0) })))
         }
         
         session.accept(updatedSession)

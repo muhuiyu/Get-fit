@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E413F80E29FAAD7900277593 /* WorkoutRoutineObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E413F80D29FAAD7900277593 /* WorkoutRoutineObject.swift */; };
+		E413F81029FAAE3500277593 /* WorkoutRoutineCircuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E413F80F29FAAE3500277593 /* WorkoutRoutineCircuit.swift */; };
+		E413F81229FAAE4100277593 /* WorkoutSessionCircuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E413F81129FAAE4100277593 /* WorkoutSessionCircuit.swift */; };
 		E416219729DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416219629DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift */; };
 		E416219929DBC5EC00F55474 /* YearMonthDayObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416219829DBC5EC00F55474 /* YearMonthDayObject.swift */; };
 		E416219B29DBF70000F55474 /* WorkoutPersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416219A29DBF70000F55474 /* WorkoutPersonalRecord.swift */; };
@@ -189,6 +192,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E413F80D29FAAD7900277593 /* WorkoutRoutineObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineObject.swift; sourceTree = "<group>"; };
+		E413F80F29FAAE3500277593 /* WorkoutRoutineCircuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutineCircuit.swift; sourceTree = "<group>"; };
+		E413F81129FAAE4100277593 /* WorkoutSessionCircuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionCircuit.swift; sourceTree = "<group>"; };
 		E416219629DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCircuitHistoryViewController.swift; sourceTree = "<group>"; };
 		E416219829DBC5EC00F55474 /* YearMonthDayObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthDayObject.swift; sourceTree = "<group>"; };
 		E416219A29DBF70000F55474 /* WorkoutPersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPersonalRecord.swift; sourceTree = "<group>"; };
@@ -493,6 +499,7 @@
 				E4AF075E29D3E5C2007EBD9B /* UserGoalObject.swift */,
 				E4AF076029D3E5E8007EBD9B /* MacroRatioObject.swift */,
 				E416219C29DBF79800F55474 /* WorkoutPersonalRecordObject.swift */,
+				E413F80D29FAAD7900277593 /* WorkoutRoutineObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -878,8 +885,10 @@
 				E44C590928BF522B007DA562 /* WorkoutSessionInterface.swift */,
 				E4C78D4B28B1F18A005AE5C4 /* WorkoutSession.swift */,
 				E44B6BA028B48A0E00CCB19C /* WorkoutRoutine.swift */,
-				E4C25ED929C9A483006734A5 /* WorkoutSet.swift */,
 				E44C590328BF46ED007DA562 /* WorkoutCircuit.swift */,
+				E413F81129FAAE4100277593 /* WorkoutSessionCircuit.swift */,
+				E413F80F29FAAE3500277593 /* WorkoutRoutineCircuit.swift */,
+				E4C25ED929C9A483006734A5 /* WorkoutSet.swift */,
 				E4C78D4D28B1F198005AE5C4 /* WorkoutItem.swift */,
 				E4F73B8A28BA0F960056E1DD /* WorkoutMachine.swift */,
 				E4F73B8428BA0EF70056E1DD /* WorkoutBodyPart.swift */,
@@ -1100,12 +1109,14 @@
 				E416BCA728BEFF42008CBEE4 /* ProgressViewModel.swift in Sources */,
 				E4C78D3028B1259C005AE5C4 /* HomeViewController.swift in Sources */,
 				E416BC8828BCF7E6008CBEE4 /* FoodLogCell.swift in Sources */,
+				E413F81029FAAE3500277593 /* WorkoutRoutineCircuit.swift in Sources */,
 				E42E45C428B4D8720088A9BF /* WorkoutExerciseListViewController.swift in Sources */,
 				E44B6BA128B48A0E00CCB19C /* WorkoutRoutine.swift in Sources */,
 				E4C78D3828B125D5005AE5C4 /* LoadingScreenViewController.swift in Sources */,
 				E416219B29DBF70000F55474 /* WorkoutPersonalRecord.swift in Sources */,
 				E4C78CF128B12174005AE5C4 /* ProgressBarView.swift in Sources */,
 				E4F73B8F28BA0FD90056E1DD /* FoodLog.swift in Sources */,
+				E413F80E29FAAD7900277593 /* WorkoutRoutineObject.swift in Sources */,
 				E4AF075D29D3E53C007EBD9B /* UserPreferenceObject.swift in Sources */,
 				E4AF075729CF2570007EBD9B /* WorkoutSetObject.swift in Sources */,
 				E4C78CF228B12174005AE5C4 /* SpinnerView.swift in Sources */,
@@ -1185,6 +1196,7 @@
 				E4C78D3E28B1267E005AE5C4 /* MeViewController.swift in Sources */,
 				E4C78CFD28B12174005AE5C4 /* Icons.swift in Sources */,
 				E4C78CF328B12174005AE5C4 /* BaseCell.swift in Sources */,
+				E413F81229FAAE4100277593 /* WorkoutSessionCircuit.swift in Sources */,
 				E4C78D6E28B274C0005AE5C4 /* WorkoutSessionViewModel.swift in Sources */,
 				E4C78D4C28B1F18A005AE5C4 /* WorkoutSession.swift in Sources */,
 				E4C78D0328B12174005AE5C4 /* DateFormatter+Extensions.swift in Sources */,

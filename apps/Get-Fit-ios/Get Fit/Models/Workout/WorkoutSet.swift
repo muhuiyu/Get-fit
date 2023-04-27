@@ -26,20 +26,33 @@ struct WorkoutSet: Codable {
     var calories: Int
     var restTime: TimeInterval
     var note: String
+    
+    init(id: UUID = UUID(),
+         itemID: WorkoutItemID,
+         type: WorkoutSetType = .normal,
+         weight: Double = 0,
+         reps: Int = 0,
+         time: TimeInterval = TimeInterval(0),
+         distanceInMeter: Double = 0,
+         calories: Int = 0,
+         restTime: TimeInterval = TimeInterval(30),
+         note: String = "") {
+        self.id = id
+        self.itemID = itemID
+        self.type = type
+        self.weight = weight
+        self.reps = reps
+        self.time = time
+        self.distanceInMeter = distanceInMeter
+        self.calories = calories
+        self.restTime = restTime
+        self.note = note
+    }
 }
 
 extension WorkoutSet {
     init(from lastSet: WorkoutSet) {
-        self.id = UUID()
-        self.itemID = lastSet.itemID
-        self.type = lastSet.type
-        self.weight = lastSet.weight
-        self.reps = lastSet.reps
-        self.time = lastSet.time
-        self.distanceInMeter = lastSet.distanceInMeter
-        self.calories = lastSet.calories
-        self.restTime = lastSet.restTime
-        self.note = lastSet.note
+        self.init(itemID: lastSet.itemID, type: lastSet.type, weight: lastSet.weight, reps: lastSet.reps, time: lastSet.time, distanceInMeter: lastSet.distanceInMeter, calories: lastSet.calories, restTime: lastSet.restTime, note: lastSet.note)
     }
 }
 

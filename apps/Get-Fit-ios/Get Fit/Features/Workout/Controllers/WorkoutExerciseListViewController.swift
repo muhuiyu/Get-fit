@@ -183,10 +183,9 @@ extension WorkoutExerciseListViewController: UISearchResultsUpdating, UISearchCo
         filterOptionForSearchText(searchText)
     }
     func filterOptionForSearchText(_ searchText: String) {
-        filteredOptions = options.filter({ text in
-            guard let name = WorkoutItem.getWorkoutItemName(of: text) else { return false }
-            return name.lowercased().contains(searchText.lowercased())
-            // TODO: - Add body parts search
+        filteredOptions = options.filter({ id in
+            guard let item = WorkoutItem.getWorkoutItem(of: id) else { return false }
+            return item.shouldReturnAsSearchResult(for: searchText)
         })
         tableView.reloadData()
     }

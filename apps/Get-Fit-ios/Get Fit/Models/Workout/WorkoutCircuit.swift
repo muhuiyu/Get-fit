@@ -24,6 +24,16 @@ struct WorkoutCircuit: Codable {
     let date: YearMonthDay
     let type: WorkoutCircuitType
     var sets: [WorkoutSet]
+    
+    init(id: WorkoutCircuitID = UUID(),
+         date: YearMonthDay,
+         type: WorkoutCircuitType,
+         sets: [WorkoutSet] = []) {
+        self.id = id
+        self.date = date
+        self.type = type
+        self.sets = sets
+    }
 }
 
 // MARK: - Persistable
