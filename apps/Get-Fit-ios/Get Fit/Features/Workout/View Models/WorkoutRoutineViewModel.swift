@@ -9,11 +9,8 @@ import UIKit
 import RxRelay
 import RxSwift
 
-class WorkoutRoutineViewModel {
-    private let disposeBag = DisposeBag()
-    
+class WorkoutRoutineViewModel: BaseViewModel {
     var routine: BehaviorRelay<WorkoutRoutine?> = BehaviorRelay(value: nil)
-    var displayTitleString: BehaviorRelay<String> = BehaviorRelay(value: "")
     
     struct Section {
         static let header = 0
@@ -21,15 +18,9 @@ class WorkoutRoutineViewModel {
         static let addExercise = 2
     }
     
-    init() {
-        self.routine
-            .asObservable()
-            .subscribe(onNext: { value in
-                if let value = value {
-                    self.displayTitleString.accept(value.title)
-                }
-            })
-            .disposed(by: disposeBag)
+    override init() {
+        super.init()
+        configureSignals()
     }
 }
 
@@ -88,6 +79,9 @@ extension WorkoutRoutineViewModel {
         case editItem
         case addExercise
         case others
+    }
+    private func configureSignals() {
+        
     }
 }
 

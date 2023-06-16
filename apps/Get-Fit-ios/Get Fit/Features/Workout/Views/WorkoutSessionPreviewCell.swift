@@ -93,11 +93,11 @@ extension WorkoutSessionPreviewCell {
         
     }
     private func reconfigureCellData(for session: WorkoutSession) {
-        self.titleLabel.text = session.title
-        self.contentLabel.text = session.sessionPreviewCellSummary
-        self.dayLabel.text = String(session.startTime.day)
-        self.weekdayLabel.text = session.startTime.toDate()?.toWeekDayString() ?? ""
-        self.durationLabel.text = session.durationInHourMinuteString
+        titleLabel.text = session.title
+        contentLabel.text = session.sessionPreviewCellSummary
+        dayLabel.text = String(session.startTime.day)
+        weekdayLabel.text = session.startTime.toDate()?.toWeekDayString() ?? ""
+        durationLabel.text = session.durationInHourMinuteString
     }
 
     private func configureSignals() {

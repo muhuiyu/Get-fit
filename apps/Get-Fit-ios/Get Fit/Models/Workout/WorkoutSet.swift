@@ -35,7 +35,7 @@ struct WorkoutSet: Codable {
          time: TimeInterval = TimeInterval(0),
          distanceInMeter: Double = 0,
          calories: Int = 0,
-         restTime: TimeInterval = TimeInterval(30),
+         restTime: TimeInterval = TimeInterval(60),
          note: String = "") {
         self.id = id
         self.itemID = itemID

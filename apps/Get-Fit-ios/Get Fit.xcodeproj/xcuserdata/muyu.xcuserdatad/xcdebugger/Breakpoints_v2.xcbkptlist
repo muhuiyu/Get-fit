@@ -20,5 +20,335 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C619B686-0B91-4551-B611-C887FCC18548"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Get Fit/Data/Realm/RealmDatabase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "createBackupToCloud()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C619B686-0B91-4551-B611-C887FCC18548 - f95aa808c45efba2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "262"
+                  endingLineNumber = "262"
+                  offsetFromSymbolStart = "787">
+               </Location>
+               <Location
+                  uuid = "C619B686-0B91-4551-B611-C887FCC18548 - f95aa808c45efa0f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "787">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "54C147B1-9839-4348-A081-437870FDCB7A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Get Fit/Data/Realm/RealmDatabase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "createBackupToCloud()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "54C147B1-9839-4348-A081-437870FDCB7A - f95aa808c45efbc5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "54C147B1-9839-4348-A081-437870FDCB7A - f95aa808c45efbc5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "54C147B1-9839-4348-A081-437870FDCB7A - f95aa808c45efbc5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "749">
+               </Location>
+               <Location
+                  uuid = "54C147B1-9839-4348-A081-437870FDCB7A - f95aa808c45efa2e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "749">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD8FE59C-657D-40E6-8923-3C25A1864F65"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Get Fit/Data/Realm/RealmDatabase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
+            landmarkName = "createBackupToCloud()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AD8FE59C-657D-40E6-8923-3C25A1864F65 - 81b7c3d6b4aa362"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "457">
+               </Location>
+               <Location
+                  uuid = "AD8FE59C-657D-40E6-8923-3C25A1864F65 - 81b7c3d6b4aa3df"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "457">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "281D371B-7B7F-4B5D-84BE-32146AE9192C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Get Fit/Data/Realm/RealmDatabase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "createBackupToCloud()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "281D371B-7B7F-4B5D-84BE-32146AE9192C - 81b7c3d6b4aa3fe"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "260"
+                  endingLineNumber = "260"
+                  offsetFromSymbolStart = "884">
+               </Location>
+               <Location
+                  uuid = "281D371B-7B7F-4B5D-84BE-32146AE9192C - f95aa808c45efbc5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "281D371B-7B7F-4B5D-84BE-32146AE9192C - f95aa808c45efbe4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "260"
+                  endingLineNumber = "260"
+                  offsetFromSymbolStart = "143">
+               </Location>
+               <Location
+                  uuid = "281D371B-7B7F-4B5D-84BE-32146AE9192C - f95aa808c45efa41"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.createBackupToCloud() -&gt; ()"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "265"
+                  endingLineNumber = "265"
+                  offsetFromSymbolStart = "143">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AAA6658F-FEC7-499B-BC75-C3CC260AA288"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Get Fit/Data/Realm/RealmDatabase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "readBackup()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AAA6658F-FEC7-499B-BC75-C3CC260AA288 - 3d984da0a7c24923"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Get_Fit.RealmDatabase.readBackup() -&gt; Swift.Optional&lt;Foundation.Data&gt;"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "101">
+               </Location>
+               <Location
+                  uuid = "AAA6658F-FEC7-499B-BC75-C3CC260AA288 - 3070bfb20aef31df"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.readBackup() -&gt; Swift.Optional&lt;Foundation.Data&gt;"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "265"
+                  endingLineNumber = "265"
+                  offsetFromSymbolStart = "283">
+               </Location>
+               <Location
+                  uuid = "AAA6658F-FEC7-499B-BC75-C3CC260AA288 - 3d984da0a7c24986"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Get_Fit.RealmDatabase.readBackup() -&gt; Swift.Optional&lt;Foundation.Data&gt;"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "271"
+                  endingLineNumber = "271"
+                  offsetFromSymbolStart = "101">
+               </Location>
+               <Location
+                  uuid = "AAA6658F-FEC7-499B-BC75-C3CC260AA288 - 3070bfb20aef3134"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;__C.CKRecord&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Get_Fit.RealmDatabase.readBackup() -&gt; Swift.Optional&lt;Foundation.Data&gt;"
+                  moduleName = "Get Fit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/muyu/Dev/swift/Get%20Fit/apps/Get-Fit-ios/Get%20Fit/Data/Realm/RealmDatabase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "270"
+                  endingLineNumber = "270"
+                  offsetFromSymbolStart = "283">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

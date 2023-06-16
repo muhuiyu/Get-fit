@@ -53,7 +53,7 @@ extension WorkoutItem {
         machineSeatedCalfRaise.id: machineSeatedCalfRaise,
         machineShoulderPress.id: machineShoulderPress,
         machineShoulderPressAlternating.id: machineShoulderPressAlternating,
-        machineTricepsDip.id: machineTricepsDip,
+        machineTricepDips.id: machineTricepDips,
         pushUp.id: pushUp,
         renegadeRows.id: renegadeRows,
         reverseSeatedPecDeck.id: reverseSeatedPecDeck,
@@ -190,13 +190,14 @@ extension WorkoutItem {
                                        bodyPart: [.biceps],
                                        mechanics: .isolated,
                                        force: .pull)
-    static let machineTricepsDip = WorkoutItem(id: "machineTricepsDip",
-                                               name: "Machine tricep dip",
-                                               type: WorkoutItemType.strengthWeightAndReps,
+    static let machineTricepDips = WorkoutItem(id: "machineTricepDips",
+                                               name: "Machine tricep dips",
+                                               type: WorkoutItemType.bodyWeightTrainingAssistedBodyWeightAndReps,
                                                bodyPart: [.triceps, .chest],
                                                mechanics: .compound,
                                                force: .push,
-                                               machine: .tricepDipMachine)
+                                               machine: .tricepDipMachine,
+                                               alsoKnownAsList: ["machine triceps dip", "assisted tricep dips", "assisted dip"])
     static let pushUp = WorkoutItem(id: "pushUp",
                                     name: "Push up",
                                     type: WorkoutItemType.bodyWeightTrainingWeightAndReps,

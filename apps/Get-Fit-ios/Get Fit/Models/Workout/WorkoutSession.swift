@@ -12,7 +12,7 @@ import RealmSwift
 
 typealias WorkoutSessionID = UUID
 
-struct WorkoutSession: WorkoutSessionInterface, Codable {
+struct WorkoutSession: Codable {
     var id: WorkoutSessionID
     var userID: UserID
     var startTime: DateAndTime
@@ -65,7 +65,7 @@ extension WorkoutSession {
         self.bodyWeight = 0
         self.startTime = DateAndTime()
         self.endTime = self.startTime.afterMinutes(preferredWorkoutLength.minute)
-        self.circuits = routine.circuits
+        self.circuits = routine.circuits.map({ $0.toWorkoutCircuit() })
         self.note = routine.note
     }
 }
@@ -132,6 +132,21 @@ extension WorkoutSession {
         let weightString = "Total weight: " + String(totalWeight)
         let setString = "Total sets: " + String(numberOfSets)
         return weightString + ", " + setString
+    }
+    var allItemNames: String {
+        return circuits
+            .compactMap({ circuit in
+                circuit.sets.compactMap({ WorkoutItem.getWorkoutItemName(of: $0.itemID) })
+                    .reduce(into: Set<String>(), { $0.insert($1) })
+                    .joined(separator: ", ")
+            })
+            .joined(separator: ", ")
+    }
+    var numberOfSets: Int {
+        return circuits.reduce(into: 0) { $0 += $1.sets.count }
+    }
+    var totalWeight: Double {
+        return circuits.reduce(into: 0) { $0 += $1.sets.reduce(into: 0) { $0 += $1.weight } }
     }
 }
 

@@ -57,18 +57,14 @@ extension WorkoutRoutineViewController {
     private func configureSignals() {
         viewModel.routine
             .asObservable()
-            .subscribe { _ in
+            .subscribe { value in
+                if let value = value {
+                    self.title = value.title
+                }
                 self.configureCells()
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.displayTitleString
-            .asObservable()
-            .subscribe { value in
-                self.title = value
             }
             .disposed(by: disposeBag)
     }

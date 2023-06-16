@@ -37,7 +37,7 @@ extension WorkoutViewController {
                                                           message: nil,
                                                           preferredStyle: .actionSheet)
         let alertActions = [
-            AlertActionOption(title: AppText.Workout.newSession, style: .default) { _ in
+            AlertActionOption(title: AppText.Workout.startAnEmptyWorkout, style: .default) { _ in
                 guard
                     let userID = self.appCoordinator?.userManager.id,
                     let preferredWorkoutLength = self.appCoordinator?.userManager.preferredWorkoutLength else {
@@ -57,6 +57,11 @@ extension WorkoutViewController {
     private func didTapSettings() {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         coordinator.showSettings()
+    }
+    @objc
+    private func didTapRoutines() {
+        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        coordinator.showWorkoutRoutineList()
     }
     private func didSelectSession(at indexPath: IndexPath, _ item: WorkoutSession) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
@@ -97,6 +102,10 @@ extension WorkoutViewController {
     }
     private func configureNavigationBar() {
         title = viewModel.displayTitle
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Routines",
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(didTapRoutines))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: Icons.plus),
                             style: .plain,

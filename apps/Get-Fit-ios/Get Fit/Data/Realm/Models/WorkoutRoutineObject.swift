@@ -8,20 +8,20 @@
 import Foundation
 import RealmSwift
 
-final class WorkoutSessionObject: Object {
+final class WorkoutRoutineObject: Object {
     override class func primaryKey() -> String? {
         return "id"
     }
     @objc dynamic var id: UUID = UUID()
     @objc dynamic var userID: UserID = UUID()
     @objc dynamic var title: String = ""
-    var circuits = List<WorkoutCircuitID>()
+    var circuits = List<WorkoutRoutineCircuitObject>()
     @objc dynamic var note: String = ""
     
     convenience init(id: UUID,
                      userID: UserID,
                      title: String,
-                     circuits: List<WorkoutCircuitID>,
+                     circuits: List<WorkoutRoutineCircuitObject>,
                      note: String) {
         self.init()
         self.id = id

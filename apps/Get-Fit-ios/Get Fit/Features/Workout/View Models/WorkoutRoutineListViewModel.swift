@@ -10,7 +10,11 @@ import RxRelay
 import RxSwift
 
 class WorkoutRoutineListViewModel: BaseViewModel {
-    var routines: BehaviorRelay<[WorkoutRoutine]> = BehaviorRelay(value: [])
+    lazy var dataSource = WorkoutSessionDataSource.dataSource()
+    
+    // MARK: - Reactive Properties
+    private var routines: BehaviorRelay<[WorkoutRoutine]> = BehaviorRelay(value: [])
+    var displayRoutines: BehaviorRelay<[WorkoutRoutineSection]> = BehaviorRelay(value: [])
 }
 
 extension WorkoutRoutineListViewModel {
@@ -19,9 +23,10 @@ extension WorkoutRoutineListViewModel {
 
 extension WorkoutRoutineListViewModel {
     func reloadData() {
-        guard let cacheManager = appCoordinator?.cacheManager else { return }
-        let workoutRoutines = cacheManager.getWorkoutRoutines()
-        routines.accept(workoutRoutines)
+        guard let userID = appCoordinator?.userManager.id else { return }
+        if let data = appCoordinator?.dataProvider.getAllWorkoutRoutines(for: userID) {
+            self.routines.accept(data)
+        }
     }
     func deleteRoutine(at indexPath: IndexPath) {
         // TODO: - 

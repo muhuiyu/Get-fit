@@ -43,7 +43,8 @@ extension WorkoutCoordinator {
             return viewController
         case .workoutRoutineList:
             let viewController = WorkoutRoutineListViewController(appCoordinator: parentCoordinator,
-                                                                  coordinator: self)
+                                                                  coordinator: self,
+                                                                  viewModel: WorkoutRoutineListViewModel())
             return viewController
         case .workoutRoutine(let routine):
             let viewController = WorkoutRoutineViewController(appCoordinator: parentCoordinator,
@@ -53,7 +54,9 @@ extension WorkoutCoordinator {
         case .createRoutine:
             let viewController = WorkoutRoutineViewController(appCoordinator: parentCoordinator,
                                                               coordinator: self)
-            viewController.viewModel.routine.accept(WorkoutRoutine())
+            if let userID = parentCoordinator?.userManager.id {
+                viewController.viewModel.routine.accept(WorkoutRoutine(userID: userID))
+            }
             return viewController
         case .editCircuit(let circuit):
             // TODO: -
@@ -99,7 +102,7 @@ extension WorkoutCoordinator {
     }
     func showWorkoutRoutineList() {
         guard let viewController = makeViewController(to: .workoutRoutineList) else { return }
-        self.navigate(to: viewController, presentModally: false)
+        self.navigate(to: viewController, presentModally: true)
     }
     func showWorkoutRoutine(for routine: WorkoutRoutine) {
         guard let viewController = makeViewController(to: .workoutRoutine(routine)) else { return }

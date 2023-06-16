@@ -22,7 +22,7 @@ enum WorkoutCircuitType: String, Codable {
 struct WorkoutCircuit: Codable {
     let id: WorkoutCircuitID
     let date: YearMonthDay
-    let type: WorkoutCircuitType
+    var type: WorkoutCircuitType
     var sets: [WorkoutSet]
     
     init(id: WorkoutCircuitID = UUID(),

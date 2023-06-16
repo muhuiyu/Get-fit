@@ -8,11 +8,8 @@
 import UIKit
 import RxSwift
 
-class WorkoutRoutineListViewController: BaseViewController {
-    private let disposeBag = DisposeBag()
+class WorkoutRoutineListViewController: BaseMVVMViewController<WorkoutRoutineListViewModel> {
     private let tableView = UITableView()
-    
-    private let viewModel = WorkoutRoutineListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,18 +28,21 @@ extension WorkoutRoutineListViewController {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         coordinator.showCreateRoutine()
     }
+    private func didSelectRoutine(at indexPath: IndexPath, _ item: WorkoutRoutine) {
+        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        coordinator.showWorkoutRoutine(for: item)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 // MARK: - View Config
 extension WorkoutRoutineListViewController {
     private func configureViews() {
-        title = viewModel.titleString
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: AppText.General.add,
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(didTapAdd(_:)))
-        tableView.dataSource = self
+        configureNavigationBar()
+        
+        // table view
         tableView.delegate = self
+        tableView.register(WorkoutRoutinePreviewCell.self, forCellReuseIdentifier: WorkoutRoutinePreviewCell.reuseID)
         view.addSubview(tableView)
     }
     private func configureConstraints() {
@@ -54,40 +54,28 @@ extension WorkoutRoutineListViewController {
         
     }
     private func configureSignals() {
-        viewModel.routines
+        viewModel.displayRoutines
             .asObservable()
-            .subscribe { _ in
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+            .bind(to: self.tableView.rx.items(dataSource: viewModel.dataSource))
+            .disposed(by: disposeBag)
+        
+        Observable
+            .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(WorkoutRoutine.self))
+            .subscribe { indexPath, item in
+                self.didSelectRoutine(at: indexPath, item)
             }
             .disposed(by: disposeBag)
     }
-}
-// MARK: - Data Source
-extension WorkoutRoutineListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.routines.value.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        cell.textLabel?.text = viewModel.getRoutineTitle(at: indexPath)
-        cell.detailTextLabel?.text = viewModel.getRoutineSubtitle(at: indexPath)
-        cell.detailTextLabel?.numberOfLines = 0
-        return cell
+    private func configureNavigationBar() {
+        title = viewModel.titleString
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: AppText.General.add,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(didTapAdd(_:)))
     }
 }
 // MARK: - Delegate
 extension WorkoutRoutineListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defer {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        if let item = viewModel.getRoutine(at: indexPath) {
-            coordinator.showWorkoutRoutine(for: item)
-        }
-    }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         guard let coordinator = coordinator as? WorkoutCoordinator else { return nil }

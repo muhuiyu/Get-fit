@@ -55,19 +55,19 @@ extension RealmDatabase {
         syncBackup()
         
         // TODO: -
-//        try? realm.write {
-//            realm.deleteAll()
-//        }
-//        try? realm.write {
-//            workoutSessionData.forEach { item in
-//                let sessionObject = item.managedObject()
-//                let _ = realm.create(WorkoutSessionObject.self, value: sessionObject)
-//                item.circuits.forEach { circuit in
-//                    let object = circuit.managedObject()
-//                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
-//                }
-//            }
-//        }
+        try? realm.write {
+            realm.deleteAll()
+        }
+        try? realm.write {
+            workoutSessionData.forEach { item in
+                let sessionObject = item.managedObject()
+                let _ = realm.create(WorkoutSessionObject.self, value: sessionObject)
+                item.circuits.forEach { circuit in
+                    let object = circuit.managedObject()
+                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
+                }
+            }
+        }
     }
 }
 
@@ -148,6 +148,11 @@ extension RealmDatabase {
                 return WorkoutSession(managedObject: session, circuits: circuits)
             })
         return Array(sessions)
+    }
+    
+    func getAllWorkoutRoutines(for userID: UserID) -> [WorkoutRoutine] {
+        // TODO: - connect to Realm
+        return WorkoutRoutine.testEntries
     }
     
     func getWorkoutSessions(for userID: UserID, from startDate: Date, to endDate: Date) -> [WorkoutSession] {

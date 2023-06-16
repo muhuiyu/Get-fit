@@ -88,6 +88,7 @@ extension AppText {
     struct Workout {
         static var settings: String { "Settings" }
         static var newSession: String { "New Session" }
+        static var startAnEmptyWorkout: String { "Start an Empty Workout" }
         static var workoutRoutine: String { "Workout Routine" }
         static var workoutRoutines: String { "Workout Routines" }
         static var startTime: String { "Start Time" }

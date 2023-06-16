@@ -9,11 +9,26 @@ import Foundation
 
 extension WorkoutRoutine {
     static let testEntries: [WorkoutRoutine] = [
-        WorkoutRoutine(id: "routine-1",
-                       title: "Full body",
+        WorkoutRoutine(id: UUID(),
+                       userID: UUID(),
+                       title: "full body",
                        circuits: [
-                        WorkoutCircuit(id: <#T##WorkoutCircuitID#>, date: <#T##YearMonthDay#>, type: <#T##WorkoutCircuitType#>, sets: <#T##[WorkoutSet]#>)
-                       ], note: <#T##String#>)
+                        WorkoutRoutineCircuit(
+                            type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.machineSeatedCalfRaise.id, type: .normal, weight: 10, reps: 10, restTime: TimeInterval(60)),
+                                WorkoutSet(itemID: WorkoutItem.machineSeatedCalfRaise.id, type: .normal, weight: 15, reps: 10, restTime: TimeInterval(60)),
+                                WorkoutSet(itemID: WorkoutItem.machineSeatedCalfRaise.id, type: .normal, weight: 15, reps: 10, restTime: TimeInterval(60)),
+                                WorkoutSet(itemID: WorkoutItem.machineSeatedCalfRaise.id, type: .normal, weight: 15, reps: 10, restTime: TimeInterval(60)),
+                            ]),
+                        WorkoutRoutineCircuit(
+                            type: .singleExercise,
+                            sets: [
+                                WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 9, reps: 10, restTime: TimeInterval(60), note: "9kg ball"),
+                                WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 9, reps: 10, restTime: TimeInterval(60), note: "9kg ball"),
+                                WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 9, reps: 10, restTime: TimeInterval(60), note: "9kg ball"),
+                            ]),
+                       ], note: "on Thursday")
     ]
 }
 
