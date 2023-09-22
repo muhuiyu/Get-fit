@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 class WelcomeViewController: BaseViewController {
     private let titleView = UILabel()

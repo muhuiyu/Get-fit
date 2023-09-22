@@ -11,6 +11,127 @@ import Foundation
 // MARK: - Workout data
 
 let workoutSessionData: [WorkoutSession] = [
+        // MARK: - Sep 27 (session 29)
+        WorkoutSession(userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
+           startTime: DateAndTime(year: 2023, month: 9, day: 27, hour: 11, minute: 0, second: 0),
+           endTime: DateAndTime(year: 2023, month: 9, day: 27, hour: 12, minute: 0, second: 0),
+           title: "Upper body",
+           circuits: [
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 27),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.dumbbellLateralRaises.id, type: .normal, weight: 10, reps: 10, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.dumbbellLateralRaises.id, type: .normal, weight: 10, reps: 10, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.dumbbellLateralRaises.id, type: .normal, weight: 8, reps: 10, note: "4 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.dumbbellLateralRaises.id, type: .normal, weight: 8, reps: 10, note: "4 x 2"),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 27),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.seatedCableRow.id, type: .normal, weight: 26, reps: 8),
+                    WorkoutSet(itemID: WorkoutItem.seatedCableRow.id, type: .normal, weight: 26, reps: 8),
+                    WorkoutSet(itemID: WorkoutItem.seatedCableRow.id, type: .normal, weight: 19, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.seatedCableRow.id, type: .normal, weight: 19, reps: 10),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 27),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 10, reps: 8, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 10, reps: 8, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 10, reps: 8, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.smithMachineBenchPress.id, type: .normal, weight: 10, reps: 8, note: "5 x 2"),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 27),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.bicepCurl.id, type: .normal, weight: 10, reps: 10, note: "bare EZ bar"),
+                    WorkoutSet(itemID: WorkoutItem.bicepCurl.id, type: .normal, weight: 10, reps: 10, note: "bare EZ bar"),
+                    WorkoutSet(itemID: WorkoutItem.bicepCurl.id, type: .normal, weight: 10, reps: 10, note: "bare EZ bar"),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 27),
+                type: .superSet,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.rearDelts.id, type: .normal, weight: 2.5, time: 60, note: "1.25 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.russianTwist.id, type: .normal, weight: 3, time: 60),
+                    WorkoutSet(itemID: WorkoutItem.rearDelts.id, type: .normal, weight: 2.5, time: 60, note: "1.25 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.russianTwist.id, type: .normal, weight: 3, time: 60),
+                    WorkoutSet(itemID: WorkoutItem.rearDelts.id, type: .normal, weight: 2.5, time: 60, note: "1.25 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.russianTwist.id, type: .normal, weight: 3, time: 60),
+                ]),
+            ]),
+        // MARK: - Sep 25 (session 28)
+        WorkoutSession(userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
+           startTime: DateAndTime(year: 2023, month: 9, day: 25, hour: 11, minute: 0, second: 0),
+           endTime: DateAndTime(year: 2023, month: 9, day: 25, hour: 12, minute: 0, second: 0),
+           title: "Full body",
+           circuits: [
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.walkingLunges.id, type: .normal, weight: 0, reps: 1),
+                    WorkoutSet(itemID: WorkoutItem.walkingLunges.id, type: .normal, weight: 10, reps: 1, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.walkingLunges.id, type: .normal, weight: 16, reps: 1, note: "8 x 2"),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.travellingSideSquats.id, type: .normal, weight: 5, reps: 1),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.dumbbellShoulderPress.id, type: .warmUp, weight: 10, reps: 10, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.dumbbellShoulderPress.id, type: .normal, weight: 14, reps: 8, note: "7 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.dumbbellShoulderPress.id, type: .normal, weight: 10, reps: 12, note: "5 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.dumbbellShoulderPress.id, type: .normal, weight: 10, reps: 12, note: "5 x 2"),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.latPullDown.id, type: .normal, weight: 33, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.latPullDown.id, type: .normal, weight: 33, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.latPullDown.id, type: .normal, weight: 26, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.latPullDown.id, type: .normal, weight: 26, reps: 10),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 8),
+                    WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 8),
+                    WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 8),
+                    WorkoutSet(itemID: WorkoutItem.machineChestPress.id, type: .normal, weight: 12.5, reps: 8),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .superSet,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.cableFacePull.id, type: .normal, weight: 10, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableHammerCurls.id, type: .normal, weight: 5, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableFacePull.id, type: .normal, weight: 10, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableHammerCurls.id, type: .normal, weight: 5, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableFacePull.id, type: .normal, weight: 10, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableHammerCurls.id, type: .normal, weight: 5, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableFacePull.id, type: .normal, weight: 10, reps: 10),
+                    WorkoutSet(itemID: WorkoutItem.cableHammerCurls.id, type: .normal, weight: 5, reps: 10),
+                ]),
+            WorkoutCircuit(
+                date: YearMonthDay(year: 2023, month: 9, day: 25),
+                type: .singleExercise,
+                sets: [
+                    WorkoutSet(itemID: WorkoutItem.farmersWalk.id, type: .normal, weight: 20, reps: 2, note: "10 x 2"),
+                    WorkoutSet(itemID: WorkoutItem.farmersWalk.id, type: .normal, weight: 20, reps: 2, note: "10 x 2"),
+                ]),
+            ]),
         // MARK: - Jul 19 (session 27)
         WorkoutSession(userID: UUID(uuidString: "fcc57b74-1e96-4cae-82b0-ee237e261e9a") ?? UUID(),
            startTime: DateAndTime(year: 2023, month: 7, day: 19, hour: 11, minute: 0, second: 0),

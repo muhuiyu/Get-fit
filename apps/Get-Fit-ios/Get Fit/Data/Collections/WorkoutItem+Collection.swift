@@ -18,6 +18,7 @@ extension WorkoutItem {
         bicepCurlWithMachine.id: bicepCurlWithMachine,
         boxJump.id: boxJump,
         burpees.id: burpees,
+        cableFacePull.id: cableFacePull,
         cableGobletSquat.id: cableGobletSquat,
         cableHammerCurls.id: cableHammerCurls,
         cableKickback.id: cableKickback,
@@ -64,9 +65,11 @@ extension WorkoutItem {
         overheadCableTricepExtension.id: overheadCableTricepExtension,
         pallofHolds.id: pallofHolds,
         pushUp.id: pushUp,
+        rearDelts.id: rearDelts,
         renegadeRows.id: renegadeRows,
         reverseSeatedPecDeck.id: reverseSeatedPecDeck,
         romanianDeadlift.id: romanianDeadlift,
+        russianTwist.id: russianTwist,
         seatedCableRow.id: seatedCableRow,
         seatedHammerCurls.id: seatedHammerCurls,
         seatedLegCurl.id: seatedLegCurl,
@@ -84,6 +87,7 @@ extension WorkoutItem {
         travellingSideSquats.id: travellingSideSquats,
         threePartCurls.id: threePartCurls,
         tricepPushdown.id: tricepPushdown,
+        walkingLunges.id: walkingLunges,
         wallSit.id: wallSit,
     ]
     
@@ -230,7 +234,8 @@ extension WorkoutItem {
                                        type: WorkoutItemType.strengthWeightAndReps,
                                        bodyPart: [.biceps],
                                        mechanics: .isolated,
-                                       force: .pull)
+                                       force: .pull,
+                                       alsoKnownAsList: [ "bicep curls" ])
     static let machineTricepDips = WorkoutItem(id: "machineTricepDips",
                                                name: "Machine tricep dips",
                                                type: WorkoutItemType.bodyWeightTrainingAssistedBodyWeightAndReps,
@@ -260,7 +265,10 @@ extension WorkoutItem {
                                          mechanics: .compound,
                                          force: .pull,
                                          machine: .cableMachine,
-                                         videoURLString: "https://youtu.be/qViTZfPdm2g")
+                                         videoURLString: "https://youtu.be/qViTZfPdm2g",
+                                         alsoKnownAsList: [
+                                            "cable pulldown", "cable pull down"
+                                         ])
     static let machinePullDown = WorkoutItem(id: "machinePullDown",
                                              name: "Machine pull down",
                                              type: WorkoutItemType.strengthWeightAndReps,
@@ -404,10 +412,18 @@ extension WorkoutItem {
                                     bodyPart: [.glutes, .hamstrings, .quads],
                                     mechanics: .compound,
                                     force: .pull,
-                                    machine: .cableMachine,
                                     alsoKnownAsList: [
                                         "dumbbell lunges"
                                     ])
+    static let walkingLunges = WorkoutItem(id: "walkingLunges",
+                                           name: "Walking lunges",
+                                           type: WorkoutItemType.bodyWeightTrainingWeightAndReps,
+                                           bodyPart: [.glutes, .hamstrings, .quads],
+                                           mechanics: .compound,
+                                           force: .pull,
+                                           alsoKnownAsList: [
+                                            "Travelling lunges",
+                                           ])
     static let cableReverseLunge = WorkoutItem(id: "cableReverseLunge",
                                                name: "Cable reverse lunge",
                                                type: WorkoutItemType.strengthWeightAndReps,
@@ -648,6 +664,14 @@ extension WorkoutItem {
                                                   force: .pull,
                                                   machine: .cableMachine,
                                                   videoURLString: "https://youtu.be/bu3VjZ9ML-I", alsoKnownAsList: ["Face Pull with External Rotation"])
+    static let cableFacePull = WorkoutItem(id: "cableFacePull",
+                                           name: "Cable face pull",
+                                           type: WorkoutItemType.strengthWeightAndReps,
+                                           bodyPart: [.shoulders, .back, .triceps],
+                                           mechanics: .compound,
+                                           force: .pull,
+                                           machine: .cableMachine,
+                                           videoURLString: "https://www.youtube.com/watch?v=0Po47vvj9g4", alsoKnownAsList: ["Face Pull"])
     static let boxJump = WorkoutItem(id: "boxJump",
                                      name: "Box jump",
                                      type: WorkoutItemType.bodyWeightTrainingReps,
@@ -695,4 +719,17 @@ extension WorkoutItem {
                                      mechanics: .compound,
                                      force: .push,
                                      videoURLString: "https://youtu.be/-cdph8hv0O0")
+    static let russianTwist = WorkoutItem(id: "russianTwist",
+                                          name: "Russian twist",
+                                          type: WorkoutItemType.strengthWeightAndTime,
+                                          bodyPart: [.core],
+                                          mechanics: .isolated,
+                                          force: .pull,
+                                          alsoKnownAsList: ["russian twists"])
+    static let rearDelts = WorkoutItem(id: "rearDelts",
+                                       name: "Rear delts",
+                                       type: WorkoutItemType.strengthWeightAndTime,
+                                       bodyPart: [.back, .triceps],
+                                       mechanics: .compound,
+                                       force: .pull)
 }

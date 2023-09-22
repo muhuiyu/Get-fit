@@ -133,6 +133,7 @@ extension AppText {
         static var editRecipes: String { "Edit Recipes" }
         static var feedback: String { "Feedback" }
         static var sendFeedback: String { "Send Feedback" }
+        static var export: String { "Export" }
         static var helpAndSupport: String { "Help and Support" }
         static var sync: String { "Sync" }
         static var signedInAs: String { "SignedInAs" }

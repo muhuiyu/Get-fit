@@ -64,8 +64,10 @@ extension MeViewController {
         cells.append(accountSection)
         let generalFunctionsSection = configureGeneralFunctionsSection()
         cells.append(generalFunctionsSection)
-        let customizedDataSection = configureCustomizedDataSection()
-        cells.append(customizedDataSection)
+//        let customizedDataSection = configureCustomizedDataSection()
+//        cells.append(customizedDataSection)
+        let exportSection = configureExportSection()
+        cells.append(exportSection)
         let feedbackSection = configureFeedbackSection()
         cells.append(feedbackSection)
     }
@@ -105,6 +107,12 @@ extension MeViewController {
         editRecipesCell.textLabel?.text = AppText.Me.editRecipes
         editRecipesCell.accessoryType = .disclosureIndicator
         return [ editExercisesCell, editMealsCell, editRecipesCell ]
+    }
+    private func configureExportSection() -> [UITableViewCell] {
+        let exportCell = UITableViewCell()
+        exportCell.textLabel?.text = AppText.Me.export
+        exportCell.accessoryType = .disclosureIndicator
+        return [ exportCell ]
     }
     private func configureFeedbackSection() -> [UITableViewCell] {
         let sendFeedbackCell = UITableViewCell()

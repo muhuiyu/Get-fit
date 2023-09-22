@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 struct UserPreference: Codable {
     var id: UUID = UUID()
@@ -15,11 +13,6 @@ struct UserPreference: Codable {
     let goal: UserGoal
     let preferredWorkoutLength: TimeInterval
     let preferredNumberOfMeals: Int
-}
-extension UserPreference {
-    init(snapshot: DocumentSnapshot) throws {
-        self = try snapshot.data(as: UserPreference.self)
-    }
 }
 // MARK: - Persistable
 extension UserPreference: Persistable {

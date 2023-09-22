@@ -5,8 +5,6 @@
 //  Created by Mu Yu on 8/21/22.
 //
 
-import FirebaseFirestoreSwift
-
 struct MealLog {
     let hour: Int
     let minute: Int
