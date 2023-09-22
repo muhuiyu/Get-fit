@@ -88,20 +88,11 @@
 		E4AF076129D3E5E8007EBD9B /* MacroRatioObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF076029D3E5E8007EBD9B /* MacroRatioObject.swift */; };
 		E4AF076329D3ECC5007EBD9B /* PersistableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF076229D3ECC5007EBD9B /* PersistableProtocol.swift */; };
 		E4AF076529D3F312007EBD9B /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AF076429D3F312007EBD9B /* DataProvider.swift */; };
-		E4C25E2529C4094C006734A5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2429C4094C006734A5 /* FirebaseAuth */; };
-		E4C25E2729C4094C006734A5 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2629C4094C006734A5 /* FirebaseAuthCombine-Community */; };
-		E4C25E2929C4094C006734A5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2829C4094C006734A5 /* FirebaseFirestore */; };
-		E4C25E2B29C4094C006734A5 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2A29C4094C006734A5 /* FirebaseFirestoreCombine-Community */; };
-		E4C25E2D29C4094C006734A5 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2C29C4094C006734A5 /* FirebaseFirestoreSwift */; };
-		E4C25E2F29C4094C006734A5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E2E29C4094C006734A5 /* FirebaseStorage */; };
-		E4C25E3129C4094C006734A5 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E3029C4094C006734A5 /* FirebaseStorageCombine-Community */; };
 		E4C25E3429C40999006734A5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E3329C40999006734A5 /* SnapKit */; };
 		E4C25E3729C409E1006734A5 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E3629C409E1006734A5 /* RxCocoa */; };
 		E4C25E3929C409E1006734A5 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E3829C409E1006734A5 /* RxRelay */; };
 		E4C25E3B29C409E1006734A5 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E3A29C409E1006734A5 /* RxSwift */; };
 		E4C25E3E29C40A25006734A5 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E3D29C40A25006734A5 /* RxDataSources */; };
-		E4C25E4129C40A7A006734A5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4029C40A7A006734A5 /* GoogleSignIn */; };
-		E4C25E4329C40A7A006734A5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4229C40A7A006734A5 /* GoogleSignInSwift */; };
 		E4C25E4629C43DAC006734A5 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4529C43DAC006734A5 /* Lottie */; };
 		E4C25E4929C43E07006734A5 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4829C43E07006734A5 /* Collections */; };
 		E4C25E4B29C43E07006734A5 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E4C25E4A29C43E07006734A5 /* OrderedCollections */; };
@@ -181,6 +172,9 @@
 		E4C78D6A28B214B0005AE5C4 /* WorkoutSessionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C78D6928B214B0005AE5C4 /* WorkoutSessionSection.swift */; };
 		E4C78D6C28B274A0005AE5C4 /* WorkoutSessionPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C78D6B28B274A0005AE5C4 /* WorkoutSessionPreviewCell.swift */; };
 		E4C78D6E28B274C0005AE5C4 /* WorkoutSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C78D6D28B274C0005AE5C4 /* WorkoutSessionViewModel.swift */; };
+		E4F171E22A6B5AF4009CBD50 /* WorkoutRoutinePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F171E12A6B5AF4009CBD50 /* WorkoutRoutinePreviewViewController.swift */; };
+		E4F171E42A6B5D1B009CBD50 /* WorkoutItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F171E32A6B5D1B009CBD50 /* WorkoutItemCell.swift */; };
+		E4F171E62A6B62DE009CBD50 /* WorkoutCircuitHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F171E52A6B62DE009CBD50 /* WorkoutCircuitHeaderCell.swift */; };
 		E4F73B8528BA0EF70056E1DD /* WorkoutBodyPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B8428BA0EF70056E1DD /* WorkoutBodyPart.swift */; };
 		E4F73B8B28BA0F960056E1DD /* WorkoutMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B8A28BA0F960056E1DD /* WorkoutMachine.swift */; };
 		E4F73B8D28BA0FC60056E1DD /* FoodUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B8C28BA0FC60056E1DD /* FoodUnit.swift */; };
@@ -191,6 +185,7 @@
 		E4F73B9828BA25BF0056E1DD /* VoidResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9728BA25BF0056E1DD /* VoidResult.swift */; };
 		E4F73B9E28BA34E40056E1DD /* UnitNutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9D28BA34E40056E1DD /* UnitNutrition.swift */; };
 		E4F73BA028BA35AB0056E1DD /* AmountAndUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F73B9F28BA35AB0056E1DD /* AmountAndUnit.swift */; };
+		E4F91DBB2A6976DE0054FA4D /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F91DBA2A6976DE0054FA4D /* temp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -352,6 +347,9 @@
 		E4C78D6928B214B0005AE5C4 /* WorkoutSessionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionSection.swift; sourceTree = "<group>"; };
 		E4C78D6B28B274A0005AE5C4 /* WorkoutSessionPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionPreviewCell.swift; sourceTree = "<group>"; };
 		E4C78D6D28B274C0005AE5C4 /* WorkoutSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionViewModel.swift; sourceTree = "<group>"; };
+		E4F171E12A6B5AF4009CBD50 /* WorkoutRoutinePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutinePreviewViewController.swift; sourceTree = "<group>"; };
+		E4F171E32A6B5D1B009CBD50 /* WorkoutItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutItemCell.swift; sourceTree = "<group>"; };
+		E4F171E52A6B62DE009CBD50 /* WorkoutCircuitHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCircuitHeaderCell.swift; sourceTree = "<group>"; };
 		E4F73B8428BA0EF70056E1DD /* WorkoutBodyPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutBodyPart.swift; sourceTree = "<group>"; };
 		E4F73B8A28BA0F960056E1DD /* WorkoutMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMachine.swift; sourceTree = "<group>"; };
 		E4F73B8C28BA0FC60056E1DD /* FoodUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodUnit.swift; sourceTree = "<group>"; };
@@ -362,6 +360,7 @@
 		E4F73B9728BA25BF0056E1DD /* VoidResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResult.swift; sourceTree = "<group>"; };
 		E4F73B9D28BA34E40056E1DD /* UnitNutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitNutrition.swift; sourceTree = "<group>"; };
 		E4F73B9F28BA35AB0056E1DD /* AmountAndUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountAndUnit.swift; sourceTree = "<group>"; };
+		E4F91DBA2A6976DE0054FA4D /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,25 +368,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C25E4329C40A7A006734A5 /* GoogleSignInSwift in Frameworks */,
 				E4AF074B29CF1D88007EBD9B /* Realm in Frameworks */,
 				E490D13228BCA1EB0074E28F /* HealthKit.framework in Frameworks */,
 				E4C25E3E29C40A25006734A5 /* RxDataSources in Frameworks */,
-				E4C25E2929C4094C006734A5 /* FirebaseFirestore in Frameworks */,
 				E4C25E3729C409E1006734A5 /* RxCocoa in Frameworks */,
-				E4C25E3129C4094C006734A5 /* FirebaseStorageCombine-Community in Frameworks */,
-				E4C25E2729C4094C006734A5 /* FirebaseAuthCombine-Community in Frameworks */,
 				E4AF074D29CF1D88007EBD9B /* RealmSwift in Frameworks */,
 				E4C25E4629C43DAC006734A5 /* Lottie in Frameworks */,
-				E4C25E2B29C4094C006734A5 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				E4C25E3B29C409E1006734A5 /* RxSwift in Frameworks */,
-				E4C25E2F29C4094C006734A5 /* FirebaseStorage in Frameworks */,
 				E4C25E3429C40999006734A5 /* SnapKit in Frameworks */,
-				E4C25E2529C4094C006734A5 /* FirebaseAuth in Frameworks */,
-				E4C25E2D29C4094C006734A5 /* FirebaseFirestoreSwift in Frameworks */,
 				E4C25E4B29C43E07006734A5 /* OrderedCollections in Frameworks */,
 				E4C25E3929C409E1006734A5 /* RxRelay in Frameworks */,
-				E4C25E4129C40A7A006734A5 /* GoogleSignIn in Frameworks */,
 				E4C25E4929C43E07006734A5 /* Collections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,6 +476,7 @@
 				E4AF075829CF26E9007EBD9B /* RealmDatabase.swift */,
 				E4AF074F29CF2284007EBD9B /* Models */,
 				E416219E29DC3E1E00F55474 /* MockData.swift */,
+				E4F91DBA2A6976DE0054FA4D /* temp.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -589,6 +580,8 @@
 				E4C78D6B28B274A0005AE5C4 /* WorkoutSessionPreviewCell.swift */,
 				E46A71B32A0384F600A95B37 /* WorkoutRoutinePreviewCell.swift */,
 				E44B6B9E28B47D9900CCB19C /* WorkoutSetCell.swift */,
+				E4F171E32A6B5D1B009CBD50 /* WorkoutItemCell.swift */,
+				E4F171E52A6B62DE009CBD50 /* WorkoutCircuitHeaderCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -806,13 +799,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E4C78D2E28B1256B005AE5C4 /* Controllers */ = {
+		E4C78D2E28B1256B005AE5C4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E4C78D3A28B12660005AE5C4 /* WorkoutViewController.swift */,
 				E4C25EE129CAE018006734A5 /* WorkoutSettingsViewController.swift */,
 				E44B6B9228B3CA3C00CCB19C /* WorkoutSessionViewController.swift */,
 				E42E45BB28B4A2610088A9BF /* WorkoutRoutineListViewController.swift */,
+				E4F171E12A6B5AF4009CBD50 /* WorkoutRoutinePreviewViewController.swift */,
 				E42E45BF28B4CF290088A9BF /* WorkoutRoutineViewController.swift */,
 				E42E45C328B4D8720088A9BF /* WorkoutExerciseListViewController.swift */,
 				E4C25ED729C89CF1006734A5 /* WorkoutSessionReorderExercisesViewController.swift */,
@@ -820,7 +814,7 @@
 				E4C25EE529CC3704006734A5 /* TimerController.swift */,
 				E416219629DB066C00F55474 /* WorkoutCircuitHistoryViewController.swift */,
 			);
-			path = Controllers;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		E4C78D3128B125D5005AE5C4 /* Controllers */ = {
@@ -880,7 +874,7 @@
 			isa = PBXGroup;
 			children = (
 				E4C25E5B29C85AE0006734A5 /* Views */,
-				E4C78D2E28B1256B005AE5C4 /* Controllers */,
+				E4C78D2E28B1256B005AE5C4 /* ViewControllers */,
 				E4C25E5029C700CD006734A5 /* View Models */,
 				E4C78C9228B12174005AE5C4 /* Data Source */,
 			);
@@ -962,20 +956,11 @@
 			);
 			name = "Get Fit";
 			packageProductDependencies = (
-				E4C25E2429C4094C006734A5 /* FirebaseAuth */,
-				E4C25E2629C4094C006734A5 /* FirebaseAuthCombine-Community */,
-				E4C25E2829C4094C006734A5 /* FirebaseFirestore */,
-				E4C25E2A29C4094C006734A5 /* FirebaseFirestoreCombine-Community */,
-				E4C25E2C29C4094C006734A5 /* FirebaseFirestoreSwift */,
-				E4C25E2E29C4094C006734A5 /* FirebaseStorage */,
-				E4C25E3029C4094C006734A5 /* FirebaseStorageCombine-Community */,
 				E4C25E3329C40999006734A5 /* SnapKit */,
 				E4C25E3629C409E1006734A5 /* RxCocoa */,
 				E4C25E3829C409E1006734A5 /* RxRelay */,
 				E4C25E3A29C409E1006734A5 /* RxSwift */,
 				E4C25E3D29C40A25006734A5 /* RxDataSources */,
-				E4C25E4029C40A7A006734A5 /* GoogleSignIn */,
-				E4C25E4229C40A7A006734A5 /* GoogleSignInSwift */,
 				E4C25E4529C43DAC006734A5 /* Lottie */,
 				E4C25E4829C43E07006734A5 /* Collections */,
 				E4C25E4A29C43E07006734A5 /* OrderedCollections */,
@@ -1011,11 +996,9 @@
 			);
 			mainGroup = E4C78BD828B12124005AE5C4;
 			packageReferences = (
-				E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E4C25E3229C40999006734A5 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E4C25E3529C409E1006734A5 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				E4C25E3C29C40A25006734A5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
-				E4C25E3F29C40A7A006734A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				E4C25E4429C43DAC006734A5 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E4C25E4729C43E06006734A5 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E4AF074929CF1D88007EBD9B /* XCRemoteSwiftPackageReference "realm-swift" */,
@@ -1060,6 +1043,7 @@
 				E46A71B42A0384F600A95B37 /* WorkoutRoutinePreviewCell.swift in Sources */,
 				E416BC9028BDB750008CBEE4 /* UserHealthData.swift in Sources */,
 				E413F81829FAB60E00277593 /* WorkoutRoutineCircuitObject.swift in Sources */,
+				E4F91DBB2A6976DE0054FA4D /* temp.swift in Sources */,
 				E4C78D3B28B12660005AE5C4 /* WorkoutViewController.swift in Sources */,
 				E44B6B9F28B47D9900CCB19C /* WorkoutSetCell.swift in Sources */,
 				E4C78BE528B12124005AE5C4 /* AppDelegate.swift in Sources */,
@@ -1139,6 +1123,7 @@
 				E4C78D0C28B12174005AE5C4 /* UILabel+Extensions.swift in Sources */,
 				E4C25EEF29CD87EF006734A5 /* ChipView.swift in Sources */,
 				E4AF075F29D3E5C2007EBD9B /* UserGoalObject.swift in Sources */,
+				E4F171E62A6B62DE009CBD50 /* WorkoutCircuitHeaderCell.swift in Sources */,
 				E4C78D0828B12174005AE5C4 /* UIStack+RemoveAll.swift in Sources */,
 				E42E45C228B4CF420088A9BF /* WorkoutRoutineViewModel.swift in Sources */,
 				E4C25E4D29C5DACB006734A5 /* Encodable+Extensions.swift in Sources */,
@@ -1181,6 +1166,7 @@
 				E4C78D1428B12174005AE5C4 /* Coordinator.swift in Sources */,
 				E4C78D0128B12174005AE5C4 /* UIImageView+loadImageUsingURL.swift in Sources */,
 				E4F73B8528BA0EF70056E1DD /* WorkoutBodyPart.swift in Sources */,
+				E4F171E22A6B5AF4009CBD50 /* WorkoutRoutinePreviewViewController.swift in Sources */,
 				E44B6B9528B451D900CCB19C /* IconTitleSubtitleNumberUnitView.swift in Sources */,
 				E4AF075B29D3E3E4007EBD9B /* UserObject.swift in Sources */,
 				E48912B628CEA8D9009AFB09 /* TitleTableHeaderView.swift in Sources */,
@@ -1197,6 +1183,7 @@
 				E413F81429FAB21F00277593 /* WorkoutRoutineCircuit.swift in Sources */,
 				E4C78D0428B12174005AE5C4 /* String+Extensions.swift in Sources */,
 				E4F73B8B28BA0F960056E1DD /* WorkoutMachine.swift in Sources */,
+				E4F171E42A6B5D1B009CBD50 /* WorkoutItemCell.swift in Sources */,
 				E4C25EED29CC3FAD006734A5 /* WorkoutItemInfoViewController.swift in Sources */,
 				E4C78CB728B12174005AE5C4 /* Database.swift in Sources */,
 				E4C78CEF28B12174005AE5C4 /* TextButton.swift in Sources */,
@@ -1431,14 +1418,6 @@
 				minimumVersion = 10.37.0;
 			};
 		};
-		E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		E4C25E3229C40999006734A5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1458,14 +1437,6 @@
 		E4C25E3C29C40A25006734A5 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		E4C25E3F29C40A7A006734A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1500,41 +1471,6 @@
 			package = E4AF074929CF1D88007EBD9B /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
-		E4C25E2429C4094C006734A5 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		E4C25E2629C4094C006734A5 /* FirebaseAuthCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseAuthCombine-Community";
-		};
-		E4C25E2829C4094C006734A5 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		E4C25E2A29C4094C006734A5 /* FirebaseFirestoreCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFirestoreCombine-Community";
-		};
-		E4C25E2C29C4094C006734A5 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
-		E4C25E2E29C4094C006734A5 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
-		E4C25E3029C4094C006734A5 /* FirebaseStorageCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E2329C4094C006734A5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseStorageCombine-Community";
-		};
 		E4C25E3329C40999006734A5 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E4C25E3229C40999006734A5 /* XCRemoteSwiftPackageReference "SnapKit" */;
@@ -1559,16 +1495,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4C25E3C29C40A25006734A5 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
-		};
-		E4C25E4029C40A7A006734A5 /* GoogleSignIn */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E3F29C40A7A006734A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignIn;
-		};
-		E4C25E4229C40A7A006734A5 /* GoogleSignInSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4C25E3F29C40A7A006734A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignInSwift;
 		};
 		E4C25E4529C43DAC006734A5 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

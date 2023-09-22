@@ -121,7 +121,9 @@ extension TitleSubtitleButtonCell {
         iconsView.snp.remakeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalTo(contentView.layoutMarginsGuide).inset(Constants.Spacing.slight)
+            make.width.greaterThanOrEqualTo(60)
         }
+        iconsView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
     private func configureGestures() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapInView(_:)))

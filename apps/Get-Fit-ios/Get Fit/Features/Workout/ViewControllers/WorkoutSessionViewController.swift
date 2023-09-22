@@ -27,7 +27,6 @@ class WorkoutSessionViewController: BaseMVVMViewController<WorkoutSessionViewMod
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
         configureViews()
         configureConstraints()
         configureGestures()
@@ -345,38 +344,55 @@ extension WorkoutSessionViewController {
             var section = [UITableViewCell]()
             
             // Header cell
-            let headerCell = TitleSubtitleButtonCell()
+            let headerCell = WorkoutCircuitHeaderCell(
+                circuit: circuit,
+                historyButtonTapHandler: { [weak self] in
+                    self?.didTapHistoryButton(circuit)
+                },
+                infoButtonTapHandler: { [weak self] in
+                    self?.didTapMoreButton(at: circuitIndex, circuit)
+                })
             
-            let historyButton = IconButton(name: Icons.clockArrowCirclepath)
-            historyButton.tapHandler = { [weak self] in
-                self?.didTapHistoryButton(circuit)
-            }
-            historyButton.contentMode = .scaleAspectFit
-            historyButton.iconColor = .Brand.primary
-            
-            let moreButton = IconButton(name: Icons.ellipsis)
-            moreButton.tapHandler = { [weak self] in
-                self?.didTapMoreButton(at: circuitIndex, circuit)
-            }
-            moreButton.contentMode = .scaleAspectFit
-            moreButton.iconColor = .Brand.primary
-            
-            headerCell.icons = [historyButton, moreButton]
-            
-            switch circuit.type {
-            case .singleExercise, .circuit:
-                headerCell.title = circuit.title
-                headerCell.subtitle = ""
-                headerCell.titleFont = UIFont.bodyMedium
-            case .superSet:
-                headerCell.title = AppText.Workout.superSet
-                headerCell.titleColor = UIColor.secondaryLabel
-                headerCell.titleFont = UIFont.small
-                headerCell.subtitle = circuit.title
-                headerCell.subtitleColor = UIColor.label
-                headerCell.subtitleFont = UIFont.body
-                headerCell.numberOfLinesOfSubtitle = circuit.workoutItems.count
-            }
+//            let headerCell = TitleSubtitleButtonCell()
+//
+//            let historyButton = IconButton(name: Icons.clockArrowCirclepath)
+//            historyButton.tapHandler = { [weak self] in
+//                self?.didTapHistoryButton(circuit)
+//            }
+//            historyButton.contentMode = .scaleAspectFit
+//            historyButton.iconColor = .Brand.primary
+//
+//            let moreButton = IconButton(name: Icons.ellipsis)
+//            moreButton.tapHandler = { [weak self] in
+//                self?.didTapMoreButton(at: circuitIndex, circuit)
+//            }
+//            moreButton.contentMode = .scaleAspectFit
+//            moreButton.iconColor = .Brand.primary
+//
+//            headerCell.icons = [historyButton, moreButton]
+//
+//            switch circuit.type {
+//            case .singleExercise:
+//                headerCell.title = circuit.title
+//                headerCell.subtitle = ""
+//                headerCell.titleFont = UIFont.bodyMedium
+//            case .circuit:
+//                headerCell.title = AppText.Workout.circuit
+//                headerCell.titleColor = UIColor.secondaryLabel
+//                headerCell.titleFont = UIFont.small
+//                headerCell.subtitle = circuit.customizedTitle
+//                headerCell.subtitleColor = UIColor.label
+//                headerCell.subtitleFont = UIFont.body
+//                headerCell.numberOfLinesOfSubtitle = 0
+//            case .superSet:
+//                headerCell.title = AppText.Workout.superSet
+//                headerCell.titleColor = UIColor.secondaryLabel
+//                headerCell.titleFont = UIFont.small
+//                headerCell.subtitle = circuit.title
+//                headerCell.subtitleColor = UIColor.label
+//                headerCell.subtitleFont = UIFont.body
+//                headerCell.numberOfLinesOfSubtitle = circuit.workoutItems.count
+//            }
             section.append(headerCell)
             
             // Set cells

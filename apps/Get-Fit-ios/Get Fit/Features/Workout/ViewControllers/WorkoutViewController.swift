@@ -14,8 +14,6 @@ class WorkoutViewController: BaseMVVMViewController<WorkoutViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
-        
         configureViews()
         configureConstraints()
         configureGestures()

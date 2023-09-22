@@ -44,14 +44,14 @@ extension HomeCoordinator {
         case .addFoodLog(let date, let mealIndex):
             let viewController = AddFoodViewController(appCoordinator: parentCoordinator,
                                                        coordinator: self,
-                                                       viewModel: AddFoodViewModel())
+                                                       viewModel: AddFoodViewModel(appCoordinator: parentCoordinator))
             viewController.viewModel.date = date
             viewController.viewModel.mealIndex = mealIndex
             return viewController
         case .viewFoodLog(let foodLog, let date, let mealIndex, let foodLogIndex):
             let viewController = EditFoodLogViewController(appCoordinator: parentCoordinator,
                                                            coordinator: self,
-                                                           viewModel: FoodLogViewModel())
+                                                           viewModel: FoodLogViewModel(appCoordinator: parentCoordinator))
             viewController.viewModel.foodLog.accept(foodLog)
             viewController.viewModel.date = date
             viewController.viewModel.mealIndex = mealIndex

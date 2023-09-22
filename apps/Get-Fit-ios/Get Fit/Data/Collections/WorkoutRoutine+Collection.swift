@@ -28,7 +28,7 @@ extension WorkoutRoutine {
                                 WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 9, reps: 10, restTime: TimeInterval(60), note: "9kg ball"),
                                 WorkoutSet(itemID: WorkoutItem.alternatingHipExtensionsWithBosuBall.id, type: .normal, weight: 9, reps: 10, restTime: TimeInterval(60), note: "9kg ball"),
                             ]),
-                       ], note: "on Thursday")
+                       ], note: "every Thursday")
     ]
 }
 

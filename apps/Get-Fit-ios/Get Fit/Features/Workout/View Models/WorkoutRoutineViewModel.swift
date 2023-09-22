@@ -17,9 +17,8 @@ class WorkoutRoutineViewModel: BaseViewModel {
         static let itemLogs = 1
         static let addExercise = 2
     }
-    
-    override init() {
-        super.init()
+    override init(appCoordinator: AppCoordinator? = nil) {
+        super.init(appCoordinator: appCoordinator)
         configureSignals()
     }
 }

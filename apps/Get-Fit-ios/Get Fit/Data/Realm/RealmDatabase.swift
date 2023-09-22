@@ -55,19 +55,19 @@ extension RealmDatabase {
         syncBackup()
         
         // TODO: -
-        try? realm.write {
-            realm.deleteAll()
-        }
-        try? realm.write {
-            workoutSessionData.forEach { item in
-                let sessionObject = item.managedObject()
-                let _ = realm.create(WorkoutSessionObject.self, value: sessionObject)
-                item.circuits.forEach { circuit in
-                    let object = circuit.managedObject()
-                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
-                }
-            }
-        }
+//        try? realm.write {
+//            realm.deleteAll()
+//        }
+//        try? realm.write {
+//            workoutSessionData.forEach { item in
+//                let sessionObject = item.managedObject()
+//                let _ = realm.create(WorkoutSessionObject.self, value: sessionObject)
+//                item.circuits.forEach { circuit in
+//                    let object = circuit.managedObject()
+//                    let _ = realm.create(WorkoutCircuitObject.self, value: object)
+//                }
+//            }
+//        }
     }
 }
 
@@ -196,7 +196,8 @@ extension RealmDatabase {
             return .failure(error)
         }
     }
-        
+    
+    @discardableResult
     func removeWorkoutSession(for userID: UserID, at sessionID: WorkoutSessionID) -> VoidResult {
         guard let object = realm.objects(WorkoutSessionObject.self).where({ $0.id == sessionID }).first else {
             return .failure(RealmError.missingObject)
@@ -251,11 +252,12 @@ extension RealmDatabase {
     internal var backupURL: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("backup.realm") }
     
     func syncBackup() {
-        createBackupToCloud()
-        lastSyncTime = Date()
+//        createBackupToCloud()
+//        lastSyncTime = Date()
     }
     
     internal func createBackupToCloud() {
+        // TODO: - login to my icloud
         guard let fileURL = Realm.Configuration.defaultConfiguration.fileURL else { return }
         let record = CKRecord(recordType: "Backup", recordID: backupRecordID)
         let asset = CKAsset(fileURL: fileURL)

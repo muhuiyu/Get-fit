@@ -38,8 +38,7 @@ extension MainTabBarController {
     private func configureInitialTabBarItems() {
         var mainViewControllers = [UINavigationController]()
         TabBarCategory.allCases.forEach { [weak self] category in
-            guard let _ = self else { return }
-            if let viewController = generateViewController(category) {
+            if let viewController = self?.generateViewController(category) {
                 mainViewControllers.append(viewController)
             }
         }
@@ -47,7 +46,7 @@ extension MainTabBarController {
     }
     
     private func generateViewController(_ category: TabBarCategory) -> UINavigationController? {
-        let viewController = category.viewController
+        let viewController = category.getViewController(appCoordinator)
         viewController.appCoordinator = self.appCoordinator
         viewController.tabBarItem = category.tabBarItem
         
@@ -102,12 +101,13 @@ enum TabBarCategory: Int, CaseIterable {
         case .me: return UIImage(systemName: Icons.personFill)
         }
     }
-    var viewController: BaseViewController {
+    
+    func getViewController(_ appCoordinator: AppCoordinator?) -> BaseViewController {
         switch self {
-        case .home: return HomeViewController(viewModel: HomeViewModel())
-        case .workout: return WorkoutViewController(viewModel: WorkoutViewModel())
-        case .progress: return ProgressViewController()
-        case .me: return MeViewController(viewModel: MeViewModel())
+        case .home: return HomeViewController(viewModel: HomeViewModel(appCoordinator: appCoordinator))
+        case .workout: return WorkoutViewController(viewModel: WorkoutViewModel(appCoordinator: appCoordinator))
+        case .progress: return ProgressViewController(viewModel: ProgressViewModel(appCoordinator: appCoordinator))
+        case .me: return MeViewController(viewModel: MeViewModel(appCoordinator: appCoordinator))
         }
     }
     var tabBarItem: UITabBarItem {

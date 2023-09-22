@@ -19,6 +19,7 @@ extension WorkoutItem {
         boxJump.id: boxJump,
         burpees.id: burpees,
         cableGobletSquat.id: cableGobletSquat,
+        cableHammerCurls.id: cableHammerCurls,
         cableKickback.id: cableKickback,
         cablePullThrough.id: cablePullThrough,
         cableReverseLunge.id: cableReverseLunge,
@@ -27,14 +28,18 @@ extension WorkoutItem {
         cableSplitSquat.id: cableSplitSquat,
         cableSquat.id: cableSquat,
         cableSideKick.id: cableSideKick,
+        cossackLunges.id: cossackLunges,
         deadlift.id: deadlift,
+        dumbbellAlternatingShoulderPress.id: dumbbellAlternatingShoulderPress,
         dumbbellChestPress.id: dumbbellChestPress,
         dumbbellGobletSquat.id: dumbbellGobletSquat,
         dumbbellInclinePress.id: dumbbellInclinePress,
         dumbbellInclineBenchRow.id: dumbbellInclineBenchRow,
         dumbbellLateralRaises.id: dumbbellLateralRaises,
+        dumbbellLateralRaisesWithAdductions.id: dumbbellLateralRaisesWithAdductions,
         dumbbellShoulderPress.id: dumbbellShoulderPress,
         farmersWalk.id: farmersWalk,
+        facePullWithRotation.id: facePullWithRotation,
         flatDumbbellChestFly.id: flatDumbbellChestFly,
         forearmCurl.id: forearmCurl,
         frontRaises.id: frontRaises,
@@ -42,11 +47,13 @@ extension WorkoutItem {
         hammerStrengthLatPulldown.id: hammerStrengthLatPulldown,
         hammerStrengthRow.id: hammerStrengthRow,
         hipAbduction.id: hipAbduction,
+        hipExtensionWithBosuBall.id: hipExtensionWithBosuBall,
         hipExtension.id: hipExtension,
         kettleBellGoodMornings.id: kettleBellGoodMornings,
         kneelingHipThrust.id: kneelingHipThrust,
         latPullDown.id: latPullDown,
         legPress.id: legPress,
+        lunges.id: lunges,
         machineChestFly.id: machineChestFly,
         machineChestPress.id: machineChestPress,
         machinePullDown.id: machinePullDown,
@@ -54,26 +61,30 @@ extension WorkoutItem {
         machineShoulderPress.id: machineShoulderPress,
         machineShoulderPressAlternating.id: machineShoulderPressAlternating,
         machineTricepDips.id: machineTricepDips,
+        overheadCableTricepExtension.id: overheadCableTricepExtension,
+        pallofHolds.id: pallofHolds,
         pushUp.id: pushUp,
         renegadeRows.id: renegadeRows,
         reverseSeatedPecDeck.id: reverseSeatedPecDeck,
         romanianDeadlift.id: romanianDeadlift,
+        seatedCableRow.id: seatedCableRow,
+        seatedHammerCurls.id: seatedHammerCurls,
+        seatedLegCurl.id: seatedLegCurl,
+        seatedLegExtension.id: seatedLegExtension,
+        seatedLegPress.id: seatedLegPress,
         singleLegSeatedLegPress.id: singleLegSeatedLegPress,
         skullCrusher.id: skullCrusher,
         smithMachineBackSquats.id: smithMachineBackSquats,
         smithMachineBenchPress.id: smithMachineBenchPress,
         smithMachineInclinePress.id: smithMachineInclinePress,
         smithMachineSplitSquats.id: smithMachineSplitSquats,
-        seatedCableRow.id: seatedCableRow,
-        seatedLegCurl.id: seatedLegCurl,
-        seatedLegExtension.id: seatedLegExtension,
-        seatedLegPress.id: seatedLegPress,
         standingCableChestFly.id: standingCableChestFly,
         standingCableChestPress.id: standingCableChestPress,
         standingCableRow.id: standingCableRow,
         travellingSideSquats.id: travellingSideSquats,
         threePartCurls.id: threePartCurls,
         tricepPushdown.id: tricepPushdown,
+        wallSit.id: wallSit,
     ]
     
     // Upper body
@@ -134,6 +145,15 @@ extension WorkoutItem {
                                                    bodyPart: [.shoulders],
                                                    mechanics: .compound,
                                                    force: .push)
+    static let dumbbellAlternatingShoulderPress = WorkoutItem(id: "dumbbellAlternatingShoulderPress",
+                                                   name: "Dumbbell alternating shoulder press",
+                                                   type: WorkoutItemType.strengthWeightAndReps,
+                                                   bodyPart: [.shoulders],
+                                                   mechanics: .compound,
+                                                   force: .push,
+                                                              alsoKnownAsList: [
+                                                                "alternating dumbbell shoulder press"
+                                                              ])
     static let machineShoulderPress = WorkoutItem(id: "machineShoulderPress",
                                                   name: "Machine shoulder press",
                                                   type: WorkoutItemType.strengthWeightAndReps,
@@ -170,13 +190,34 @@ extension WorkoutItem {
                                             mechanics: .isolated,
                                             force: .pull,
                                             videoURLString: "https://www.youtube.com/watch?v=zSVftMjHDiQ")
+    static let cableHammerCurls = WorkoutItem(id: "cableHammerCurls",
+                                              name: "Cable hammer curls",
+                                              type: WorkoutItemType.strengthWeightAndReps,
+                                              bodyPart: [.biceps],
+                                              mechanics: .isolated,
+                                              force: .pull,
+                                              machine: .cableMachine,
+                                              videoURLString: "https://youtu.be/vsarApmqJmo")
     static let hammerCurls = WorkoutItem(id: "hammerCurls",
                                          name: "Hammer curls",
                                          type: WorkoutItemType.strengthWeightAndReps,
                                          bodyPart: [.biceps],
                                          mechanics: .isolated,
                                          force: .pull,
-                                         videoURLString: "https://youtu.be/0IAM2YtviQY")
+                                         videoURLString: "https://youtu.be/0IAM2YtviQY",
+                                         alsoKnownAsList: [
+                                            "dumbbell hammer curls"
+                                         ])
+    static let seatedHammerCurls = WorkoutItem(id: "seatedHammerCurls",
+                                               name: "Seated hammer curls",
+                                               type: WorkoutItemType.strengthWeightAndReps,
+                                               bodyPart: [.biceps],
+                                               mechanics: .isolated,
+                                               force: .pull,
+                                               videoURLString: "https://youtu.be/BbxA1QF3TxY",
+                                               alsoKnownAsList: [
+                                                "dumbbell seated hammer curls", "seated dumbbell hammer curls"
+                                               ])
     static let bicepCurlWithMachine = WorkoutItem(id: "bicepCurlWithMachine",
                                                   name: "Bicep curl with machine",
                                                   type: WorkoutItemType.strengthWeightAndReps,
@@ -288,6 +329,19 @@ extension WorkoutItem {
                                             force: .push,
                                             machine: .cableMachine,
                                             videoURLString: "https://youtu.be/fvIVljEvqYY")
+    static let overheadCableTricepExtension = WorkoutItem(id: "overheadCableTricepExtension",
+                                            name: "Overhead cable tricep extension",
+                                            type: WorkoutItemType.strengthWeightAndReps,
+                                            bodyPart: [.triceps],
+                                            mechanics: .isolated,
+                                            force: .push,
+                                            machine: .cableMachine,
+                                            videoURLString: "https://youtu.be/GzmlxvSFE7A",
+                                            alsoKnownAsList: [
+                                                "Overhead cable pull",
+                                                "Overhead rope press",
+                                                "Overhead tricep pull"
+                                            ])
     static let skullCrusher = WorkoutItem(id: "skullCrusher",
                                           name: "Skull crusher",
                                           type: WorkoutItemType.strengthWeightAndReps,
@@ -302,6 +356,16 @@ extension WorkoutItem {
                                                    mechanics: .isolated,
                                                    force: .pull,
                                                    videoURLString: "https://youtu.be/q5sNYB1Q6aM")
+    static let dumbbellLateralRaisesWithAdductions = WorkoutItem(id: "dumbbellLateralRaisesWithAdductions",
+                                                   name: "Dumbbell lateral raises with adductions",
+                                                   type: WorkoutItemType.strengthWeightAndReps,
+                                                   bodyPart: [.shoulders, .lateral],
+                                                   mechanics: .isolated,
+                                                   force: .pull,
+                                                   videoURLString: "https://youtu.be/q5sNYB1Q6aM",
+                                                                 alsoKnownAsList: [
+                                                                    "lateral raises dumbbell adductions"
+                                                                 ])
     static let renegadeRows = WorkoutItem(id: "renegadeRows",
                                           name: "Renegade rows",
                                           type: WorkoutItemType.strengthWeightAndReps,
@@ -327,6 +391,23 @@ extension WorkoutItem {
                                       machine: .barbell,
                                       videoURLString: "https://youtu.be/-4qRntuXBSc")
     
+    static let cossackLunges = WorkoutItem(id: "cossackLunges",
+                                           name: "Cossack lunges",
+                                           type: WorkoutItemType.bodyWeightTrainingTime,
+                                           bodyPart: [.glutes, .quads, .hamstrings],
+                                           mechanics: .compound,
+                                           force: .pull,
+                                           videoURLString: "https://youtu.be/Zi_x6s6YXHo")
+    static let lunges = WorkoutItem(id: "lunges",
+                                    name: "lunges",
+                                    type: WorkoutItemType.strengthWeightAndReps,
+                                    bodyPart: [.glutes, .hamstrings, .quads],
+                                    mechanics: .compound,
+                                    force: .pull,
+                                    machine: .cableMachine,
+                                    alsoKnownAsList: [
+                                        "dumbbell lunges"
+                                    ])
     static let cableReverseLunge = WorkoutItem(id: "cableReverseLunge",
                                                name: "Cable reverse lunge",
                                                type: WorkoutItemType.strengthWeightAndReps,
@@ -384,6 +465,13 @@ extension WorkoutItem {
                                           force: .push,
                                           machine: .abductionMachine,
                                           videoURLString: "https://youtu.be/sqXw3xVlDfk")
+    static let hipExtensionWithBosuBall = WorkoutItem(id: "hipExtensionWithBosuBall",
+                                          name: "Hip extension with bosu ball",
+                                          type: WorkoutItemType.strengthWeightAndReps,
+                                          bodyPart: [.hamstrings, .glutes, .back],
+                                          mechanics: .compound,
+                                          force: .pull,
+                                          machine: .romanChair)
     static let hipExtension = WorkoutItem(id: "hipExtension",
                                           name: "Hip extension",
                                           type: WorkoutItemType.strengthWeightAndReps,
@@ -552,6 +640,14 @@ extension WorkoutItem {
                                          mechanics: .compound,
                                          force: .push,
                                          alsoKnownAsList: ["farmer walk", "framers walk", "framerwalk"])
+    static let facePullWithRotation = WorkoutItem(id: "facePullWithRotation",
+                                                  name: "Face pull with rotation",
+                                                  type: WorkoutItemType.strengthWeightAndReps,
+                                                  bodyPart: [.shoulders, .back, .triceps],
+                                                  mechanics: .compound,
+                                                  force: .pull,
+                                                  machine: .cableMachine,
+                                                  videoURLString: "https://youtu.be/bu3VjZ9ML-I", alsoKnownAsList: ["Face Pull with External Rotation"])
     static let boxJump = WorkoutItem(id: "boxJump",
                                      name: "Box jump",
                                      type: WorkoutItemType.bodyWeightTrainingReps,
@@ -585,4 +681,18 @@ extension WorkoutItem {
                                      mechanics: .compound,
                                      force: .push,
                                      alsoKnownAsList: ["Squat thrust"])
+    static let pallofHolds = WorkoutItem(id: "pallofHolds",
+                                         name: "Pallof holds",
+                                         type: WorkoutItemType.strengthWeightAndTime,
+                                         bodyPart: [.core],
+                                         mechanics: .isolated,
+                                         force: .pull,
+                                         videoURLString: "https://youtu.be/m_OKnWKiptY")
+    static let wallSit = WorkoutItem(id: "wallSit",
+                                     name: "Wall sit",
+                                     type: WorkoutItemType.bodyWeightTrainingTime,
+                                     bodyPart: [.core, .quads],
+                                     mechanics: .compound,
+                                     force: .push,
+                                     videoURLString: "https://youtu.be/-cdph8hv0O0")
 }

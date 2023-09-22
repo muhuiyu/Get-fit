@@ -8,15 +8,10 @@
 import UIKit
 import RxSwift
 
-class ProgressViewController: BaseViewController {
-    private let disposeBag = DisposeBag()
-    
-    var viewModel = ProgressViewModel()
+class ProgressViewController: BaseMVVMViewController<ProgressViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
-        
         configureViews()
         configureConstraints()
         configureGestures()

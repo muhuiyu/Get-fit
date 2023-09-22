@@ -12,8 +12,8 @@ import RxRelay
 class WorkoutSessionViewModel: BaseViewModel {
     var session: BehaviorRelay<WorkoutSession?> = BehaviorRelay(value: nil)
     
-    override init() {
-        super.init()
+    override init(appCoordinator: AppCoordinator? = nil) {
+        super.init(appCoordinator: appCoordinator)
         configureSignals()
     }
 }
@@ -175,7 +175,13 @@ extension WorkoutSessionViewModel {
             let dataProvider = appCoordinator?.dataProvider
         else { return }
         
-        dataProvider.removeWorkoutSession(for: userID, at: sessionID)
+        let result = dataProvider.removeWorkoutSession(for: userID, at: sessionID)
+        switch result {
+        case .success:
+            return
+        case .failure(let error):
+            ErrorHandler.shared.handle(error)
+        }
     }
     func fetchHistory(for circuit: WorkoutCircuit) -> [WorkoutCircuit] {
         guard

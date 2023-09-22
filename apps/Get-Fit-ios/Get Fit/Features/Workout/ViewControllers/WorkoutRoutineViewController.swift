@@ -8,12 +8,10 @@
 import UIKit
 import RxSwift
 
-class WorkoutRoutineViewController: BaseViewController {
-    private let disposeBag = DisposeBag()
+class WorkoutRoutineViewController: BaseMVVMViewController<WorkoutRoutineViewModel> {
     private let tableView = UITableView()
     
     private var cells = [[UITableViewCell]]()
-    var viewModel = WorkoutRoutineViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

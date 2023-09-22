@@ -13,6 +13,7 @@ class WorkoutCoordinator: BaseCoordinator {
         case newSession(WorkoutSession)
         case workoutRoutineList
         case workoutRoutine(WorkoutRoutine)
+        case workoutRoutinePreview(WorkoutRoutine)
         case createRoutine
         case editCircuit(WorkoutCircuit)
         case selectFromExerciseList(WorkoutSessionViewModel?, WorkoutRoutineViewModel?, WorkoutCircuitType)
@@ -31,29 +32,37 @@ extension WorkoutCoordinator {
         case .session(let session):
             let viewController = WorkoutSessionViewController(appCoordinator: parentCoordinator,
                                                               coordinator: self,
-                                                              viewModel: WorkoutSessionViewModel())
+                                                              viewModel: WorkoutSessionViewModel(appCoordinator: parentCoordinator))
             viewController.viewModel.session.accept(session)
             return viewController
         case .newSession(let session):
             let viewController = WorkoutSessionViewController(appCoordinator: parentCoordinator,
                                                               coordinator: self,
-                                                              viewModel: WorkoutSessionViewModel(),
+                                                              viewModel: WorkoutSessionViewModel(appCoordinator: parentCoordinator),
                                                               isNewSession: true)
             viewController.viewModel.session.accept(session)
             return viewController
         case .workoutRoutineList:
             let viewController = WorkoutRoutineListViewController(appCoordinator: parentCoordinator,
                                                                   coordinator: self,
-                                                                  viewModel: WorkoutRoutineListViewModel())
+                                                                  viewModel: WorkoutRoutineListViewModel(appCoordinator: parentCoordinator))
             return viewController
         case .workoutRoutine(let routine):
             let viewController = WorkoutRoutineViewController(appCoordinator: parentCoordinator,
-                                                              coordinator: self)
+                                                              coordinator: self,
+                                                              viewModel: WorkoutRoutineViewModel(appCoordinator: parentCoordinator))
+            viewController.viewModel.routine.accept(routine)
+            return viewController
+        case .workoutRoutinePreview(let routine):
+            let viewController = WorkoutRoutinePreviewViewController(appCoordinator: parentCoordinator,
+                                                                     coordinator: self,
+                                                                     viewModel: WorkoutRoutineViewModel(appCoordinator: parentCoordinator))
             viewController.viewModel.routine.accept(routine)
             return viewController
         case .createRoutine:
             let viewController = WorkoutRoutineViewController(appCoordinator: parentCoordinator,
-                                                              coordinator: self)
+                                                              coordinator: self,
+                                                              viewModel: WorkoutRoutineViewModel(appCoordinator: parentCoordinator))
             if let userID = parentCoordinator?.userManager.id {
                 viewController.viewModel.routine.accept(WorkoutRoutine(userID: userID))
             }
@@ -71,7 +80,7 @@ extension WorkoutCoordinator {
         case .settings:
             let viewController = WorkoutSettingsViewController(appCoordinator: parentCoordinator,
                                                                coordinator: self,
-                                                               viewModel: WorkoutSettingsViewModel())
+                                                               viewModel: WorkoutSettingsViewModel(appCoordinator: parentCoordinator))
             return viewController
         case .settingsEditExercise:
             // TODO: -
@@ -102,7 +111,17 @@ extension WorkoutCoordinator {
     }
     func showWorkoutRoutineList() {
         guard let viewController = makeViewController(to: .workoutRoutineList) else { return }
-        self.navigate(to: viewController, presentModally: true)
+        let options = ModalOptions(isEmbedInNavigationController: true,
+                                   modalPresentationStyle: .overFullScreen,
+                                   isModalInPresentation: true)
+        self.navigate(to: viewController, presentModally: true, options: options)
+    }
+    func showWorkoutRoutinePreview(for routine: WorkoutRoutine) {
+        guard let viewController = makeViewController(to: .workoutRoutinePreview(routine)) else { return }
+        let options = ModalOptions(isEmbedInNavigationController: false,
+                                   modalPresentationStyle: .fullScreen,
+                                   isModalInPresentation: false)
+        self.navigate(to: viewController, presentModally: true, options: options)
     }
     func showWorkoutRoutine(for routine: WorkoutRoutine) {
         guard let viewController = makeViewController(to: .workoutRoutine(routine)) else { return }

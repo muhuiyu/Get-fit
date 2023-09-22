@@ -24,13 +24,18 @@ class WorkoutRoutineListViewController: BaseMVVMViewController<WorkoutRoutineLis
 // MARK: - Handlers
 extension WorkoutRoutineListViewController {
     @objc
+    private func didTapClose(_ sender: UIBarButtonItem) {
+        guard let coordinator = coordinator as? WorkoutCoordinator else { return }
+        coordinator.dismissCurrentModal()
+    }
+    @objc
     private func didTapAdd(_ sender: UIBarButtonItem) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
         coordinator.showCreateRoutine()
     }
     private func didSelectRoutine(at indexPath: IndexPath, _ item: WorkoutRoutine) {
         guard let coordinator = coordinator as? WorkoutCoordinator else { return }
-        coordinator.showWorkoutRoutine(for: item)
+        coordinator.showWorkoutRoutinePreview(for: item)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -68,6 +73,10 @@ extension WorkoutRoutineListViewController {
     }
     private func configureNavigationBar() {
         title = viewModel.titleString
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: Icons.xmark),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(didTapClose(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: AppText.General.add,
                                                             style: .plain,
                                                             target: self,

@@ -10,11 +10,16 @@ import RxRelay
 import RxSwift
 
 class WorkoutRoutineListViewModel: BaseViewModel {
-    lazy var dataSource = WorkoutSessionDataSource.dataSource()
+    lazy var dataSource = WorkoutRoutineDataSource.dataSource()
     
     // MARK: - Reactive Properties
     private var routines: BehaviorRelay<[WorkoutRoutine]> = BehaviorRelay(value: [])
     var displayRoutines: BehaviorRelay<[WorkoutRoutineSection]> = BehaviorRelay(value: [])
+    
+    override init(appCoordinator: AppCoordinator?) {
+        super.init(appCoordinator: appCoordinator)
+        configureSignals()
+    }
 }
 
 extension WorkoutRoutineListViewModel {
@@ -45,5 +50,20 @@ extension WorkoutRoutineListViewModel {
     }
     func getRoutine(at indexPath: IndexPath) -> WorkoutRoutine? {
         return routines.value[indexPath.row]
+    }
+}
+
+// MARK: - Private methods
+extension WorkoutRoutineListViewModel {
+    private func configureSignals() {
+        self.routines
+            .asObservable()
+            .subscribe { value in
+                let routines: [WorkoutRoutineSection] = [
+                    WorkoutRoutineSection(header: "", items: value)
+                ]
+                self.displayRoutines.accept(routines)
+            }
+            .disposed(by: disposeBag)
     }
 }

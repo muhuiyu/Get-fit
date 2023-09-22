@@ -15,8 +15,8 @@ class HomeViewModel: BaseViewModel {
     var currentDate: BehaviorRelay<Date> = BehaviorRelay(value: Date())
     var dailyMealLog: BehaviorRelay<DailyMealLog?> = BehaviorRelay(value: nil)
 
-    override init() {
-        super.init()
+    override init(appCoordinator: AppCoordinator? = nil) {
+        super.init(appCoordinator: appCoordinator)
         configureSignals()
     }
 }

@@ -17,7 +17,7 @@ class BaseViewModel: ViewModelType {
     
     weak var appCoordinator: AppCoordinator?
     
-    func setup(appCoordinator: AppCoordinator?) {
+    init(appCoordinator: AppCoordinator? = nil) {
         self.appCoordinator = appCoordinator
     }
 }

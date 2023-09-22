@@ -17,8 +17,6 @@ class TimerViewController: BaseMVVMViewController<TimerViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
-        
         configureViews()
         configureConstraints()
         configureGestures()

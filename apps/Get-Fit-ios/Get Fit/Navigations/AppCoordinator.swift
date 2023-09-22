@@ -139,8 +139,3 @@ extension AppCoordinator {
         authViewModel.signIn()
     }
 }
-
-// MARK: - Users
-extension AppCoordinator {
-    var isUserLoggedIn: Bool { userManager != nil }
-}

@@ -16,8 +16,8 @@ class WorkoutViewModel: BaseViewModel {
     private var sessions: BehaviorRelay<WorkoutSessionList> = BehaviorRelay(value: [])
     var displaySessions: BehaviorRelay<[WorkoutSessionSection]> = BehaviorRelay(value: [])
     
-    override init() {
-        super.init()
+    override init(appCoordinator: AppCoordinator? = nil) {
+        super.init(appCoordinator: appCoordinator)
         configureSignals()
     }
 }

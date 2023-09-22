@@ -12,7 +12,6 @@ class WorkoutSettingsViewController: BaseMVVMViewController<WorkoutSettingsViewM
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
         configureViews()
         configureConstraints()
     }

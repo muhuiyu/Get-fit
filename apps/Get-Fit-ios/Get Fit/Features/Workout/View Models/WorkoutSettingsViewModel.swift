@@ -11,9 +11,9 @@ import RxRelay
 
 class WorkoutSettingsViewModel: BaseViewModel {
     var cells: [[UITableViewCell]] = []
-    
-    override init() {
-        super.init()
+
+    override init(appCoordinator: AppCoordinator? = nil) {
+        super.init(appCoordinator: appCoordinator)
         configureCells()
     }
     

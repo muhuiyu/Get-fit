@@ -14,7 +14,6 @@ class AddFoodViewController: BaseMVVMViewController<AddFoodViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
         configureViews()
         configureConstraints()
         configureGestures()

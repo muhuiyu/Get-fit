@@ -18,7 +18,7 @@ class AuthenticationViewModel: BaseViewModel {
         case signedOut
     }
     
-    override init() {
+    init() {
         super.init()
         configureSignals()
         configureSignIn()

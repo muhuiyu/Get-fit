@@ -24,15 +24,18 @@ struct WorkoutCircuit: Codable {
     let date: YearMonthDay
     var type: WorkoutCircuitType
     var sets: [WorkoutSet]
+    let customizedTitle: String
     
     init(id: WorkoutCircuitID = UUID(),
          date: YearMonthDay,
          type: WorkoutCircuitType,
-         sets: [WorkoutSet] = []) {
+         sets: [WorkoutSet] = [],
+         customizedTitle: String = "") {
         self.id = id
         self.date = date
         self.type = type
         self.sets = sets
+        self.customizedTitle = customizedTitle
     }
 }
 
@@ -47,11 +50,12 @@ extension WorkoutCircuit: Persistable {
         }
         type = WorkoutCircuitType(rawValue: managedObject.type) ?? .singleExercise
         sets = managedObject.sets.map({ WorkoutSet(managedObject: $0) })
+        customizedTitle = managedObject.customizedTitle
     }
     public func managedObject() -> WorkoutCircuitObject {
         let setObjects = List<WorkoutSetObject>()
         sets.map({ $0.managedObject() }).forEach({ setObjects.append($0) })
-        return WorkoutCircuitObject(id: id, date: date.managedObject(), type: type.rawValue, sets: setObjects)
+        return WorkoutCircuitObject(id: id, date: date.managedObject(), type: type.rawValue, sets: setObjects, customizedTitle: customizedTitle)
     }
 }
 

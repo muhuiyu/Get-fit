@@ -23,7 +23,6 @@ class HomeViewController: BaseMVVMViewController<HomeViewModel>{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.appCoordinator = appCoordinator
         configureNavigationBar()
         configureViews()
         configureConstraints()
